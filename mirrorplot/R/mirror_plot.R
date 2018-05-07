@@ -14,7 +14,7 @@
 
 mirror_plot_function <- function(assoc_data1, assoc_data2){
   # read and process association data set 1
-  in.dt <- as.data.frame(assoc_data)
+  in.dt <- as.data.frame(assoc_data1)
   in.dt$CHR_POS = as.numeric(as.character(in.dt$CHR_POS))
   in.dt$LOG10P = as.numeric(as.character(in.dt$LOG10P))
   in.dt$LD = as.numeric(as.character(in.dt$LD))
@@ -27,20 +27,25 @@ mirror_plot_function <- function(assoc_data1, assoc_data2){
   
   # read and process association data set 2
   in.dt.2 <- as.data.frame(assoc_data2)
-  in.dt$CHR_POS = as.numeric(as.character(in.dt$CHR_POS))
-  in.dt$LOG10P = as.numeric(as.character(in.dt$LOG10P))
-  in.dt$LD = as.numeric(as.character(in.dt$LD))
-  in.dt$LD_BIN <- cut(in.dt$LD,
+  in.dt.2$CHR_POS = as.numeric(as.character(in.dt.2$CHR_POS))
+  in.dt.2$LOG10P = as.numeric(as.character(in.dt.2$LOG10P))
+  in.dt.2$LD = as.numeric(as.character(in.dt.2$LD))
+  in.dt.2$LD_BIN <- cut(in.dt.2$LD,
                       breaks=c(0,0.2,0.4,0.6,0.8,1.0),
                       labels=c("0.0-0.2","0.2-0.4","0.4-0.6","0.6-0.8","0.8-1.0"))
-  in.dt$LD_BIN = as.character(in.dt$LD_BIN)
-  in.dt$LD_BIN[is.na(in.dt$LD_BIN)] <- "NA"
-  in.dt$LD_BIN = as.factor(in.dt$LD_BIN)
+  in.dt.2$LD_BIN = as.character(in.dt.2$LD_BIN)
+  in.dt.2$LD_BIN[is.na(in.dt.2$LD_BIN)] <- "NA"
+  in.dt.2$LD_BIN = as.factor(in.dt.2$LD_BIN)
   
  # generate mirror plot
-  ggplot2::ggplot(data = in.dt, aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
+  a = ggplot2::ggplot(data = in.dt, aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
     geom_point() + scale_colour_manual(
       values = c("navyblue", "skyblue1", "green1", "darkorange1", "red", "grey")) +
     theme_bw() + xlab("Chromosome Position") + ylab("-log10(p-value)")
+  b = ggplot2::ggplot(data = in.dt.2, aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
+    geom_point() + scale_colour_manual(
+      values = c("navyblue", "skyblue1", "green1", "darkorange1", "red", "grey")) +
+    theme_bw() + xlab("Chromosome Position") + ylab("-log10(p-value)")
+  gridExtra::grid.arrange(a, b, nrow=2)
 }
 
