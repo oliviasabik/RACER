@@ -4,11 +4,8 @@ In R or RStudio, these commands will install and load mirrorplot
 
 ```
 install.packages("devtools") 
-
 library(devtools) 
-
 install_github("oliviasabik/mirrorplot") 
-
 library(mirrorplot)
 ```
 
