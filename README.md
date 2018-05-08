@@ -1,14 +1,15 @@
 # mirrorplot
 ## 1. Installation
-In R or RStudio, these commands will install and load mirrorplot``` 
+In R or RStudio, these commands will install and load mirrorplot
 
-install.packages("devtools") 
+```install.packages("devtools") 
 
 library(devtools) 
 
-
 install_github("oliviasabik/mirrorplot") 
-library(mirrorplot) ```
+
+library(mirrorplot)```
+
 ## 2. Input
 mirrorplot takes one or two data frames containing
 is a two-column tab-delimited text file. Here is a
