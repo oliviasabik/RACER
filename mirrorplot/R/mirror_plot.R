@@ -41,11 +41,12 @@ mirror_plot_function <- function(assoc_data1, assoc_data2){
   a = ggplot2::ggplot(data = in.dt, aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
     geom_point() + scale_colour_manual(
       values = c("navyblue", "skyblue1", "green1", "darkorange1", "red", "grey")) +
-    theme_bw() + xlab("Chromosome Position") + ylab("-log10(p-value)")
+    theme_bw() + xlab("Chromosome Position") + ylab("-log10(p-value)") +
+    scale_y_reverse()
   b = ggplot2::ggplot(data = in.dt.2, aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
     geom_point() + scale_colour_manual(
       values = c("navyblue", "skyblue1", "green1", "darkorange1", "red", "grey")) +
-    theme_bw() + xlab("Chromosome Position") + ylab("-log10(p-value)")
+    theme_bw() + xlab("Chromosome Position") + ylab("-log10(p-value)") 
   gridExtra::grid.arrange(a, b, nrow=2)
 }
 
