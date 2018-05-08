@@ -4,7 +4,7 @@
 \alias{mirror_plot_function}
 \title{Mirror Plot Function}
 \usage{
-mirror_plot_function(assoc_data1, assoc_data2)
+mirror_plot_function(assoc_data1, assoc_data2, name1, name2, x1, x2)
 }
 \arguments{
 \item{assoc_data1}{object in your current R environment that has
@@ -13,7 +13,15 @@ the chromosome, LOG10P which contains the -log10(P-values), and optional
 columns CHR, which contains the chromosome number, RS_ID, which
 contains the rsID numbers of the SNPs, and R2, which contains LD information.}
 
-\item{assoc_data2}{identifcal in format to}
+\item{assoc_data2}{identifcal in format to assoc_data1}
+
+\item{name1}{name of association set 1}
+
+\item{name2}{name of association set 2}
+
+\item{x1}{lower bound on x axis}
+
+\item{x2}{upper bound on x axis}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values).
