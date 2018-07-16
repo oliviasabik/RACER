@@ -24,7 +24,7 @@
 #' @examples
 #' mirror_plot_function(assoc_data1, assoc_data2, "plot1", "plot2", 1000000, 110000000, pops = c("CEU","TSI","FIN","GBR","IBS"), rs_id1 = "rs123456", rs_id2 = "rs123456")
 
-mirror_plot_function <- function(assoc_data1, assoc_data2, name1, name2, start, end, pops, rs_id_1, rs_id_2){
+mirror_plot_function <- function(assoc_data1, assoc_data2, name1=NULL, name2=NULL, start=NULL, end=NULL, pops=NULL, rs_id_1=NULL, rs_id_2=NULL){
   print("Calculating LD")
   if(!is.null(pops)){
     if(length(pops) == 1){

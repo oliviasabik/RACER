@@ -17,7 +17,7 @@
 #' @examples
 #' single_plot_function(assoc_data = assoc_data, rs_id = "rs00000001", pops = c("CEU","TSI","FIN","GBR","IBS"), start = 1000000, end = 1230000)
 
-single_plot_function <- function(assoc_data, rs_id, pops, start, end){
+single_plot_function <- function(assoc_data, start=NULL, end=NULL, rs_id=NULL, pops=NULL){
   print("Calculating LD")
   if(!is.null(pops)){
     if(length(pops) == 1){
