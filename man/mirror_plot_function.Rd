@@ -4,14 +4,18 @@
 \alias{mirror_plot_function}
 \title{Mirror Plot Function}
 \usage{
-mirror_plot_function(assoc_data1, assoc_data2, name1, name2, x1, x2)
+mirror_plot_function(assoc_data1, assoc_data2, name1, name2, start, end, pops,
+  rs_id_1, rs_id_2)
 }
 \arguments{
-\item{assoc_data1}{object in your current R environment that has
-columns named CHR_POS representing the position of the snp on
-the chromosome, LOG10P which contains the -log10(P-values), and optional
-columns CHR, which contains the chromosome number, RS_ID, which
-contains the rsID numbers of the SNPs, and R2, which contains LD information.}
+\item{assoc_data1}{object that has columns named
+CHR_POS representing the position of the snp on
+the chromosome, LOG10P which contains the -log10(P-values),
+CHR, which contains the chromosome number, RS_ID, which
+contains the rsID numbers of the SNPs, and R2, which contains
+LD information. If you want to compute LD information for the dataset,
+add a column to the input called LD, and fill it with NA, and include the
+rs_id numbers for the lead SNPs you want to use to compute the LD.}
 
 \item{assoc_data2}{identifcal in format to assoc_data1}
 
@@ -19,15 +23,21 @@ contains the rsID numbers of the SNPs, and R2, which contains LD information.}
 
 \item{name2}{name of association set 2}
 
-\item{x1}{lower bound on x axis}
+\item{start}{lower bound on x axis}
 
-\item{x2}{upper bound on x axis}
+\item{end}{upper bound on x axis}
+
+\item{pops}{populations used to calculate LD}
+
+\item{rs_id_1}{lead snp used to calculate LD for first association dataset}
+
+\item{rs_id_2}{lead snp used to calculate LD for second association dataset}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values).
 }
 \examples{
-base_plot_function()
+mirror_plot_function(assoc_data1, assoc_data2, "plot1", "plot2", 1000000, 110000000, pops = c("CEU","TSI","FIN","GBR","IBS"), rs_id1 = "rs123456", rs_id2 = "rs123456")
 }
 \keyword{association}
 \keyword{plot}

@@ -4,20 +4,33 @@
 \alias{single_plot_function}
 \title{Single Plot Function}
 \usage{
-single_plot_function(assoc_data)
+single_plot_function(assoc_data, rs_id, pops, start, end)
 }
 \arguments{
-\item{assoc_data}{a data frmae that has columns named CHR_POS representing
+\item{assoc_data}{required. a data frmae that has columns named CHR_POS representing
 the position of the snp on the chromosome, LOG10P which contains the
 -log10(P-values), and optional columns CHR, which contains the chromosome
 number, RS_ID, which contains the rsID numbers of the SNPs, and R2, which
 contains LD information.}
+
+\item{rs_id}{optional. a character string. the rs_id number of the lead snp used for LD calculations, set NULL if input has LD information}
+
+\item{pops}{optional. populations from the 1000K Genomes dataset to use for LD calculations, set NULL if input has LD information}
+
+\item{start}{required. starting chromosomal position of the association plot}
+
+\item{end}{required. ending chromosomal position of the association plot}
 }
 \description{
-This function allows you to creat a plot of -log10(P-values).
+This function allows you to creat a plot of -log10(P-values) of an association study
+by their genomic position, for example, the results of a GWAS or eQTL study. Sources
+1000K genomes phase III data for linkage disequilibrium calculations.
 }
 \examples{
-single_plot_function()
+single_plot_function(assoc_data = assoc_data, rs_id = "rs00000001", pops = c("CEU","TSI","FIN","GBR","IBS"), start = 1000000, end = 1230000)
 }
 \keyword{association}
-\keyword{plot}
+\keyword{disequilibrium.}
+\keyword{gwas,}
+\keyword{linkage}
+\keyword{plot,}
