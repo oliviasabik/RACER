@@ -1,7 +1,7 @@
 #' Mirror Plot Function
 #'
 #' This function allows you to creat a plot of -log10(P-values).
-#' @param assoc_data1 object that has columns named
+#' @param assoc_data1 required. A dataframe that has columns named
 #' CHR_POS representing the position of the snp on
 #' the chromosome, LOG10P which contains the -log10(P-values),
 #' CHR, which contains the chromosome number, RS_ID, which
@@ -10,14 +10,15 @@
 #' add a column to the input called LD, and fill it with NA, and include the
 #' rs_id numbers for the lead SNPs you want to use to compute the LD.
 #'
-#' @param assoc_data2 identifcal in format to assoc_data1
-#' @param name1 name of association set 1
-#' @param name2 name of association set 2
-#' @param start lower bound on x axis
-#' @param end upper bound on x axis
-#' @param pops populations used to calculate LD
-#' @param rs_id_1 lead snp used to calculate LD for first association dataset
-#' @param rs_id_2 lead snp used to calculate LD for second association dataset
+#' @param assoc_data2 required. identifcal in format to assoc_data1
+#' @param name1 optional. name of association set 1
+#' @param name2 optional. name of association set 2
+#' @param start optional. lower bound on x axis
+#' @param end optional. upper bound on x axis
+#' @param pops optional. required is rs_ids are specified. populations used
+#' to calculate LD
+#' @param rs_id_1 optional. lead snp used to calculate LD for first association dataset
+#' @param rs_id_2 optional. lead snp used to calculate LD for second association dataset
 #'
 #' @keywords association plot
 #' @export

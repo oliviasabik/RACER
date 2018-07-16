@@ -3,13 +3,18 @@
 #' This function allows you to creat a plot of -log10(P-values) of an association study
 #' by their genomic position, for example, the results of a GWAS or eQTL study. Sources
 #' 1000K genomes phase III data for linkage disequilibrium calculations.
-#' @param assoc_data required. a data frmae that has columns named CHR_POS representing
-#' the position of the snp on the chromosome, LOG10P which contains the
-#' -log10(P-values), and optional columns CHR, which contains the chromosome
-#' number, RS_ID, which contains the rsID numbers of the SNPs, and R2, which
-#' contains LD information.
-#' @param rs_id optional. a character string. the rs_id number of the lead snp used for LD calculations, set NULL if input has LD information
-#' @param pops optional. populations from the 1000K Genomes dataset to use for LD calculations, set NULL if input has LD information
+#' @param assoc_data required. A dataframe that has columns named
+#' CHR_POS representing the position of the snp on
+#' the chromosome, LOG10P which contains the -log10(P-values),
+#' CHR, which contains the chromosome number, RS_ID, which
+#' contains the rsID numbers of the SNPs, and R2, which contains
+#' LD information. If you want to compute LD information for the dataset,
+#' add a column to the input called LD, and fill it with NA, and include the
+#' rs_id numbers for the lead SNPs you want to use to compute the LD.
+#' @param rs_id optional. a character string. the rs_id number of the lead snp
+#' used for LD calculations, set NULL if input has LD information
+#' @param pops optional. required if an rs_id is specified. populations from the
+#' 1000K Genomes dataset to use for LD calculations, set NULL if input has LD information
 #' @param start required. starting chromosomal position of the association plot
 #' @param end required. ending chromosomal position of the association plot
 #' @keywords association plot, gwas, linkage disequilibrium.
