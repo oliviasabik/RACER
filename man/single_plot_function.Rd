@@ -4,22 +4,30 @@
 \alias{single_plot_function}
 \title{Single Plot Function}
 \usage{
-single_plot_function(assoc_data, rs_id, pops, start, end)
+single_plot_function(assoc_data, chr, start = NULL, end = NULL,
+  rs_id = NULL, pops = NULL)
 }
 \arguments{
-\item{assoc_data}{required. a data frmae that has columns named CHR_POS representing
-the position of the snp on the chromosome, LOG10P which contains the
--log10(P-values), and optional columns CHR, which contains the chromosome
-number, RS_ID, which contains the rsID numbers of the SNPs, and R2, which
-contains LD information.}
+\item{assoc_data}{required. A dataframe that has columns named
+CHR_POS representing the position of the snp on
+the chromosome, LOG10P which contains the -log10(P-values),
+CHR, which contains the chromosome number, RS_ID, which
+contains the rsID numbers of the SNPs, and R2, which contains
+LD information. If you want to compute LD information for the dataset,
+add a column to the input called LD, and fill it with NA, and include the
+rs_id numbers for the lead SNPs you want to use to compute the LD.}
 
-\item{rs_id}{optional. a character string. the rs_id number of the lead snp used for LD calculations, set NULL if input has LD information}
-
-\item{pops}{optional. populations from the 1000K Genomes dataset to use for LD calculations, set NULL if input has LD information}
+\item{chr}{required. chromosome to plot}
 
 \item{start}{required. starting chromosomal position of the association plot}
 
 \item{end}{required. ending chromosomal position of the association plot}
+
+\item{rs_id}{optional. a character string. the rs_id number of the lead snp
+used for LD calculations, set NULL if input has LD information}
+
+\item{pops}{optional. required if an rs_id is specified. populations from the
+1000K Genomes dataset to use for LD calculations, set NULL if input has LD information}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values) of an association study

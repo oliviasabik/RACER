@@ -4,11 +4,12 @@
 \alias{mirror_plot_function}
 \title{Mirror Plot Function}
 \usage{
-mirror_plot_function(assoc_data1, assoc_data2, name1, name2, start, end, pops,
-  rs_id_1, rs_id_2)
+mirror_plot_function(assoc_data1, assoc_data2, chr, name1 = NULL,
+  name2 = NULL, start = NULL, end = NULL, pops = NULL, rs_id_1 = NULL,
+  rs_id_2 = NULL, plotby = NULL, gene = NULL)
 }
 \arguments{
-\item{assoc_data1}{object that has columns named
+\item{assoc_data1}{required. A dataframe that has columns named
 CHR_POS representing the position of the snp on
 the chromosome, LOG10P which contains the -log10(P-values),
 CHR, which contains the chromosome number, RS_ID, which
@@ -17,21 +18,31 @@ LD information. If you want to compute LD information for the dataset,
 add a column to the input called LD, and fill it with NA, and include the
 rs_id numbers for the lead SNPs you want to use to compute the LD.}
 
-\item{assoc_data2}{identifcal in format to assoc_data1}
+\item{assoc_data2}{required. identifcal in format to assoc_data1}
 
-\item{name1}{name of association set 1}
+\item{chr}{required. chromosome you wish to plot}
 
-\item{name2}{name of association set 2}
+\item{name1}{optional. name of association set 1}
 
-\item{start}{lower bound on x axis}
+\item{name2}{optional. name of association set 2}
 
-\item{end}{upper bound on x axis}
+\item{start}{optional. If "coord" selected for plotby, then this will be lower bound of x axis}
 
-\item{pops}{populations used to calculate LD}
+\item{end}{optional. If "coord" selected for plotby, then this will be upper bound of x axis}
 
-\item{rs_id_1}{lead snp used to calculate LD for first association dataset}
+\item{pops}{optional. required is rs_ids are specified. populations used
+to calculate LD}
 
-\item{rs_id_2}{lead snp used to calculate LD for second association dataset}
+\item{rs_id_1}{optional. lead snp used to calculate LD for first association dataset}
+
+\item{rs_id_2}{optional. lead snp used to calculate LD for second association dataset}
+
+\item{plotby}{optional. "coord", "gene", or "snp". Which parameter to use to
+determine the reigon to be plotted.}
+
+\item{gene}{optional. If "gene" selected for plotby, then plot will be +/- 50kb of gene}
+
+\item{snp}{optional. If "snp" selected for plotby, then plot will be +/- 50kb of snp}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values).

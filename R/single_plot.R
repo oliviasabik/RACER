@@ -11,6 +11,7 @@
 #' LD information. If you want to compute LD information for the dataset,
 #' add a column to the input called LD, and fill it with NA, and include the
 #' rs_id numbers for the lead SNPs you want to use to compute the LD.
+#' @param chr required. chromosome to plot
 #' @param rs_id optional. a character string. the rs_id number of the lead snp
 #' used for LD calculations, set NULL if input has LD information
 #' @param pops optional. required if an rs_id is specified. populations from the
@@ -22,7 +23,7 @@
 #' @examples
 #' single_plot_function(assoc_data = assoc_data, rs_id = "rs00000001", pops = c("CEU","TSI","FIN","GBR","IBS"), start = 1000000, end = 1230000)
 
-single_plot_function <- function(assoc_data, start=NULL, end=NULL, rs_id=NULL, pops=NULL){
+single_plot_function <- function(assoc_data, chr, start=NULL, end=NULL, rs_id=NULL, pops=NULL){
   print("Calculating LD")
   if(!is.null(pops)){
     if(length(pops) == 1){
@@ -77,6 +78,7 @@ single_plot_function <- function(assoc_data, start=NULL, end=NULL, rs_id=NULL, p
   in.dt$LD_BIN = as.character(in.dt$LD_BIN)
   in.dt$LD_BIN[is.na(in.dt$LD_BIN)] <- "NA"
   in.dt$LD_BIN = as.factor(in.dt$LD_BIN)
+  in.dt = dplyr::filter(in.dt, CHR == chr)
   in.dt = dplyr::filter(in.dt, CHR_POS > start)
   in.dt = dplyr::filter(in.dt, CHR_POS < end)
   print("Generating Plot")
