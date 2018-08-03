@@ -13,10 +13,8 @@ mirror_plot_function(assoc_data1, assoc_data2, chr, name1 = NULL,
 CHR_POS representing the position of the snp on
 the chromosome, LOG10P which contains the -log10(P-values),
 CHR, which contains the chromosome number, RS_ID, which
-contains the rsID numbers of the SNPs, and R2, which contains
-LD information. If you want to compute LD information for the dataset,
-add a column to the input called LD, and fill it with NA, and include the
-rs_id numbers for the lead SNPs you want to use to compute the LD.}
+LD information. If no column named LD is in the input, LD will
+be calculated from 1000 genomes phase III in relation to rs_id_1.}
 
 \item{assoc_data2}{required. identifcal in format to assoc_data1}
 
@@ -33,7 +31,8 @@ rs_id numbers for the lead SNPs you want to use to compute the LD.}
 \item{pops}{optional. required is rs_ids are specified. populations used
 to calculate LD}
 
-\item{rs_id_1}{optional. lead snp used to calculate LD for first association dataset}
+\item{rs_id_1}{optional. lead snp used to calculate LD for first association dataset and used for coordinates
+if plotby = "snp"}
 
 \item{rs_id_2}{optional. lead snp used to calculate LD for second association dataset}
 
@@ -48,7 +47,7 @@ determine the reigon to be plotted.}
 This function allows you to creat a plot of -log10(P-values).
 }
 \examples{
-mirror_plot_function(assoc_data1, assoc_data2, "plot1", "plot2", 1000000, 110000000, pops = c("CEU","TSI","FIN","GBR","IBS"), rs_id1 = "rs123456", rs_id2 = "rs123456")
+mirror_plot_function(assoc_data1, assoc_data2, "plot1", "plot2", 1000000, 110000000, pops = c("CEU","TSI","FIN","GBR","IBS"), rs_id_1 = "rs123456", rs_id_2 = "rs123456",  plotby = "coord")
 }
 \keyword{association}
 \keyword{plot}

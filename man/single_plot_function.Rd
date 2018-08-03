@@ -4,30 +4,35 @@
 \alias{single_plot_function}
 \title{Single Plot Function}
 \usage{
-single_plot_function(assoc_data, chr, start = NULL, end = NULL,
-  rs_id = NULL, pops = NULL)
+single_plot_function(assoc_data, chr, plotby, start = NULL, end = NULL,
+  rs_id = NULL, pops = NULL, gene = NULL)
 }
 \arguments{
 \item{assoc_data}{required. A dataframe that has columns named
 CHR_POS representing the position of the snp on
 the chromosome, LOG10P which contains the -log10(P-values),
 CHR, which contains the chromosome number, RS_ID, which
-contains the rsID numbers of the SNPs, and R2, which contains
+contains the rsID numbers of the SNPs, and LD, which contains
 LD information. If you want to compute LD information for the dataset,
 add a column to the input called LD, and fill it with NA, and include the
 rs_id numbers for the lead SNPs you want to use to compute the LD.}
 
 \item{chr}{required. chromosome to plot}
 
-\item{start}{required. starting chromosomal position of the association plot}
+\item{plotby}{required. "coord", "gene", or "snp". Which parameter to use to
+determine the reigon to be plotted.}
 
-\item{end}{required. ending chromosomal position of the association plot}
+\item{start}{optional. If "coord" selected for plotby, then this will be lower bound of x axis}
+
+\item{end}{optional. If "coord" selected for plotby, then this will be upper bound of x axis}
 
 \item{rs_id}{optional. a character string. the rs_id number of the lead snp
-used for LD calculations, set NULL if input has LD information}
+used for LD calculations, and can be used to set the plotting coordinates}
 
 \item{pops}{optional. required if an rs_id is specified. populations from the
 1000K Genomes dataset to use for LD calculations, set NULL if input has LD information}
+
+\item{gene}{optional. If "gene" selected for plotby, then plot will be +/- 50kb of gene}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values) of an association study
@@ -35,7 +40,7 @@ by their genomic position, for example, the results of a GWAS or eQTL study. Sou
 1000K genomes phase III data for linkage disequilibrium calculations.
 }
 \examples{
-single_plot_function(assoc_data = assoc_data, rs_id = "rs00000001", pops = c("CEU","TSI","FIN","GBR","IBS"), start = 1000000, end = 1230000)
+single_plot_function(assoc_data = assoc_data, chr = 1, rs_id = "rs00000001", pops = c("CEU","TSI","FIN","GBR","IBS"), start = 1000000, end = 1230000)
 }
 \keyword{association}
 \keyword{disequilibrium.}

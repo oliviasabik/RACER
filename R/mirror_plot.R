@@ -5,7 +5,6 @@
 #' CHR_POS representing the position of the snp on
 #' the chromosome, LOG10P which contains the -log10(P-values),
 #' CHR, which contains the chromosome number, RS_ID, which
-#' contains the rsID numbers of the SNPs, and LD, which contains
 #' LD information. If no column named LD is in the input, LD will
 #' be calculated from 1000 genomes phase III in relation to rs_id_1.
 #'
@@ -44,19 +43,19 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
   colnames(biomart_hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
   gene_sub = subset(biomart_hg19, biomart_hg19$CHR == chr_2)
 
-  if(sum(is.null(plotby)) == 0){
+  if((sum(is.null(plotby)) == 0) == TRUE){
     print("Plotting by...")
     if((plotby == "coord") == TRUE){
       print("coord")
       start = start
       end = end
     }else if((plotby == "gene") == TRUE){
-      print(paste("gene:",gene)
+      print(paste("gene:",gene))
       if(sum(is.null(gene)) == 0){
         p = subset(gene_sub, gene_sub$GENE_NAME == gene)
         start = min(p$TRX_START) - 500000
         end = max(p$TRX_END) + 500000
-      }else{print("No gene specified.")}
+        }else{print("No gene specified.")}
     }else if((plotby == "snp") == TRUE){
       print(paste("snp",rs_id_1))
       q = subset(assoc_data1, RS_ID == rs_id_1)
@@ -99,10 +98,20 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
     dplyr::filter(CHR_POS < end)
 
   # determining input for LD info
-  if("LD" %in% colnames(in.dt) | "LD" %in% colnames(in.dt.2)){
+  if("LD" %in% colnames(in.dt)){
     print("Using LD info from the input data set.")
-  }else{
-    print(paste0("Pulling LD data from 1000 Genomes Phase III data using", rs_id_1))
+    in.dt$LD = as.numeric(as.character(in.dt$LD))
+    in.dt$LD_BIN <- cut(in.dt$LD,
+                        breaks=c(0,0.2,0.4,0.6,0.8,1.0),
+                        labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
+    in.dt$LD_BIN = as.character(in.dt$LD_BIN)
+    in.dt$LD_BIN[is.na(in.dt$LD_BIN)] <- "NA"
+    in.dt$LD_BIN = as.factor(in.dt$LD_BIN)
+    in.dt$LD_BIN = factor(in.dt$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
+  }else if((sum(is.null(rs_id_1)) == 1) == TRUE){
+    in.dt$LD_BIN = NA
+  }else if((sum(is.null(rs_id_1)) == 0) == TRUE){
+    print(paste0("Pulling LD data from 1000 Genomes Phase III data using ", rs_id_1))
     if(!is.null(pops)){
       if(length(pops) == 1){
         ld_command_1 = paste0("curl -k -X GET 'https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", rs_id_1,
@@ -113,17 +122,24 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
                                                "col_9", "col_10"), sep = "\t")
         colnames(z_1) = z_1[1,]
         z_1 = z_1[-1,]
-        z_1 = dplyr::select(z_1, RS_Number, LD)
+        z_1 = dplyr::select(z_1, RS_Number, R2)
         colnames(z_1) = c("RS_ID", "LD")
-        assoc_data1$LD = NA
-        assoc_data1 = dplyr::select(assoc_data1, -LD)
-        assoc_data1 = merge(assoc_data1, z_1, by = "RS_ID", all.x = TRUE)
+        in.dt$LD = NA
+        in.dt = dplyr::select(in.dt, -LD)
+        in.dt = merge(in.dt, z_1, by = "RS_ID", all.x = TRUE)
+        in.dt$LD = as.numeric(as.character(in.dt$LD))
+        in.dt$LD_BIN <- cut(in.dt$LD,
+                            breaks=c(0,0.2,0.4,0.6,0.8,1.0),
+                            labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
+        in.dt$LD_BIN = as.character(in.dt$LD_BIN)
+        in.dt$LD_BIN[is.na(in.dt$LD_BIN)] <- "NA"
+        in.dt$LD_BIN = as.factor(in.dt$LD_BIN)
+        in.dt$LD_BIN = factor(in.dt$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
       }else if(length(pops) > 1){
         ld_command_1 = paste0("curl -k -X GET 'https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", rs_id_1,
                               "&pop=")
         for (i in 1:length(pops)){
           if (i < length(pops)){
-            print(i)
             a = pops[i]
             ld_command_1 = paste0(ld_command_1, a, "%2B")
           } else if(i == length(pops)){
@@ -138,17 +154,41 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
                                                "col_9", "col_10"), sep = "\t")
         colnames(z_1) = z_1[1,]
         z_1 = z_1[-1,]
-        z_1 = dplyr::select(z_1, RS_Number, LD)
+        z_1 = dplyr::select(z_1, RS_Number, R2)
         colnames(z_1) = c("RS_ID", "LD")
-        assoc_data1$LD = NA
-        assoc_data1 = dplyr::select(assoc_data1, -LD)
-        assoc_data1 = merge(assoc_data1, z_1, by = "RS_ID", all.x = TRUE)
+        in.dt$LD = NA
+        in.dt = dplyr::select(in.dt, -LD)
+        in.dt = merge(in.dt, z_1, by = "RS_ID", all.x = TRUE)
+        in.dt$LD = as.numeric(as.character(in.dt$LD))
+        in.dt$LD_BIN <- cut(in.dt$LD,
+                            breaks=c(0,0.2,0.4,0.6,0.8,1.0),
+                            labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
+        in.dt$LD_BIN = as.character(in.dt$LD_BIN)
+        in.dt$LD_BIN[is.na(in.dt$LD_BIN)] <- "NA"
+        in.dt$LD_BIN = as.factor(in.dt$LD_BIN)
+        in.dt$LD_BIN = factor(in.dt$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
       }
     }
+  }
 
+  if("LD" %in% colnames(in.dt.2)){
+    print("Using input LD for data set two.")
+    in.dt.2$LD_BIN = "NA"
+    in.dt.2$LD = as.numeric(as.character(in.dt.2$LD))
+    in.dt.2$LD_BIN <- cut(in.dt.2$LD,
+                          breaks=c(0,0.2,0.4,0.6,0.8,1.0),
+                          labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
+    in.dt.2$LD_BIN = as.character(in.dt.2$LD_BIN)
+    in.dt.2$LD_BIN[is.na(in.dt.2$LD_BIN)] <- "NA"
+    in.dt.2$LD_BIN = as.factor(in.dt.2$LD_BIN)
+    in.dt.2$LD_BIN = factor(in.dt.2$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
+  }else if((sum(is.null(rs_id_2)) == 1) == TRUE){
+    in.dt.2$LD_BIN = NA
+  }else if((sum(is.null(rs_id_2)) == 0) == TRUE){
+    print(paste0("Pulling LD data from 1000 Genomes Phase III data using ", rs_id_2))
     if(!is.null(pops)){
       if(length(pops) == 1){
-        ld_command_2 = paste0("curl -k -X GET 'https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", rs_id_1,
+        ld_command_2 = paste0("curl -k -X GET 'https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", rs_id_2,
                               "&pop=",pops,"&r2_d=r2'")
         z_2 = system(ld_command_2, intern = TRUE)
         z_2 = as.data.frame(z_2)
@@ -156,17 +196,24 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
                                                "col_9", "col_10"), sep = "\t")
         colnames(z_2) = z_2[1,]
         z_2 = z_2[-1,]
-        z_2 = dplyr::select(z_2, RS_Number, LD)
+        z_2 = dplyr::select(z_2, RS_Number, R2)
         colnames(z_2) = c("RS_ID", "LD")
-        assoc_data2$LD = NA
-        assoc_data2 = dplyr::select(assoc_data2, -LD)
-        assoc_data2 = merge(assoc_data2, z_2, by = "RS_ID", all.x = TRUE)
+        in.dt.2$LD = NA
+        in.dt.2 = dplyr::select(in.dt.2, -LD)
+        in.dt.2 = merge(in.dt.2, z_2, by = "RS_ID", all.x = TRUE)
+        in.dt.2$LD = as.numeric(as.character(in.dt.2$LD))
+        in.dt.2$LD_BIN <- cut(in.dt.2$LD,
+                              breaks=c(0,0.2,0.4,0.6,0.8,1.0),
+                              labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
+        in.dt.2$LD_BIN = as.character(in.dt.2$LD_BIN)
+        in.dt.2$LD_BIN[is.na(in.dt.2$LD_BIN)] <- "NA"
+        in.dt.2$LD_BIN = as.factor(in.dt.2$LD_BIN)
+        in.dt.2$LD_BIN = factor(in.dt.2$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
       }else if(length(pops) > 1){
         ld_command_2 = paste0("curl -k -X GET 'https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", rs_id_1,
                               "&pop=")
         for (i in 1:length(pops)){
           if (i < length(pops)){
-            print(i)
             a = pops[i]
             ld_command_2 = paste0(ld_command_2, a, "%2B")
           } else if(i == length(pops)){
@@ -181,36 +228,22 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
                                                "col_9", "col_10"), sep = "\t")
         colnames(z_2) = z_2[1,]
         z_2 = z_2[-1,]
-        z_2 = dplyr::select(z_2, RS_Number, LD)
+        z_2 = dplyr::select(z_2, RS_Number, R2)
         colnames(z_2) = c("RS_ID", "LD")
-        assoc_data2$LD = NA
-        assoc_data2 = dplyr::select(assoc_data2, -LD)
-        assoc_data2 = merge(assoc_data2, z_2, by = "RS_ID", all.x = TRUE)
+        in.dt.2$LD = NA
+        in.dt.2 = dplyr::select(in.dt.2, -LD)
+        in.dt.2 = merge(in.dt.2, z_2, by = "RS_ID", all.x = TRUE)
+        in.dt.2$LD = as.numeric(as.character(in.dt.2$LD))
+        in.dt.2$LD_BIN <- cut(in.dt.2$LD,
+                              breaks=c(0,0.2,0.4,0.6,0.8,1.0),
+                              labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
+        in.dt.2$LD_BIN = as.character(in.dt.2$LD_BIN)
+        in.dt.2$LD_BIN[is.na(in.dt.2$LD_BIN)] <- "NA"
+        in.dt.2$LD_BIN = as.factor(in.dt.2$LD_BIN)
+        in.dt.2$LD_BIN = factor(in.dt.2$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
       }
     }
   }
-
-  #processing LD information
-  in.dt$LD = as.numeric(as.character(in.dt$LD))
-  in.dt$LD_BIN <- cut(in.dt$LD,
-                      breaks=c(0,0.2,0.4,0.6,0.8,1.0),
-                      labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
-  in.dt$LD_BIN = as.character(in.dt$LD_BIN)
-  in.dt$LD_BIN[is.na(in.dt$LD_BIN)] <- "NA"
-  in.dt$LD_BIN = as.factor(in.dt$LD_BIN)
-  in.dt$LD_BIN = factor(in.dt$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
-  print(table(in.dt$LD_BIN))
-
-
-  in.dt.2$LD = as.numeric(as.character(in.dt.2$LD))
-  in.dt.2$LD_BIN <- cut(in.dt.2$LD,
-                        breaks=c(0,0.2,0.4,0.6,0.8,1.0),
-                        labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
-  in.dt.2$LD_BIN = as.character(in.dt.2$LD_BIN)
-  in.dt.2$LD_BIN[is.na(in.dt.2$LD_BIN)] <- "NA"
-  in.dt.2$LD_BIN = as.factor(in.dt.2$LD_BIN)
-  in.dt.2$LD_BIN = factor(in.dt.2$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
-  print(table(in.dt.2$LD_BIN))
 
   # generate mirror plot
   print("Generating plots")
