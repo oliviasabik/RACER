@@ -105,15 +105,17 @@ mirrorplot::mirror_plot_function(b4galnt3_eqtl, b4galnt3_gwas, chr = 12, plotby 
 information from the 1000 Genomes Phase III Database, calculated from the Ad Mixed
 populations, for SNP rs2509353.
 ```
-mirrorplot::mirror_plot_function(cadm1_eqtl, cadm1_gwas, chr = 11, plotby = "gene", gene_plot = "CADM1", "Cadm1 eQTL", "eBMD GWAS",
-                                 ldby = "1000genomes", 
-                                 pops = c("MXL","PUR","CLM","PEL"), 
-                                 snp_ld_1 = "rs2509353")
+mirrorplot::mirror_plot_function(cadm1_eqtl, cadm1_gwas, chr = 11, 
+				plotby = "gene", gene_plot = "CADM1", "Cadm1 eQTL", "eBMD GWAS",
+                                ldby = "1000genomes", 
+                                pops = c("MXL","PUR","CLM","PEL"), 
+                                snp_ld_1 = "rs2509353")
 
 ```
 (4)Plotting two associations on chromosome 11 by the location of gene CADM1, with no 
 LD information included. 
 ```
-mirrorplot::mirror_plot_function(cadm1_eqtl, cadm1_gwas, chr = 11, plotby = "gene", gene = "CADM1","Cadm1 eQTL", "eBMD GWAS",
+mirrorplot::mirror_plot_function(cadm1_eqtl, cadm1_gwas, chr = 11, 
+				plotby = "gene", gene = "CADM1","Cadm1 eQTL", "eBMD GWAS",
                                 ldby = "none")
 ```
