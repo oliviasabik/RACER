@@ -4,8 +4,9 @@
 \alias{single_plot_function}
 \title{Single Plot Function}
 \usage{
-single_plot_function(assoc_data, chr, plotby, start = NULL, end = NULL,
-  rs_id = NULL, pops = NULL, gene = NULL)
+single_plot_function(assoc_data, chr, plotby, gene_plot = NULL,
+  snp_plot = NULL, start_plot = NULL, end_plot = NULL, ldby,
+  pops = NULL, snp_ld = NULL)
 }
 \arguments{
 \item{assoc_data}{required. A dataframe that has columns named
@@ -14,25 +15,27 @@ the chromosome, LOG10P which contains the -log10(P-values),
 CHR, which contains the chromosome number, RS_ID, which
 contains the rsID numbers of the SNPs, and LD, which contains
 LD information. If you want to compute LD information for the dataset,
-add a column to the input called LD, and fill it with NA, and include the
-rs_id numbers for the lead SNPs you want to use to compute the LD.}
+be sure to include rs_id numbers for all the SNPs in your input data.}
 
 \item{chr}{required. chromosome to plot}
 
 \item{plotby}{required. "coord", "gene", or "snp". Which parameter to use to
 determine the reigon to be plotted.}
 
-\item{start}{optional. If "coord" selected for plotby, then this will be lower bound of x axis}
+\item{gene_plot}{optional. If "gene" selected for plotby, then plot will be +/- 50kb of gene}
 
-\item{end}{optional. If "coord" selected for plotby, then this will be upper bound of x axis}
+\item{snp_plot}{optional. If "snp" selected for plotby, then plot will be +/- 50kb of snp}
 
-\item{rs_id}{optional. a character string. the rs_id number of the lead snp
-used for LD calculations, and can be used to set the plotting coordinates}
+\item{start_plot}{optional. If "coord" selected for plotby, then this will be lower bound of x axis}
 
-\item{pops}{optional. required if an rs_id is specified. populations from the
-1000K Genomes dataset to use for LD calculations, set NULL if input has LD information}
+\item{end_plot}{optional. If "coord" selected for plotby, then this will be upper bound of x axis}
 
-\item{gene}{optional. If "gene" selected for plotby, then plot will be +/- 50kb of gene}
+\item{ldby}{required. "none", "input", or "1000genomes"}
+
+\item{pops}{optional. required if ldby = "1000genomes". Populations used
+to calculate LD.}
+
+\item{snp_ld}{optional. required if ldby = "1000genomes". snp used to calculate LD}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values) of an association study
@@ -40,7 +43,8 @@ by their genomic position, for example, the results of a GWAS or eQTL study. Sou
 1000K genomes phase III data for linkage disequilibrium calculations.
 }
 \examples{
-single_plot_function(assoc_data = assoc_data, chr = 1, rs_id = "rs00000001", pops = c("CEU","TSI","FIN","GBR","IBS"), start = 1000000, end = 1230000)
+single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "gene/snp/coord", x_plot = "GENE_NAME/RS_ID/START/END",
+ ldby= "none/input/1000genomes", pops = c("POP1", "POP2", etc...), snp_ld = "RS_ID")
 }
 \keyword{association}
 \keyword{disequilibrium.}
