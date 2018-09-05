@@ -49,6 +49,7 @@ gather LD information, either from the input data or from the 1000 Genomes Phase
 	be used for each plot, specify snp_ld_1 and snp_ld_2. Finally, if you want to use 
 	1000 Genomes to source LD information, you also need to specify the populations you 
 	want to use to. List whatever subset of populations you wish. Pops include:
+``` 
 	(AFR) African
 		(YRI) Yoruba in Ibadan, Nigera
 		(LWK) Luhya in Webuye, Kenya
@@ -80,6 +81,7 @@ gather LD information, either from the input data or from the 1000 Genomes Phase
 		(BEB) Bengali from Bangladesh
 		(STU) Sri Lankan Tamil from the UK
 		(ITU) Indian Telugu from the UK
+``` 
 
 ## 4. Examples
 (1) Plotting two associations on chromosome 12, plotted by coordinates specified in the command
