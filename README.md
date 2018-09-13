@@ -23,6 +23,7 @@ and one containing the -log10(p-value)s associated with theose variants.
 This file can also have the rs_id values to use to calculates linkage disequilibrium
 and/or the R2 information reflecting the linkage disequalibrium of the SNPs based on 
 the lead SNP. 
+
 Here is an example file:
 ``` 
 RS_ID	CHR_POS	LD	LOG10P 
@@ -32,11 +33,14 @@ rs3 	587000 	0.6 	8.0
 rs4 	589000	0.8	1.4
 ```
 Additionally, you are required to provide:
+
 (1) the chromosome you wish to plot ex: chr = 3
+
 (2) the methodby which you are plotting the association data
 	(a) either +/- 50kb of a gene, ex: plotby = "gene", gene_plot = "GENE_NAME", 
 	(b) +/- 50kb of a snp, ex: plotby = "snp", snp_plot = "rs#",
 	(c) or by a set of coordinates you provide, ex: start_plot = 100,000, plot_end = 103,000
+
 (3) the method by which you want to want to gather LD information
 	(a) either not include LD data in the plot, ex: ldby = "none"
 	(b) from the input data, ex: ldby = "input" and input data frame has a column named LD
