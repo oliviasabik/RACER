@@ -37,14 +37,14 @@ Additionally, you are required to provide:
 (1) the chromosome you wish to plot ex: chr = 3
 
 (2) the methodby which you are plotting the association data  
-    -(a) either +/- 50kb of a gene, ex: plotby = "gene", gene_plot = "GENE_NAME",  
-    -(b) +/- 50kb of a snp, ex: plotby = "snp", snp_plot = "rs#",  
-    -(c) or by a set of coordinates you provide, ex: start_plot = 100,000, plot_end = 103,000  
+- (1) either +/- 50kb of a gene, ex: plotby = "gene", gene_plot = "GENE_NAME",  
+- (2) +/- 50kb of a snp, ex: plotby = "snp", snp_plot = "rs#",  
+- (3) or by a set of coordinates you provide, ex: start_plot = 100,000, plot_end = 103,000  
 
 (3) the method by which you want to want to gather LD information  
-    -(a) either not include LD data in the plot, ex: ldby = "none",  
-    -(b) from the input data, ex: ldby = "input" and input data frame has a column named LD,  
-    -(c) or from the 1000 Genomes Phase III database, ex: ldby = "1000genomes", snp_ld_1 = "rs#", pops = "EUR"  
+- (1) either not include LD data in the plot, ex: ldby = "none",  
+- (2) from the input data, ex: ldby = "input" and input data frame has a column named LD,  
+- (3) or from the 1000 Genomes Phase III database, ex: ldby = "1000genomes", snp_ld_1 = "rs#", pops = "EUR"  
 	If you want to calculate LD for the same SNP in both plots, just specify snp_ld_1, 
 	but if you want a different lead SNP to be used for each plot, specify snp_ld_1 and snp_ld_2. 
 	Finally, if you want to use 1000 Genomes to source LD information, you also need to specify 
