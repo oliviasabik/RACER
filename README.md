@@ -39,7 +39,7 @@ Additionally, you are required to provide:
 (2) the methodby which you are plotting the association data  
 - (1) either +/- 50kb of a gene, ex: plotby = "gene", gene_plot = "GENE_NAME",  
 - (2) +/- 50kb of a snp, ex: plotby = "snp", snp_plot = "rs#",  
-- (3) or by a set of coordinates you provide, ex: start_plot = 100,000, plot_end = 103,000  
+- (3) or by a set of coordinates you provide, ex: plotby = "coord", start_plot = 100,000, plot_end = 103,000  
 
 (3) the method by which you want to want to gather LD information  
 - (1) either not include LD data in the plot, ex: ldby = "none",  
