@@ -10,6 +10,8 @@ library(mirrorplot)
 The package can also be installed by using the install command in R to install the 
 package from the directory it was downloaded into:
 ```
+install.packages("devtools") 
+library(devtools)
 install("{PATH}/mirrorplot-master/")
 library(mirrorplot)
 ```
