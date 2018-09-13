@@ -36,12 +36,12 @@ Additionally, you are required to provide:
 
 (1) the chromosome you wish to plot ex: chr = 3
 
-(2) the methodby which you are plotting the association data
+(2) the methodby which you are plotting the association data  
    (a) either +/- 50kb of a gene, ex: plotby = "gene", gene_plot = "GENE_NAME",  
    (b) +/- 50kb of a snp, ex: plotby = "snp", snp_plot = "rs#",  
    (c) or by a set of coordinates you provide, ex: start_plot = 100,000, plot_end = 103,000  
 
-(3) the method by which you want to want to gather LD information
+(3) the method by which you want to want to gather LD information  
    (a) either not include LD data in the plot, ex: ldby = "none",  
    (b) from the input data, ex: ldby = "input" and input data frame has a column named LD,  
    (c) or from the 1000 Genomes Phase III database, ex: ldby = "1000genomes", snp_ld_1 = "rs#", pops = "EUR"  
