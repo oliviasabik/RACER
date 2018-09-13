@@ -5,8 +5,8 @@
 \title{Mirror Plot Function}
 \usage{
 mirror_plot_function(assoc_data1, assoc_data2, chr, name1 = NULL,
-  name2 = NULL, plotby = NULL, gene_plot = NULL, snp_plot = NULL,
-  start_plot = NULL, end_plot = NULL, ldby = NULL, pops = NULL,
+  name2 = NULL, plotby, gene_plot = NULL, snp_plot = NULL,
+  start_plot = NULL, end_plot = NULL, ldby, pops = NULL,
   snp_ld_1 = NULL, snp_ld_2 = NULL)
 }
 \arguments{

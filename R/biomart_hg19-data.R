@@ -1,17 +1,17 @@
-#' Biomart Gene Data
+#'Biomart Gene Data
 #'
-#' Data from the Biomart database for all known genes
+#'Data from the Biomart database for all known genes
 #'
-#' @docType data
+#'@docType data
 #'
-#' @usage data(biomart_hg19)
+#'@usage data(biomart_hg19)
 #'
-#' @format A flat file
+#'@format A flat file
 #'
-#' @keywords datasets
+#'@keywords datasets
 #'
-#' @source \href{http://grch37.ensembl.org/index.html}
+#'@source \href{http://grch37.ensembl.org/index.html}
 #'
-#' @examples
-#' data(biomart_hg19)
+#'@examples
+#'data(biomart_hg19)
 "biomart_hg19"

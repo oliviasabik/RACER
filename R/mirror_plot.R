@@ -32,8 +32,8 @@
 #' ldby = "1000genomes", pops = c("CEU","TSI","FIN","GBR","IBS"), snp_ld_1 = "rs123456", snp_ld_2 = "rs123456")
 
 mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name2=NULL,
-                                 plotby = NULL, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL,
-                                 ldby=NULL, pops=NULL, snp_ld_1=NULL, snp_ld_2=NULL){
+                                 plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL,
+                                 ldby, pops=NULL, snp_ld_1=NULL, snp_ld_2=NULL){
   reqs = c("CHR", "CHR_POS", "LOG10P")
   cols_1 = colnames(assoc_data1)
   cols_2 = colnames(assoc_data2)
@@ -46,6 +46,8 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
   chr_in = chr
   colnames(biomart_hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
   gene_sub = subset(biomart_hg19, biomart_hg19$CHR == chr_in)
+
+  `%>%` <- magrittr::`%>%`
 
   if((sum(is.null(plotby)) == 0) == TRUE){
     print("Plotting by...")
@@ -74,7 +76,7 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
   # reading in gene data
   gene_sub = subset(gene_sub, gene_sub$TRX_START > (start-5000))
   gene_sub = subset(gene_sub, gene_sub$TRX_END < (end+5000))
-  gene_sub = arrange(gene_sub, desc(LENGTH))
+  gene_sub = dplyr::arrange(gene_sub, desc(LENGTH))
   gene_sub = gene_sub[!duplicated(gene_sub$GENE_ID),]
   gene_sub = gene_sub[,c(3,4,5)]
   gene_sub = reshape2::melt(gene_sub, id.vars = "GENE_NAME")
@@ -278,67 +280,67 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
   }
 
   # generate mirror plot
+  print("Generating plot")
   if(ldby != "none"){
-    print("Generating plots")
-    a = ggplot2::ggplot(data = in.dt, aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
-      geom_point() + scale_colour_manual(
+    a = ggplot2::ggplot(data = in.dt, ggplot2::aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
+      ggplot2::geom_point() + ggplot2::scale_colour_manual(
         values = c("red", "darkorange1", "green1", "skyblue1", "navyblue", "grey")) +
-      theme_bw() + xlab(paste0("Chromosome ", chr_in, " Position")) + ylab("-log10(p-value)") +
-      scale_y_reverse() + theme(axis.title.x=element_blank(),
-                                axis.text.x=element_blank(),
-                                axis.ticks.x=element_blank()) +
-      theme(legend.position = "none") +
-      xlim(start,end) + ggtitle(paste0("Mirror Plot of ", name1, " and ", name2 ))
+      ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) + ggplot2::ylab("-log10(p-value)") +
+      ggplot2::scale_y_reverse() + ggplot2::theme(axis.title.x=ggplot2::element_blank(),
+                                axis.text.x=ggplot2::element_blank(),
+                                axis.ticks.x=ggplot2::element_blank()) +
+      ggplot2::theme(legend.position = "none") +
+      ggplot2::xlim(start,end) + ggplot2::ggtitle(paste0("Mirror Plot of ", name1, " and ", name2 ))
 
 
-    b = ggplot2::ggplot(data = in.dt.2, aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
-      geom_point() + scale_colour_manual(
+    b = ggplot2::ggplot(data = in.dt.2, ggplot2::aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
+      ggplot2::geom_point() + ggplot2::scale_colour_manual(
         values = c("red", "darkorange1", "green1", "skyblue1", "navyblue", "grey")) +
-      theme_bw() + xlab(paste0("Chromosome ", chr_in, " Position (Mbp)")) + ylab("-log10(p-value)") +
-      theme(legend.position = "bottom") +
-      xlim(start,end) + ylim(min(in.dt.2$LOG10P),max(in.dt.2$LOG10P)) +
-      theme(axis.title.x=element_blank(),
-            axis.text.x=element_blank(),
-            axis.ticks.x=element_blank())
+      ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position (Mbp)")) +
+      ggplot2::ylab("-log10(p-value)") + ggplot2::theme(legend.position = "bottom") +
+      ggplot2::xlim(start,end) + ggplot2::ylim(min(in.dt.2$LOG10P),max(in.dt.2$LOG10P)) +
+      ggplot2::theme(axis.title.x=ggplot2::element_blank(),
+            axis.text.x=ggplot2::element_blank(),
+            axis.ticks.x=ggplot2::element_blank())
 
-    c = ggplot(gene_sub, aes(x = value, y = y_value)) +
-      geom_line(aes(group = GENE_NAME), size = 2) + theme_bw() +
-      geom_text(data = plot_lab, aes(x = value, y = y_value, label = GENE_NAME),
-                hjust = -0.1,vjust = 0.3, size = 2.5) + xlim(start,end) +
-      theme(axis.title.y = element_text(color = "white", size = 28),
-            axis.text.y = element_blank(),
-            axis.ticks.y = element_blank()) + xlab(paste0("Chromosome ", chr_in, " Position")) +
-      ylim(0,(max(gene_sub$y_value)+1))
+    c = ggplot2::ggplot(gene_sub, ggplot2::aes(x = value, y = y_value)) +
+      ggplot2::geom_line(ggplot2::aes(group = GENE_NAME), size = 2) + ggplot2::theme_bw() +
+      ggplot2::geom_text(data = plot_lab, ggplot2::aes(x = value, y = y_value, label = GENE_NAME),
+                hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
+      ggplot2::theme(axis.title.y = ggplot2::element_text(color = "white", size = 28),
+            axis.text.y = ggplot2::element_blank(),
+            axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
+      ggplot2::ylim(0,(max(gene_sub$y_value)+1))
 
     ggpubr::ggarrange(a, b, c, heights = c(2,2,1), nrow = 3, ncol = 1,
                       common.legend = TRUE, legend = "right")
   }else if(ldby == "none"){
-    print("Generating plots")
-    a = ggplot2::ggplot(data = in.dt, aes(x = CHR_POS, y = LOG10P)) +
-      geom_point() + theme_bw() + xlab(paste0("Chromosome ", chr_in, " Position")) + ylab("-log10(p-value)") +
-      scale_y_reverse() + theme(axis.title.x=element_blank(),
-                                axis.text.x=element_blank(),
-                                axis.ticks.x=element_blank()) +
-      theme(legend.position = "none") +
-      xlim(start,end) + ggtitle(paste0("Mirror Plot of ", name1, " and ", name2 ))
+    a = ggplot2::ggplot(in.dt, ggplot2::aes(x = CHR_POS, y = LOG10P)) +
+      ggplot2::geom_point() + ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
+      ggplot2::ylab("-log10(p-value)") +
+      ggplot2::scale_y_reverse() + theme(axis.title.x=ggplot2::element_blank(),
+                                axis.text.x=ggplot2::element_blank(),
+                                axis.ticks.x=ggplot2::element_blank()) +
+      ggplot2::theme(legend.position = "none") +
+      ggplot2::xlim(start,end) + ggplot2::ggtitle(paste0("Mirror Plot of ", name1, " and ", name2 ))
 
 
-    b = ggplot2::ggplot(data = in.dt.2, aes(x = CHR_POS, y = LOG10P)) +
-      geom_point() + theme_bw() + xlab(paste0("Chromosome ", chr_in, " Position (Mbp)")) + ylab("-log10(p-value)") +
-      theme(legend.position = "bottom") +
-      xlim(start,end) + ylim(min(in.dt.2$LOG10P),max(in.dt.2$LOG10P)) +
-      theme(axis.title.x=element_blank(),
-            axis.text.x=element_blank(),
-            axis.ticks.x=element_blank())
+    b = ggplot2::ggplot(in.dt.2, ggplot2::aes(x = CHR_POS, y = LOG10P)) +
+      ggplot2::geom_point() + ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position (Mbp)")) +
+      ggplot2::ylab("-log10(p-value)") + ggplot2::theme(legend.position = "bottom") +
+      ggplot2::xlim(start,end) + ggplot2::ylim(min(in.dt.2$LOG10P),max(in.dt.2$LOG10P)) +
+      ggplot2::theme(axis.title.x=ggplot2::element_blank(),
+            axis.text.x=ggplot2::element_blank(),
+            axis.ticks.x=ggplot2::element_blank())
 
-    c = ggplot(gene_sub, aes(x = value, y = y_value)) +
-      geom_line(aes(group = GENE_NAME), size = 2) + theme_bw() +
-      geom_text(data = plot_lab, aes(x = value, y = y_value, label = GENE_NAME),
-                hjust = -0.1,vjust = 0.3, size = 2.5) + xlim(start,end) +
-      theme(axis.title.y = element_text(color = "white", size = 28),
-            axis.text.y = element_blank(),
-            axis.ticks.y = element_blank()) + xlab(paste0("Chromosome ", chr_in, " Position")) +
-      ylim(0,(max(gene_sub$y_value)+1))
+    c = ggplot2::ggplot(gene_sub, ggplot2::aes(x = value, y = y_value)) +
+      ggplot2::geom_line(ggplot2::aes(group = GENE_NAME), size = 2) + ggplot2::theme_bw() +
+      ggplot2::geom_text(data = plot_lab, ggplot2::aes(x = value, y = y_value, label = GENE_NAME),
+                hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
+      ggplot2::theme(axis.title.y = ggplot2::element_text(color = "white", size = 28),
+            axis.text.y = ggplot2::element_blank(),
+            axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
+      ggplot2::ylim(0,(max(gene_sub$y_value)+1))
 
     ggpubr::ggarrange(a, b, c, heights = c(2,2,1), nrow = 3, ncol = 1,
                       common.legend = TRUE, legend = "right")

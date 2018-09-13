@@ -35,6 +35,8 @@ single_plot_function <- function(assoc_data, chr, plotby, gene_plot = NULL, snp_
     data = "good"
   }else{print("Association data set is missing a required column.")}
 
+  `%>%` <- magrittr::`%>%`
+
   data(biomart_hg19)
   chr_in = chr
   colnames(biomart_hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
@@ -69,7 +71,7 @@ single_plot_function <- function(assoc_data, chr, plotby, gene_plot = NULL, snp_
   # reading in gene data
   gene_sub = subset(gene_sub, gene_sub$TRX_START > (start-5000))
   gene_sub = subset(gene_sub, gene_sub$TRX_END < (end+5000))
-  gene_sub = arrange(gene_sub, desc(LENGTH))
+  gene_sub = dplyr::arrange(gene_sub, desc(LENGTH))
   gene_sub = gene_sub[!duplicated(gene_sub$GENE_ID),]
   gene_sub = gene_sub[,c(3,4,5)]
   gene_sub = reshape2::melt(gene_sub,id.vars = "GENE_NAME")
@@ -83,7 +85,7 @@ single_plot_function <- function(assoc_data, chr, plotby, gene_plot = NULL, snp_
   in.dt$LOG10P = as.numeric(as.character(in.dt$LOG10P))
   in.dt$CHR = as.numeric(as.character(in.dt$CHR))
   in.dt = dplyr::filter(in.dt, CHR == chr_in)
-  in.dt = dplyr::filter(in.dt, CHR_POS > start)%>%
+  in.dt = dplyr::filter(in.dt, CHR_POS > start) %>%
     dplyr::filter(CHR_POS < end)
 
   # calculate LD
@@ -176,37 +178,37 @@ single_plot_function <- function(assoc_data, chr, plotby, gene_plot = NULL, snp_
   # Generate plots
   print("Generating Plot")
   if(ldby !="none"){
-    c = ggplot(gene_sub, aes(x = value, y = y_value)) +
-      geom_line(aes(group = GENE_NAME), size = 2) + theme_bw() +
-      geom_text(data = plot_lab, aes(x = value, y = y_value, label = GENE_NAME),
-                hjust = -0.1,vjust = 0.3, size = 2.5) + xlim(start,end) +
-      theme(axis.title.y = element_text(color = "white", size = 28),
-            axis.text.y = element_blank(),
-            axis.ticks.y = element_blank()) + xlab(paste0("Chromosome ", chr_in, " Position")) +
-      ylim(0,(max(gene_sub$y_value)+1))
+    c = ggplot2::ggplot(gene_sub, ggplot2::aes(x = value, y = y_value)) +
+      ggplot2::geom_line(ggplot2::aes(group = GENE_NAME), size = 2) + ggplot2::theme_bw() +
+      ggplot2::geom_text(data = plot_lab, ggplot2::aes(x = value, y = y_value, label = GENE_NAME),
+                hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
+      ggplot2::theme(axis.title.y = ggplot2::element_text(color = "white", size = 28),
+            axis.text.y = ggplot2::element_blank(),
+            axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
+      ggplot2::ylim(0,(max(gene_sub$y_value)+1))
 
-    b = ggplot2::ggplot(data = in.dt, aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
-      geom_point() + scale_colour_manual(
+    b = ggplot2::ggplot(in.dt, ggplot2::aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
+      ggplot2::geom_point() + ggplot2::scale_colour_manual(
         values = c("red", "darkorange1", "green1", "skyblue1", "navyblue", "grey")) +
-      theme_bw() + xlab("Chromosome Position") + ylab("-log10(p-value)") +
-      xlim(start, end) + ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
+      ggplot2::theme_bw() + ggplot2::xlab("Chromosome Position") + ggplot2::ylab("-log10(p-value)") +
+      ggplot2::xlim(start, end) + ggplot2::ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
 
     ggpubr::ggarrange(b, c, heights = c(4,1), nrow = 2, ncol = 1,
                       common.legend = TRUE, legend = "right")
   }else if(ldby == "none"){
-    print("Generating Plots.")
-    c = ggplot(gene_sub, aes(x = value, y = y_value)) +
-      geom_line(aes(group = GENE_NAME), size = 2) + theme_bw() +
-      geom_text(data = plot_lab, aes(x = value, y = y_value, label = GENE_NAME),
-                hjust = -0.1,vjust = 0.3, size = 2.5) + xlim(start,end) +
-      theme(axis.title.y = element_text(color = "white", size = 28),
-            axis.text.y = element_blank(),
-            axis.ticks.y = element_blank()) + xlab(paste0("Chromosome ", chr_in, " Position")) +
-      ylim(0,(max(gene_sub$y_value)+1))
+    c = ggplot2::ggplot(gene_sub, ggplot2::aes(x = value, y = y_value)) +
+      ggplot2::geom_line(ggplot2::aes(group = GENE_NAME), size = 2) + ggplot2::theme_bw() +
+      ggplot2::geom_text(data = plot_lab, ggplot2::aes(x = value, y = y_value, label = GENE_NAME),
+                hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
+      ggplot2::theme(axis.title.y = ggplot2::element_text(color = "white", size = 28),
+            axis.text.y = ggplot2::element_blank(),
+            axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
+      ggplot2::ylim(0,(max(gene_sub$y_value)+1))
 
-    b = ggplot2::ggplot(data = in.dt, aes(x = CHR_POS, y = LOG10P)) +
-      geom_point() + theme_bw() + xlab("Chromosome Position") + ylab("-log10(p-value)") +
-      xlim(start, end) + ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
+    b = ggplot2::ggplot(in.dt, ggplot2::aes(x = CHR_POS, y = LOG10P)) +
+      ggplot2::geom_point() + ggplot2::theme_bw() + ggplot2::xlab("Chromosome Position") +
+      ggplot2::ylab("-log10(p-value)") +
+      ggplot2::xlim(start, end) + ggplot2::ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
 
     ggpubr::ggarrange(b, c, heights = c(4,1), nrow = 2, ncol = 1,
                       common.legend = TRUE, legend = "right")

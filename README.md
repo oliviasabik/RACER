@@ -29,26 +29,20 @@ rs2	585000	0.3	1.5
 rs3 	587000 	0.6 	8.0
 rs4 	589000	0.8	1.4
 ```
-Additionally, you are required to provide (1) the chromosome you wish to plot, (2) the method
-by which you are plotting the association data, either +/- 50kb of a snp, +/- 50kb of a snp,
-or by a set of coordinates you provide, and (3) the method by which you want to want to 
-gather LD information, either from the input data or from the 1000 Genomes Phase III database.
-
-## 3. Options
-(1) Plotting: Indicate how to determine the range of the plot using the plotby parameter
-	(a) plotby = "gene"; gene_plot = "GENE_NAME"
-	(b) plotby = "coord"; start_plot = plot start location, end_plot = plot end location
-	(c) plotby = "snp"; snp_plot = "RS_id" of the SNP to use for plotting
-(2) LD information
-	(a) ldby = "none"; no LD information will be included in plotting
-	(b) ldby = "input"; LD information will be sourced from the input file, from the column 
-	named LD in the input data set
-	(c) ldby = "1000genomes"; LD information will be sourced from 1000 Genomes Phase III
-	using the snp specific in snp_ld_1 = "rs_id". If you want to calculate LD for the same 
-	SNP in both plots, just specify snp_ld_1, but if you want a different lead SNP to 
-	be used for each plot, specify snp_ld_1 and snp_ld_2. Finally, if you want to use 
-	1000 Genomes to source LD information, you also need to specify the populations you 
-	want to use to. List whatever subset of populations you wish. Pops include:
+Additionally, you are required to provide:
+(1) the chromosome you wish to plot ex: chr = 3
+(2) the methodby which you are plotting the association data
+	(a) either +/- 50kb of a gene, ex: plotby = "gene", gene_plot = "GENE_NAME", 
+	(b) +/- 50kb of a snp, ex: plotby = "snp", snp_plot = "rs#",
+	(c) or by a set of coordinates you provide, ex: start_plot = 100,000, plot_end = 103,000
+(3) the method by which you want to want to gather LD information
+	(a) either not include LD data in the plot, ex: ldby = "none"
+	(b) from the input data, ex: ldby = "input" and input data frame has a column named LD
+	(c) or from the 1000 Genomes Phase III database, ex: ldby = "1000genomes", snp_ld_1 = "rs#", pops = "EUR"
+	If you want to calculate LD for the same SNP in both plots, just specify snp_ld_1, 
+	but if you want a different lead SNP to be used for each plot, specify snp_ld_1 and snp_ld_2. 
+	Finally, if you want to use 1000 Genomes to source LD information, you also need to specify 
+	the populations you want to use to. List whatever subset of populations you wish. Pops include:
 ``` 
 	(AFR) African
 		(YRI) Yoruba in Ibadan, Nigera
@@ -83,7 +77,7 @@ gather LD information, either from the input data or from the 1000 Genomes Phase
 		(ITU) Indian Telugu from the UK
 ``` 
 
-## 4. Examples
+## 3. Examples
 (1) Plotting two associations on chromosome 12, plotted by coordinates specified in the command
 with default LD information.
 ```
