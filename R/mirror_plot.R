@@ -284,7 +284,8 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
   if(ldby != "none"){
     a = ggplot2::ggplot(data = in.dt, ggplot2::aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
       ggplot2::geom_point() + ggplot2::scale_colour_manual(
-        values = c("red", "darkorange1", "green1", "skyblue1", "navyblue", "grey")) +
+        values = c("1.0-0.8" = "red", "0.8-0.6" = "darkorange1", "0.6-0.4" = "green1",
+                   "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey")) +
       ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) + ggplot2::ylab("-log10(p-value)") +
       ggplot2::scale_y_reverse() + ggplot2::theme(axis.title.x=ggplot2::element_blank(),
                                 axis.text.x=ggplot2::element_blank(),
@@ -295,7 +296,8 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
 
     b = ggplot2::ggplot(data = in.dt.2, ggplot2::aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
       ggplot2::geom_point() + ggplot2::scale_colour_manual(
-        values = c("red", "darkorange1", "green1", "skyblue1", "navyblue", "grey")) +
+        values = c("1.0-0.8" = "red", "0.8-0.6" = "darkorange1", "0.6-0.4" = "green1",
+                   "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey")) +
       ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position (Mbp)")) +
       ggplot2::ylab("-log10(p-value)") + ggplot2::theme(legend.position = "bottom") +
       ggplot2::xlim(start,end) + ggplot2::ylim(min(in.dt.2$LOG10P),max(in.dt.2$LOG10P)) +

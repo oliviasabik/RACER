@@ -3,7 +3,6 @@
 \docType{data}
 \name{biomart_hg19}
 \alias{biomart_hg19}
-\alias{biomart_hg19}
 \title{Biomart Gene Data}
 \format{A flat file}
 \source{
