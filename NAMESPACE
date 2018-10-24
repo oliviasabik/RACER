@@ -2,3 +2,4 @@
 
 export(mirror_plot_function)
 export(single_plot_function)
+import(ggplot2)

@@ -27,7 +27,7 @@
 
 #' @keywords association plot
 #' @export
-#' @importFrom(ggplot2)
+#' @import ggplot2
 #' @examples
 #' mirror_plot_function(assoc_data1, assoc_data2, chr, "name1", "name2", plotby = "coord", start_plot, end_plot,
 #' ldby = "1000genomes", pops = c("CEU","TSI","FIN","GBR","IBS"), snp_ld_1 = "rs123456", snp_ld_2 = "rs123456")

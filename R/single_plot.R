@@ -23,7 +23,7 @@
 #' @param snp_ld optional. required if ldby = "1000genomes". snp used to calculate LD
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
-#' @importFrom(ggplot2)
+#' @import ggplot2
 #' @examples
 #' single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "gene/snp/coord", x_plot = "GENE_NAME/RS_ID/START/END",
 #'  ldby= "none/input/1000genomes", pops = c("POP1", "POP2", etc...), snp_ld = "RS_ID")
