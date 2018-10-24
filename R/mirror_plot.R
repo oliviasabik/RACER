@@ -27,6 +27,7 @@
 
 #' @keywords association plot
 #' @export
+#' @importFrom(ggplot2)
 #' @examples
 #' mirror_plot_function(assoc_data1, assoc_data2, chr, "name1", "name2", plotby = "coord", start_plot, end_plot,
 #' ldby = "1000genomes", pops = c("CEU","TSI","FIN","GBR","IBS"), snp_ld_1 = "rs123456", snp_ld_2 = "rs123456")
@@ -285,7 +286,7 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
     a = ggplot2::ggplot(data = in.dt, ggplot2::aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
       ggplot2::geom_point() + ggplot2::scale_colour_manual(
         values = c("1.0-0.8" = "red", "0.8-0.6" = "darkorange1", "0.6-0.4" = "green1",
-                   "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey")) +
+                   "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey"), drop = FALSE) +
       ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) + ggplot2::ylab("-log10(p-value)") +
       ggplot2::scale_y_reverse() + ggplot2::theme(axis.title.x=ggplot2::element_blank(),
                                 axis.text.x=ggplot2::element_blank(),
@@ -297,7 +298,7 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
     b = ggplot2::ggplot(data = in.dt.2, ggplot2::aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
       ggplot2::geom_point() + ggplot2::scale_colour_manual(
         values = c("1.0-0.8" = "red", "0.8-0.6" = "darkorange1", "0.6-0.4" = "green1",
-                   "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey")) +
+                   "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey"), drop = FALSE) +
       ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position (Mbp)")) +
       ggplot2::ylab("-log10(p-value)") + ggplot2::theme(legend.position = "bottom") +
       ggplot2::xlim(start,end) + ggplot2::ylim(min(in.dt.2$LOG10P),max(in.dt.2$LOG10P)) +
@@ -320,7 +321,7 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name
     a = ggplot2::ggplot(in.dt, ggplot2::aes(x = CHR_POS, y = LOG10P)) +
       ggplot2::geom_point() + ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
       ggplot2::ylab("-log10(p-value)") +
-      ggplot2::scale_y_reverse() + theme(axis.title.x=ggplot2::element_blank(),
+      ggplot2::scale_y_reverse() + ggplot2::theme(axis.title.x=ggplot2::element_blank(),
                                 axis.text.x=ggplot2::element_blank(),
                                 axis.ticks.x=ggplot2::element_blank()) +
       ggplot2::theme(legend.position = "none") +
