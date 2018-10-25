@@ -32,7 +32,7 @@
 #' mirror_plot_function(assoc_data1, assoc_data2, chr, "name1", "name2", plotby = "coord", start_plot, end_plot,
 #' ldby = "1000genomes", pops = c("CEU","TSI","FIN","GBR","IBS"), snp_ld_1 = "rs123456", snp_ld_2 = "rs123456")
 
-mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1="Association Dataset #1", name2="Association Dataset #2",
+mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1="Association Dataset #1", name2="Association Dataset #2",
                                  plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL,
                                  ldby = "none", pops=NULL, snp_ld_1=NULL, snp_ld_2=NULL){
   reqs = c("CHR", "CHR_POS", "LOG10P")
@@ -43,10 +43,17 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1="Associati
   if(sum(reqs %in% cols_2) == 3){
   }else{print("Association Data Set #2 is missing a required column.")}
 
-  data(biomart_hg38)
-  chr_in = chr
-  colnames(biomart_hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
-  gene_sub = subset(biomart_hg38, biomart_hg38$CHR == chr_in)
+  if(build == "hg38"){
+    data(biomart_hg38)
+    chr_in = chr
+    colnames(biomart_hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
+    gene_sub = subset(biomart_hg38, biomart_hg38$CHR == chr_in)
+  }else if(build == "hg19"){
+    data(biomart_hg38)
+    chr_in = chr
+    colnames(biomart_hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
+    gene_sub = subset(biomart_hg38, biomart_hg38$CHR == chr_in)
+  }
 
   `%>%` <- magrittr::`%>%`
 

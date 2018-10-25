@@ -28,7 +28,7 @@
 #' single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "gene/snp/coord", x_plot = "GENE_NAME/RS_ID/START/END",
 #'  ldby= "none/input/1000genomes", pops = c("POP1", "POP2", etc...), snp_ld = "RS_ID")
 
-single_plot_function <- function(assoc_data, chr, plotby, gene_plot = NULL, snp_plot = NULL,
+single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plot = NULL, snp_plot = NULL,
                                  start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld=NULL){
   reqs = c("CHR", "CHR_POS", "LOG10P")
   cols = colnames(assoc_data)
@@ -38,10 +38,18 @@ single_plot_function <- function(assoc_data, chr, plotby, gene_plot = NULL, snp_
 
   `%>%` <- magrittr::`%>%`
 
-  data(biomart_hg38)
-  chr_in = chr
-  colnames(biomart_hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
-  gene_sub = subset(biomart_hg38, biomart_hg38$CHR == chr_in)
+  if(build == "hg38"){
+    data(biomart_hg38)
+    chr_in = chr
+    colnames(biomart_hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
+    gene_sub = subset(biomart_hg38, biomart_hg38$CHR == chr_in)
+  }else if(build == "hg19"){
+    data(biomart_hg38)
+    chr_in = chr
+    colnames(biomart_hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
+    gene_sub = subset(biomart_hg38, biomart_hg38$CHR == chr_in)
+  }
+
 
   if(sum(is.null(plotby)) == 0){
     print("Plotting by...")
