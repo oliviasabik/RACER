@@ -43,10 +43,10 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1="Associati
   if(sum(reqs %in% cols_2) == 3){
   }else{print("Association Data Set #2 is missing a required column.")}
 
-  data(biomart_hg19)
+  data(biomart_hg38)
   chr_in = chr
-  colnames(biomart_hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
-  gene_sub = subset(biomart_hg19, biomart_hg19$CHR == chr_in)
+  colnames(biomart_hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
+  gene_sub = subset(biomart_hg38, biomart_hg38$CHR == chr_in)
 
   `%>%` <- magrittr::`%>%`
 
