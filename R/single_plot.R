@@ -10,10 +10,10 @@
 #' contains the rsID numbers of the SNPs, and LD, which contains
 #' LD information. If you want to compute LD information for the dataset,
 #' be sure to include rs_id numbers for all the SNPs in your input data.
-#' @chr_col required. index of column in assoc_data containing chromosome information
-#' @pos_col required. index of column in assoc_data containing genomic position information
-#' @p_col required. index of column in assoc_data containing -log10(p-value)s
-#' @ld_col optional. Required if ldby = "input", index of column in assoc_data containing LD information
+#' @param chr_col required. index of column in assoc_data containing chromosome information
+#' @param pos_col required. index of column in assoc_data containing genomic position information
+#' @param p_col required. index of column in assoc_data containing -log10(p-value)s
+#' @param ld_col optional. Required if ldby = "input", index of column in assoc_data containing LD information
 #' @param chr required. chromosome to plot
 #' @param plotby required. "coord", "gene", or "snp". Which parameter to use to
 #' determine the reigon to be plotted.

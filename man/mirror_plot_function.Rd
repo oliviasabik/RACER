@@ -4,7 +4,7 @@
 \alias{mirror_plot_function}
 \title{Mirror Plot Function}
 \usage{
-mirror_plot_function(assoc_data1, assoc_data2, chr,
+mirror_plot_function(assoc_data1, assoc_data2, chr, build = "hg19",
   name1 = "Association Dataset #1", name2 = "Association Dataset #2",
   plotby, gene_plot = NULL, snp_plot = NULL, start_plot = NULL,
   end_plot = NULL, ldby = "none", pops = NULL, snp_ld_1 = NULL,

@@ -4,9 +4,10 @@
 \alias{single_plot_function}
 \title{Single Plot Function}
 \usage{
-single_plot_function(assoc_data, chr, plotby, gene_plot = NULL,
-  snp_plot = NULL, start_plot = NULL, end_plot = NULL,
-  ldby = "none", pops = NULL, snp_ld = NULL)
+single_plot_function(assoc_data, chr_col, pos_col, p_col, ld_col = NULL,
+  chr, build = "hg19", plotby, gene_plot = NULL, snp_plot = NULL,
+  start_plot = NULL, end_plot = NULL, ldby = "none", pops = NULL,
+  snp_ld = NULL)
 }
 \arguments{
 \item{assoc_data}{required. A dataframe that has columns named
@@ -16,6 +17,14 @@ CHR, which contains the chromosome number, RS_ID, which
 contains the rsID numbers of the SNPs, and LD, which contains
 LD information. If you want to compute LD information for the dataset,
 be sure to include rs_id numbers for all the SNPs in your input data.}
+
+\item{chr_col}{required. index of column in assoc_data containing chromosome information}
+
+\item{pos_col}{required. index of column in assoc_data containing genomic position information}
+
+\item{p_col}{required. index of column in assoc_data containing -log10(p-value)s}
+
+\item{ld_col}{optional. Required if ldby = "input", index of column in assoc_data containing LD information}
 
 \item{chr}{required. chromosome to plot}
 
