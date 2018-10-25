@@ -49,9 +49,9 @@ single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, ld_col=NUL
     message("All inputs are go.")
   }
 
-  colnames(assoc_data1)[chr_col] = "CHR"
-  colnames(assoc_data1)[pos_col] = "CHR_POS"
-  colnames(assoc_data1)[p_col] = "LOG10P"
+  colnames(assoc_data)[chr_col] = "CHR"
+  colnames(assoc_data)[pos_col] = "CHR_POS"
+  colnames(assoc_data)[p_col] = "LOG10P"
 
   `%>%` <- magrittr::`%>%`
 
