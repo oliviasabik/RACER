@@ -18,7 +18,7 @@
 #' @param snp_plot optional. If "snp" selected for plotby, then plot will be +/- 50kb of snp
 #' @param start_plot optional. If "coord" selected for plotby, then this will be lower bound of x axis
 #' @param end_plot optional. If "coord" selected for plotby, then this will be upper bound of x axis
-#' @param ldby required. "none", "input", or "1000genomes"
+#' @param ldby required. default = "none", can also use "input", or "1000genomes"
 #' @param pops optional. required if ldby = "1000genomes". Populations used
 #' to calculate LD.
 #' @param snp_ld_1 optional. required if ldby = "1000genomes". snp used to calculate LD
@@ -32,9 +32,9 @@
 #' mirror_plot_function(assoc_data1, assoc_data2, chr, "name1", "name2", plotby = "coord", start_plot, end_plot,
 #' ldby = "1000genomes", pops = c("CEU","TSI","FIN","GBR","IBS"), snp_ld_1 = "rs123456", snp_ld_2 = "rs123456")
 
-mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1=NULL, name2=NULL,
+mirror_plot_function <- function(assoc_data1, assoc_data2, chr, name1="Association Dataset #1", name2="Association Dataset #2",
                                  plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL,
-                                 ldby, pops=NULL, snp_ld_1=NULL, snp_ld_2=NULL){
+                                 ldby = "none", pops=NULL, snp_ld_1=NULL, snp_ld_2=NULL){
   reqs = c("CHR", "CHR_POS", "LOG10P")
   cols_1 = colnames(assoc_data1)
   cols_2 = colnames(assoc_data2)

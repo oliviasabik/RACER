@@ -16,21 +16,24 @@ install("{PATH}/mirrorplot-master/")
 library(mirrorplot)
 ```
 ## 2. Input
-mirrorplot takes one or two data frames containing, at minimum
-three columns,one containing the chromosome a variant is on (CHR), one 
+mirror_plot() takes two data frames containing, at minimum
+three columns, one containing the chromosome a variant is on (CHR), one 
 containing the physical location of the variants (CHR_POS)
-and one containing the -log10(p-value)s associated with theose variants.
-This file can also have the rs_id values to use to calculates linkage disequilibrium
+and one containing the -log10(p-value)s associated with theose variants (LOG10P).
+This file can also have the rs_id values (RS_ID) to use to calculates linkage disequilibrium
 and/or the R2 information reflecting the linkage disequalibrium of the SNPs based on 
 the lead SNP. 
 
+You can also plot one association using the single_plot() function. These have the same
+required columns as described for for the mirror_plot() function above. 
+
 Here is an example file:
 ``` 
-RS_ID	CHR_POS	LD	LOG10P 
-rs1	580000	0.2	1.3		
-rs2	585000	0.3	1.5  
-rs3 	587000 	0.6 	8.0
-rs4 	589000	0.8	1.4
+RS_ID	CHR	CHR_POS	LD	LOG10P 
+rs1	1	580000	0.2	1.3		
+rs2	1	585000	0.3	1.5  
+rs3	1	587000	0.6	8.0
+rs4	1	589000	0.8	1.4
 ```
 Additionally, you are required to provide:
 
@@ -38,11 +41,11 @@ Additionally, you are required to provide:
 
 (2) the methodby which you are plotting the association data  
 - (1) either +/- 50kb of a gene, ex: plotby = "gene", gene_plot = "GENE_NAME",  
-- (2) +/- 50kb of a snp, ex: plotby = "snp", snp_plot = "rs#",  
+- (2) +/- 50kb of a snp, ex: plotby = "snp", snp_plot = "RS_#",  
 - (3) or by a set of coordinates you provide, ex: plotby = "coord", start_plot = 100,000, plot_end = 103,000  
 
 (3) the method by which you want to want to gather LD information  
-- (1) either not include LD data in the plot, ex: ldby = "none",  
+- (1) either not include LD data in the plot (default), ex: ldby = "none",  
 - (2) from the input data, ex: ldby = "input" and input data frame has a column named LD,  
 - (3) or from the 1000 Genomes Phase III database, ex: ldby = "1000genomes", snp_ld_1 = "rs#", pops = "EUR"  
 	If you want to calculate LD for the same SNP in both plots, just specify snp_ld_1, 
@@ -118,4 +121,10 @@ LD information included.
 mirrorplot::mirror_plot_function(cadm1_eqtl, cadm1_gwas, chr = 11, 
 				plotby = "gene", gene = "CADM1","Cadm1 eQTL", "eBMD GWAS",
                                 ldby = "none")
+```
+(5)Plotting one association on chromosome 11 by the location of gene CADM1, with no 
+LD information included. All of the above options are also available in single_plot_function.
+```
+mirrorplot::single_plot_function(cadm1_gwas, chr = 11, 
+				plotby = "gene", gene = "CADM1","eBMD GWAS", ldby = "none")
 ```

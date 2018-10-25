@@ -17,7 +17,7 @@
 #' @param snp_plot optional. If "snp" selected for plotby, then plot will be +/- 50kb of snp
 #' @param start_plot optional. If "coord" selected for plotby, then this will be lower bound of x axis
 #' @param end_plot optional. If "coord" selected for plotby, then this will be upper bound of x axis
-#' @param ldby required. "none", "input", or "1000genomes"
+#' @param ldby required. default = "none", but can be "input", or "1000genomes"
 #' @param pops optional. required if ldby = "1000genomes". Populations used
 #' to calculate LD.
 #' @param snp_ld optional. required if ldby = "1000genomes". snp used to calculate LD
@@ -29,7 +29,7 @@
 #'  ldby= "none/input/1000genomes", pops = c("POP1", "POP2", etc...), snp_ld = "RS_ID")
 
 single_plot_function <- function(assoc_data, chr, plotby, gene_plot = NULL, snp_plot = NULL,
-                                 start_plot=NULL, end_plot=NULL, ldby, pops=NULL, snp_ld=NULL){
+                                 start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld=NULL){
   reqs = c("CHR", "CHR_POS", "LOG10P")
   cols = colnames(assoc_data)
   if(sum(reqs %in% cols) == 3){
