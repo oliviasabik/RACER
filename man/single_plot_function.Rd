@@ -5,8 +5,8 @@
 \title{Single Plot Function}
 \usage{
 single_plot_function(assoc_data, chr, plotby, gene_plot = NULL,
-  snp_plot = NULL, start_plot = NULL, end_plot = NULL, ldby,
-  pops = NULL, snp_ld = NULL)
+  snp_plot = NULL, start_plot = NULL, end_plot = NULL,
+  ldby = "none", pops = NULL, snp_ld = NULL)
 }
 \arguments{
 \item{assoc_data}{required. A dataframe that has columns named
@@ -30,7 +30,7 @@ determine the reigon to be plotted.}
 
 \item{end_plot}{optional. If "coord" selected for plotby, then this will be upper bound of x axis}
 
-\item{ldby}{required. "none", "input", or "1000genomes"}
+\item{ldby}{required. default = "none", but can be "input", or "1000genomes"}
 
 \item{pops}{optional. required if ldby = "1000genomes". Populations used
 to calculate LD.}
