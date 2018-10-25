@@ -82,7 +82,7 @@ single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, ld_col=NUL
             }else{message("No gene specified.")}
     }else if((plotby == "snp") == TRUE){
       message(paste("snp",snp_plot))
-      q = subset(assoc_data1, RS_ID == snp_plot)
+      q = subset(assoc_data, RS_ID == snp_plot)
       w = q$CHR_POS
       w = as.numeric(as.character(w))
       start = w - 500000
