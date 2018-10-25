@@ -39,9 +39,9 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", 
   cols_1 = colnames(assoc_data1)
   cols_2 = colnames(assoc_data2)
   if(sum(reqs %in% cols_1) == 3){
-  }else{print("Association Data Set #1 is missing a required column.")}
+  }else{message("Association Data Set #1 is missing a required column.")}
   if(sum(reqs %in% cols_2) == 3){
-  }else{print("Association Data Set #2 is missing a required column.")}
+  }else{message("Association Data Set #2 is missing a required column.")}
 
   if(build == "hg38"){
     data(biomart_hg38)
@@ -58,27 +58,27 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", 
   `%>%` <- magrittr::`%>%`
 
   if((sum(is.null(plotby)) == 0) == TRUE){
-    print("Plotting by...")
+    message("Plotting by...")
     if((plotby == "coord") == TRUE){
-      print("coord")
+      message("coord")
       start = start_plot
       end = end_plot
     }else if((plotby == "gene") == TRUE){
-      print(paste("gene:",gene_plot))
+      message(paste("gene:",gene_plot))
       if(sum(is.null(gene_plot)) == 0){
         p = subset(gene_sub, gene_sub$GENE_NAME == gene_plot)
         start = min(p$TRX_START) - 500000
         end = max(p$TRX_END) + 500000
-        }else{print("No gene specified.")}
+        }else{message("No gene specified.")}
     }else if((plotby == "snp") == TRUE){
-      print(paste("snp",snp_plot))
+      message(paste("snp",snp_plot))
       q = subset(assoc_data1, RS_ID == snp_plot)
       w = q$CHR_POS
       w = as.numeric(as.character(w))
       start = w - 500000
       end = w + 500000}
   }else{
-    print("Please specify a parameter to plotby.")
+    message("Please specify a parameter to plotby.")
   }
 
   # reading in gene data
@@ -92,7 +92,7 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", 
   plot_lab = subset(gene_sub, gene_sub$variable == "TRX_END")
 
   # read in, format, and filter data sets
-  print("Reading in association data")
+  message("Reading in association data")
   in.dt <- as.data.frame(assoc_data1)
   in.dt$CHR_POS = as.numeric(as.character(in.dt$CHR_POS))
   in.dt$LOG10P = as.numeric(as.character(in.dt$LOG10P))
@@ -113,10 +113,10 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", 
   # NUMBER 1
   if((sum(is.null(ldby)) == 0) == TRUE){
     if(ldby == "none"){
-      print("Not including LD information in the plot.")
+      message("Not including LD information in the plot.")
     }else if(ldby == "input"){
       if("LD" %in% colnames(in.dt)){
-        print("Using LD info from the input data set.")
+        message("Using LD info from the input data set.")
         in.dt$LD = as.numeric(as.character(in.dt$LD))
         in.dt$LD_BIN <- cut(in.dt$LD,
                             breaks=c(0,0.2,0.4,0.6,0.8,1.0),
@@ -129,7 +129,7 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", 
         "No LD column in input. Please name your column of LD data in your input 'LD'."
       }
     }else if(ldby == "1000genomes"){
-      print(paste0("Pulling LD data from 1000 Genomes Phase III data using ", snp_ld_1))
+      message(paste0("Pulling LD data from 1000 Genomes Phase III data using ", snp_ld_1))
       in.dt$LD_BIN = 1
       in.dt$LD_BIN = NA
       if(!is.null(pops)){
@@ -200,14 +200,14 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", 
   if((sum(is.null(snp_ld_2)) == 0) == FALSE){
     snp_ld_2 = snp_ld_1
   }else{
-    print(snp_ld_1)
+    message(snp_ld_1)
   }
   if((sum(is.null(ldby)) == 0) == TRUE){
     if(ldby == "none"){
-      print("Not including LD information in the plot.")
+      message("Not including LD information in the plot.")
     }else if(ldby == "input"){
       if("LD" %in% colnames(in.dt.2)){
-        print("Using LD info from the input data set.")
+        message("Using LD info from the input data set.")
         in.dt.2$LD = as.numeric(as.character(in.dt.2$LD))
         in.dt.2$LD_BIN <- cut(in.dt.2$LD,
                             breaks=c(0,0.2,0.4,0.6,0.8,1.0),
@@ -220,7 +220,7 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", 
         "No LD column in input. Please name your column of LD data in your input 'LD'."
       }
     }else if(ldby == "1000genomes"){
-      print(paste0("Pulling LD data from 1000 Genomes Phase III data using ", snp_ld_2))
+      message(paste0("Pulling LD data from 1000 Genomes Phase III data using ", snp_ld_2))
       in.dt.2$LD_BIN = 1
       in.dt.2$LD_BIN = NA
       if(!is.null(pops)){
@@ -288,7 +288,7 @@ mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", 
   }
 
   # generate mirror plot
-  print("Generating plot")
+  message("Generating plot")
   if(ldby != "none"){
     a = ggplot2::ggplot(data = in.dt, ggplot2::aes(x = CHR_POS, y = LOG10P, color = LD_BIN)) +
       ggplot2::geom_point() + ggplot2::scale_colour_manual(

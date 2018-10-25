@@ -34,7 +34,7 @@ single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plo
   cols = colnames(assoc_data)
   if(sum(reqs %in% cols) == 3){
     data = "good"
-  }else{print("Association data set is missing a required column.")}
+  }else{message("Association data set is missing a required column.")}
 
   `%>%` <- magrittr::`%>%`
 
@@ -52,20 +52,20 @@ single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plo
 
 
   if(sum(is.null(plotby)) == 0){
-    print("Plotting by...")
+    message("Plotting by...")
     if((plotby == "coord") == TRUE){
-      print("coord")
+      message("coord")
       start = start_plot
       end = end_plot
     }else if((plotby == "gene") == TRUE){
-      print(paste("gene:",gene_plot))
+      message(paste("gene:",gene_plot))
             if(sum(is.null(gene_plot)) == 0){
               p = subset(gene_sub, gene_sub$GENE_NAME == gene_plot)
               start = min(p$TRX_START) - 500000
               end = max(p$TRX_END) + 500000
-            }else{print("No gene specified.")}
+            }else{message("No gene specified.")}
     }else if((plotby == "snp") == TRUE){
-      print(paste("snp",snp_plot))
+      message(paste("snp",snp_plot))
       q = subset(assoc_data1, RS_ID == snp_plot)
       w = q$CHR_POS
       w = as.numeric(as.character(w))
@@ -74,7 +74,7 @@ single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plo
   }
 
   if(sum(is.null(plotby)) == 1){
-    print("Please specify a region to plot.")
+    message("Please specify a region to plot.")
   }
 
   # reading in gene data
@@ -88,7 +88,7 @@ single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plo
   plot_lab = subset(gene_sub, gene_sub$variable == "TRX_END")
 
   # read in, format, and filter data sets
-  print("Reading in association data")
+  message("Reading in association data")
   in.dt <- as.data.frame(assoc_data)
   in.dt$CHR_POS = as.numeric(as.character(in.dt$CHR_POS))
   in.dt$LOG10P = as.numeric(as.character(in.dt$LOG10P))
@@ -98,13 +98,13 @@ single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plo
     dplyr::filter(CHR_POS < end)
 
   # calculate LD
-  print("Calculating LD")
+  message("Calculating LD")
   if((sum(is.null(ldby)) == 0) == TRUE){
     if(ldby == "none"){
-      print("Not including LD information in the plot.")
+      message("Not including LD information in the plot.")
     }else if(ldby == "input"){
       if("LD" %in% colnames(in.dt)){
-        print("Using LD info from the input data set.")
+        message("Using LD info from the input data set.")
         in.dt$LD = as.numeric(as.character(in.dt$LD))
         in.dt$LD_BIN <- cut(in.dt$LD,
                             breaks=c(0,0.2,0.4,0.6,0.8,1.0),
@@ -117,7 +117,7 @@ single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plo
         "No LD column in input. Please name your column of LD data in your input 'LD'."
       }
     }else if(ldby == "1000genomes"){
-      print(paste0("Pulling LD data from 1000 Genomes Phase III data using ", snp_ld))
+      message(paste0("Pulling LD data from 1000 Genomes Phase III data using ", snp_ld))
       in.dt$LD_BIN = 1
       in.dt$LD_BIN = NA
       if(!is.null(pops)){
@@ -185,7 +185,7 @@ single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plo
   }
 
   # Generate plots
-  print("Generating Plot")
+  message("Generating Plot")
   if(ldby !="none"){
     c = ggplot2::ggplot(gene_sub, ggplot2::aes(x = value, y = y_value)) +
       ggplot2::geom_line(ggplot2::aes(group = GENE_NAME), size = 2) + ggplot2::theme_bw() +
