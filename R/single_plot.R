@@ -10,6 +10,10 @@
 #' contains the rsID numbers of the SNPs, and LD, which contains
 #' LD information. If you want to compute LD information for the dataset,
 #' be sure to include rs_id numbers for all the SNPs in your input data.
+#' @chr_col required. index of column in assoc_data containing chromosome information
+#' @pos_col required. index of column in assoc_data containing genomic position information
+#' @p_col required. index of column in assoc_data containing -log10(p-value)s
+#' @ld_col optional. Required if ldby = "input", index of column in assoc_data containing LD information
 #' @param chr required. chromosome to plot
 #' @param plotby required. "coord", "gene", or "snp". Which parameter to use to
 #' determine the reigon to be plotted.
@@ -28,13 +32,26 @@
 #' single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "gene/snp/coord", x_plot = "GENE_NAME/RS_ID/START/END",
 #'  ldby= "none/input/1000genomes", pops = c("POP1", "POP2", etc...), snp_ld = "RS_ID")
 
-single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plot = NULL, snp_plot = NULL,
+single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, ld_col=NULL, chr, build="hg19", plotby,
+                                 gene_plot = NULL, snp_plot = NULL,
                                  start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld=NULL){
-  reqs = c("CHR", "CHR_POS", "LOG10P")
-  cols = colnames(assoc_data)
-  if(sum(reqs %in% cols) == 3){
-    data = "good"
-  }else{message("Association data set is missing a required column.")}
+  if(missing(chr_col)){
+    message("Please specify which column contains chromosome information.")
+  }else if(missing(pos_col)){
+    message("Please specify which column contains genomic position information.")
+  }else if(missing(p_col)){
+    message("Please specify which column contains genomic position information.")
+  }else if(missing(chr)){
+    message("Please specify which chromosome you wish to plot.")
+  }else if(missing(plotby)){
+    message("Please specify the method by which you wish to plot.")
+  }else{
+    message("All inputs are go.")
+  }
+
+  colnames(assoc_data1)[chr_col] = "CHR"
+  colnames(assoc_data1)[pos_col] = "CHR_POS"
+  colnames(assoc_data1)[p_col] = "LOG10P"
 
   `%>%` <- magrittr::`%>%`
 
@@ -49,7 +66,6 @@ single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plo
     colnames(biomart_hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
     gene_sub = subset(biomart_hg19, biomart_hg19$CHR == chr_in)
   }
-
 
   if(sum(is.null(plotby)) == 0){
     message("Plotting by...")
