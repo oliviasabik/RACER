@@ -40,8 +40,6 @@ single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, rs_col=NUL
     message("Please specify which column contains genomic position information.")
   }else if(missing(p_col)){
     message("Please specify which column contains genomic position information.")
-  }else if(missing(rs_col)){
-    message("Please specify which column contains rsID numbers.")
   }else if(missing(chr)){
     message("Please specify which chromosome you wish to plot.")
   }else if(missing(plotby)){
@@ -53,7 +51,10 @@ single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, rs_col=NUL
   colnames(assoc_data)[chr_col] = "CHR"
   colnames(assoc_data)[pos_col] = "CHR_POS"
   colnames(assoc_data)[p_col] = "LOG10P"
-  colnames(assoc_data)[rs_col] = "RS_ID"
+  if(!missing(rs_col)){
+    colnames(assoc_data)[rs_col] = "RS_ID"}
+  if(!missing(ld_col)){
+    colnames(assoc_data)[ld_col] = "LD"}
 
   `%>%` <- magrittr::`%>%`
 
