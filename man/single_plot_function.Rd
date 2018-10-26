@@ -4,10 +4,10 @@
 \alias{single_plot_function}
 \title{Single Plot Function}
 \usage{
-single_plot_function(assoc_data, chr_col, pos_col, p_col, rs_col = NULL,
-  ld_col = NULL, chr, build = "hg19", plotby, gene_plot = NULL,
-  snp_plot = NULL, start_plot = NULL, end_plot = NULL,
-  ldby = "none", pops = NULL, snp_ld = NULL)
+single_plot_function(assoc_data, chr_col, pos_col, log10p_col, chr,
+  build = "hg19", plotby, gene_plot = NULL, snp_plot = NULL,
+  start_plot = NULL, end_plot = NULL, ldby = "none", pops = NULL,
+  snp_ld = NULL, rs_col = NULL, ld_col = NULL)
 }
 \arguments{
 \item{assoc_data}{required. A dataframe that has columns named
@@ -22,11 +22,7 @@ be sure to include rs_id numbers for all the SNPs in your input data.}
 
 \item{pos_col}{required. numeric. index of column in assoc_data containing genomic position information}
 
-\item{p_col}{required. numeric. index of column in assoc_data containing -log10(p-value)s}
-
-\item{rs_col}{optional. numeric. Required if ldby = "1000genomes", index of column containing rsID numbers for SNPs}
-
-\item{ld_col}{optional. numeric. Required if ldby = "input", index of column in assoc_data containing LD information}
+\item{log10p_col}{required. numeric. index of column in assoc_data containing -log10(p-value)s}
 
 \item{chr}{required. numeric. chromosome to plot}
 
@@ -46,6 +42,10 @@ determine the reigon to be plotted.}
 \item{pops}{optional. Required if ldby = "1000genomes". Populations used to calculate LD.}
 
 \item{snp_ld}{optional. Required if ldby = "1000genomes". snp used to calculate LD}
+
+\item{rs_col}{optional. numeric. Required if ldby = "1000genomes", index of column containing rsID numbers for SNPs}
+
+\item{ld_col}{optional. numeric. Required if ldby = "input", index of column in assoc_data containing LD information}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values) of an association study

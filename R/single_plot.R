@@ -12,9 +12,7 @@
 #' be sure to include rs_id numbers for all the SNPs in your input data.
 #' @param chr_col required. numeric. index of column in assoc_data containing chromosome information
 #' @param pos_col required. numeric. index of column in assoc_data containing genomic position information
-#' @param p_col required. numeric. index of column in assoc_data containing -log10(p-value)s
-#' @param rs_col optional. numeric. Required if ldby = "1000genomes", index of column containing rsID numbers for SNPs
-#' @param ld_col optional. numeric. Required if ldby = "input", index of column in assoc_data containing LD information
+#' @param log10p_col required. numeric. index of column in assoc_data containing -log10(p-value)s
 #' @param chr required. numeric. chromosome to plot
 #' @param plotby required. "coord", "gene", or "snp". Which parameter to use to
 #' determine the reigon to be plotted.
@@ -23,8 +21,11 @@
 #' @param start_plot optional. Required if "coord" selected for plotby, then this will be lower bound of x axis
 #' @param end_plot optional. Required if "coord" selected for plotby, then this will be upper bound of x axis
 #' @param ldby required. default = "none", but can be "input", or "1000genomes"
+#' @param rs_col optional. numeric. Required if ldby = "1000genomes", index of column containing rsID numbers for SNPs
+#' @param ld_col optional. numeric. Required if ldby = "input", index of column in assoc_data containing LD information
 #' @param pops optional. Required if ldby = "1000genomes". Populations used to calculate LD.
 #' @param snp_ld optional. Required if ldby = "1000genomes". snp used to calculate LD
+#'
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
 #' @import ggplot2
@@ -32,13 +33,13 @@
 #' single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "gene/snp/coord", x_plot = "GENE_NAME/RS_ID/START/END",
 #'  ldby= "none/input/1000genomes", pops = c("POP1", "POP2", etc...), snp_ld = "RS_ID")
 
-single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, rs_col=NULL, ld_col=NULL, chr, build="hg19", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld=NULL){
+single_plot_function <- function(assoc_data, chr_col, pos_col, log10p_col, chr, build="hg19", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld=NULL, rs_col=NULL, ld_col=NULL){
 
   if(missing(chr_col)){
     message("Please specify which column contains chromosome information.")
   }else if(missing(pos_col)){
     message("Please specify which column contains genomic position information.")
-  }else if(missing(p_col)){
+  }else if(missing(log10p_col)){
     message("Please specify which column contains genomic position information.")
   }else if(missing(chr)){
     message("Please specify which chromosome you wish to plot.")
@@ -50,7 +51,7 @@ single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, rs_col=NUL
 
   colnames(assoc_data)[chr_col] = "CHR"
   colnames(assoc_data)[pos_col] = "CHR_POS"
-  colnames(assoc_data)[p_col] = "LOG10P"
+  colnames(assoc_data)[log10p_col] = "LOG10P"
   if(!missing(rs_col)){
     colnames(assoc_data)[rs_col] = "RS_ID"}
   if(!missing(ld_col)){
