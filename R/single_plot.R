@@ -10,21 +10,21 @@
 #' contains the rsID numbers of the SNPs, and LD, which contains
 #' LD information. If you want to compute LD information for the dataset,
 #' be sure to include rs_id numbers for all the SNPs in your input data.
-#' @param chr_col required. index of column in assoc_data containing chromosome information
-#' @param pos_col required. index of column in assoc_data containing genomic position information
-#' @param p_col required. index of column in assoc_data containing -log10(p-value)s
-#' @param ld_col optional. Required if ldby = "input", index of column in assoc_data containing LD information
-#' @param chr required. chromosome to plot
+#' @param chr_col required. numeric. index of column in assoc_data containing chromosome information
+#' @param pos_col required. numeric. index of column in assoc_data containing genomic position information
+#' @param p_col required. numeric. index of column in assoc_data containing -log10(p-value)s
+#' @param rs_col optional. numeric. Required if ldby = "1000genomes", index of column containing rsID numbers for SNPs
+#' @param ld_col optional. numeric. Required if ldby = "input", index of column in assoc_data containing LD information
+#' @param chr required. numeric. chromosome to plot
 #' @param plotby required. "coord", "gene", or "snp". Which parameter to use to
 #' determine the reigon to be plotted.
-#' @param gene_plot optional. If "gene" selected for plotby, then plot will be +/- 50kb of gene
-#' @param snp_plot optional. If "snp" selected for plotby, then plot will be +/- 50kb of snp
-#' @param start_plot optional. If "coord" selected for plotby, then this will be lower bound of x axis
-#' @param end_plot optional. If "coord" selected for plotby, then this will be upper bound of x axis
+#' @param gene_plot optional. Required if "gene" selected for plotby, then plot will be +/- 50kb of gene
+#' @param snp_plot optional. Required if "snp" selected for plotby, then plot will be +/- 50kb of snp
+#' @param start_plot optional. Required if "coord" selected for plotby, then this will be lower bound of x axis
+#' @param end_plot optional. Required if "coord" selected for plotby, then this will be upper bound of x axis
 #' @param ldby required. default = "none", but can be "input", or "1000genomes"
-#' @param pops optional. required if ldby = "1000genomes". Populations used
-#' to calculate LD.
-#' @param snp_ld optional. required if ldby = "1000genomes". snp used to calculate LD
+#' @param pops optional. Required if ldby = "1000genomes". Populations used to calculate LD.
+#' @param snp_ld optional. Required if ldby = "1000genomes". snp used to calculate LD
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
 #' @import ggplot2
@@ -41,6 +41,8 @@ single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, ld_col=NUL
     message("Please specify which column contains genomic position information.")
   }else if(missing(p_col)){
     message("Please specify which column contains genomic position information.")
+  }else if(missing(rs_col)){
+    message("Please specify which column contains rsID numbers.")
   }else if(missing(chr)){
     message("Please specify which chromosome you wish to plot.")
   }else if(missing(plotby)){
@@ -52,6 +54,7 @@ single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, ld_col=NUL
   colnames(assoc_data)[chr_col] = "CHR"
   colnames(assoc_data)[pos_col] = "CHR_POS"
   colnames(assoc_data)[p_col] = "LOG10P"
+  colnames(assoc_data)[rs_col] = "RS_ID"
 
   `%>%` <- magrittr::`%>%`
 
