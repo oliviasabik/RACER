@@ -32,9 +32,8 @@
 #' single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "gene/snp/coord", x_plot = "GENE_NAME/RS_ID/START/END",
 #'  ldby= "none/input/1000genomes", pops = c("POP1", "POP2", etc...), snp_ld = "RS_ID")
 
-single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, ld_col=NULL, chr, build="hg19", plotby,
-                                 gene_plot = NULL, snp_plot = NULL,
-                                 start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld=NULL){
+single_plot_function <- function(assoc_data, chr_col, pos_col, p_col, rs_col=NULL, ld_col=NULL, chr, build="hg19", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld=NULL){
+
   if(missing(chr_col)){
     message("Please specify which column contains chromosome information.")
   }else if(missing(pos_col)){
