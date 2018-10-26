@@ -4,10 +4,10 @@
 \alias{single_plot_function}
 \title{Single Plot Function}
 \usage{
-single_plot_function(assoc_data, chr_col, pos_col, p_col, ld_col = NULL,
-  chr, build = "hg19", plotby, gene_plot = NULL, snp_plot = NULL,
-  start_plot = NULL, end_plot = NULL, ldby = "none", pops = NULL,
-  snp_ld = NULL)
+single_plot_function(assoc_data, chr_col, pos_col, p_col, rs_col = NULL,
+  ld_col = NULL, chr, build = "hg19", plotby, gene_plot = NULL,
+  snp_plot = NULL, start_plot = NULL, end_plot = NULL,
+  ldby = "none", pops = NULL, snp_ld = NULL)
 }
 \arguments{
 \item{assoc_data}{required. A dataframe that has columns named
@@ -18,33 +18,34 @@ contains the rsID numbers of the SNPs, and LD, which contains
 LD information. If you want to compute LD information for the dataset,
 be sure to include rs_id numbers for all the SNPs in your input data.}
 
-\item{chr_col}{required. index of column in assoc_data containing chromosome information}
+\item{chr_col}{required. numeric. index of column in assoc_data containing chromosome information}
 
-\item{pos_col}{required. index of column in assoc_data containing genomic position information}
+\item{pos_col}{required. numeric. index of column in assoc_data containing genomic position information}
 
-\item{p_col}{required. index of column in assoc_data containing -log10(p-value)s}
+\item{p_col}{required. numeric. index of column in assoc_data containing -log10(p-value)s}
 
-\item{ld_col}{optional. Required if ldby = "input", index of column in assoc_data containing LD information}
+\item{rs_col}{optional. numeric. Required if ldby = "1000genomes", index of column containing rsID numbers for SNPs}
 
-\item{chr}{required. chromosome to plot}
+\item{ld_col}{optional. numeric. Required if ldby = "input", index of column in assoc_data containing LD information}
+
+\item{chr}{required. numeric. chromosome to plot}
 
 \item{plotby}{required. "coord", "gene", or "snp". Which parameter to use to
 determine the reigon to be plotted.}
 
-\item{gene_plot}{optional. If "gene" selected for plotby, then plot will be +/- 50kb of gene}
+\item{gene_plot}{optional. Required if "gene" selected for plotby, then plot will be +/- 50kb of gene}
 
-\item{snp_plot}{optional. If "snp" selected for plotby, then plot will be +/- 50kb of snp}
+\item{snp_plot}{optional. Required if "snp" selected for plotby, then plot will be +/- 50kb of snp}
 
-\item{start_plot}{optional. If "coord" selected for plotby, then this will be lower bound of x axis}
+\item{start_plot}{optional. Required if "coord" selected for plotby, then this will be lower bound of x axis}
 
-\item{end_plot}{optional. If "coord" selected for plotby, then this will be upper bound of x axis}
+\item{end_plot}{optional. Required if "coord" selected for plotby, then this will be upper bound of x axis}
 
 \item{ldby}{required. default = "none", but can be "input", or "1000genomes"}
 
-\item{pops}{optional. required if ldby = "1000genomes". Populations used
-to calculate LD.}
+\item{pops}{optional. Required if ldby = "1000genomes". Populations used to calculate LD.}
 
-\item{snp_ld}{optional. required if ldby = "1000genomes". snp used to calculate LD}
+\item{snp_ld}{optional. Required if ldby = "1000genomes". snp used to calculate LD}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values) of an association study
