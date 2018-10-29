@@ -14,35 +14,45 @@
 #' @examples
 #' gencom_format(assoc_data = assoc_data, chr_col = 1, pos_col = 2, log10p_col = 3, ld_col = 4)
 
-gen_comp_format <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NULL, ld_col=NULL){
+gencom_format <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NULL, ld_col=NULL){
 
   if(missing(chr_col)){
-    message("Please specify which column contains chromosome information.")
+    stop("Please specify which column contains chromosome information.")
   }else if(missing(pos_col)){
-    message("Please specify which column contains genomic position information.")
-  }else if(log10p_col == NULL & p_col == NULL){
-    message("Please specify which column contains p-values or -log10(p-values).")
+    stop("Please specify which column contains genomic position information.")
+  }else if(is.null(log10p_col) && is.null(p_col)){
+    stop("Please specify which column contains p-values or -log10(p-values).")
   }else{
     message("All inputs are go!")
   }
 
   message("Formating association data...")
   colnames(assoc_data)[chr_col] = "CHR"
-  colnames(assoc_data)[pos_col] = "CHR_POS"
+  colnames(assoc_data)[pos_col] = "POS"
   message("Processing -log10(p-values)...")
-  if(log10p_col != NULL){
+  if(!is.null(log10p_col)){
     colnames(assoc_data)[log10p_col] = "LOG10P"
-  }else if(p_col != NULL){
+  }else if(!is.null(p_col)){
     colnames(assoc_data)[p_col] = "P"
     assoc_data$LOG10P = -log10(assoc_data$P)
   }
-  if(ld_col != NULL){
-    colnames(assoc_data)[ld_col] = "LD"}
+  if(!is.null(ld_col)){
+    message("Processing input LD information...")
+    colnames(assoc_data)[ld_col] = "LD"
+    assoc_data$LD = as.numeric(as.character(assoc_data$LD))
+    assoc_data$LD_BIN <- cut(assoc_data$LD,
+                      breaks=c(0,0.2,0.4,0.6,0.8,1.0),
+                      labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
+    assoc_data$LD_BIN = as.character(assoc_data$LD_BIN)
+    assoc_data$LD_BIN[is.na(assoc_data$LD_BIN)] <- "NA"
+    assoc_data$LD_BIN = as.factor(assoc_data$LD_BIN)
+    assoc_data$LD_BIN = factor(assoc_data$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
+  }
 
   # read in, format, and filter data sets
   message("Preparing association data...")
   assoc_data <- as.data.frame(assoc_data)
-  assoc_data$CHR_POS = as.numeric(as.character(assoc_data$CHR_POS))
+  assoc_data$POS = as.numeric(as.character(assoc_data$POS))
   assoc_data$LOG10P = as.numeric(as.character(assoc_data$LOG10P))
   assoc_data$CHR = as.numeric(as.character(assoc_data$CHR))
 

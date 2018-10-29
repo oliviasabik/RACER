@@ -12,7 +12,7 @@ mirror_plot_function(assoc_data1, assoc_data2, chr, build = "hg19",
 }
 \arguments{
 \item{assoc_data1}{required. A dataframe that has columns named
-CHR_POS representing the position of the snp on
+POS representing the position of the snp on
 the chromosome, LOG10P which contains the -log10(P-values),
 CHR, which contains the chromosome number, RS_ID, which
 LD information. If no column named LD is in the input, LD will
@@ -29,30 +29,21 @@ be calculated from 1000 genomes phase III in relation to snp_ld_1}
 \item{plotby}{required. "coord", "gene", or "snp". Which parameter to use to
 determine the reigon to be plotted.}
 
-\item{gene_plot}{optional. If "gene" selected for plotby, then plot will be +/- 50kb of gene}
+\item{gene_plot}{optional. If "gene" selected for plotby, then plot will be +/- 50kb of gene, should be a human gene symbol}
 
 \item{snp_plot}{optional. If "snp" selected for plotby, then plot will be +/- 50kb of snp}
 
 \item{start_plot}{optional. If "coord" selected for plotby, then this will be lower bound of x axis}
 
 \item{end_plot}{optional. If "coord" selected for plotby, then this will be upper bound of x axis}
-
-\item{ldby}{required. default = "none", can also use "input", or "1000genomes"}
-
-\item{pops}{optional. required if ldby = "1000genomes". Populations used
-to calculate LD.}
-
-\item{snp_ld_1}{optional. required if ldby = "1000genomes". snp used to calculate LD}
-
-\item{snp_ld_2}{optional. required if ldby = "1000genomes", and you want to use a different snp
-to calculate LD for the second dataset}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values).
 }
 \examples{
-mirror_plot_function(assoc_data1, assoc_data2, chr, "name1", "name2", plotby = "coord", start_plot, end_plot,
-ldby = "1000genomes", pops = c("CEU","TSI","FIN","GBR","IBS"), snp_ld_1 = "rs123456", snp_ld_2 = "rs123456")
+mirror_plot_function(assoc_data1 = df1, assoc_data2 = df2, chr = #,   name1 = "name1", name2 = "name2", plotby = "gene", gene_plot = "GENE_NAME")
+mirror_plot_function(assoc_data1 = df1, assoc_data2 = df2, chr = #, name1 = "name1", name2 = "name2", plotby = "snp", snp_plot = "rs#######")
+#' mirror_plot_function(assoc_data1 = df1, assoc_data2 = df2, chr = #, name1 = "name1", name2 = "name2", plotby = "coord", start_plot = #######, end_plot = #######)
 }
 \keyword{association}
 \keyword{plot}

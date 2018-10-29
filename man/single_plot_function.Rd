@@ -4,27 +4,16 @@
 \alias{single_plot_function}
 \title{Single Plot Function}
 \usage{
-single_plot_function(assoc_data, chr_col, pos_col, log10p_col, chr,
-  build = "hg19", plotby, gene_plot = NULL, snp_plot = NULL,
-  start_plot = NULL, end_plot = NULL, ldby = "none", pops = NULL,
-  snp_ld = NULL, rs_col = NULL, ld_col = NULL)
+single_plot_function(assoc_data, chr, build = "hg19", plotby,
+  gene_plot = NULL, snp_plot = NULL, start_plot = NULL,
+  end_plot = NULL)
 }
 \arguments{
-\item{assoc_data}{required. A dataframe that has columns named
-CHR_POS representing the position of the snp on
-the chromosome, LOG10P which contains the -log10(P-values),
-CHR, which contains the chromosome number, RS_ID, which
-contains the rsID numbers of the SNPs, and LD, which contains
-LD information. If you want to compute LD information for the dataset,
-be sure to include rs_id numbers for all the SNPs in your input data.}
-
-\item{chr_col}{required. numeric. index of column in assoc_data containing chromosome information}
-
-\item{pos_col}{required. numeric. index of column in assoc_data containing genomic position information}
-
-\item{log10p_col}{required. numeric. index of column in assoc_data containing -log10(p-value)s}
+\item{assoc_data}{required. A dataframe that has been produced by gencom_format and has columns named CHR, POS}
 
 \item{chr}{required. numeric. chromosome to plot}
+
+\item{build}{optional. default = "hg19", can also optionally be set to "hg38"}
 
 \item{plotby}{required. "coord", "gene", or "snp". Which parameter to use to
 determine the reigon to be plotted.}
@@ -36,16 +25,6 @@ determine the reigon to be plotted.}
 \item{start_plot}{optional. Required if "coord" selected for plotby, then this will be lower bound of x axis}
 
 \item{end_plot}{optional. Required if "coord" selected for plotby, then this will be upper bound of x axis}
-
-\item{ldby}{required. default = "none", but can be "input", or "1000genomes"}
-
-\item{pops}{optional. Required if ldby = "1000genomes". Populations used to calculate LD.}
-
-\item{snp_ld}{optional. Required if ldby = "1000genomes". snp used to calculate LD}
-
-\item{rs_col}{optional. numeric. Required if ldby = "1000genomes", index of column containing rsID numbers for SNPs}
-
-\item{ld_col}{optional. numeric. Required if ldby = "input", index of column in assoc_data containing LD information}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values) of an association study
@@ -53,8 +32,9 @@ by their genomic position, for example, the results of a GWAS or eQTL study. Sou
 1000K genomes phase III data for linkage disequilibrium calculations.
 }
 \examples{
-single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "gene/snp/coord", x_plot = "GENE_NAME/RS_ID/START/END",
- ldby= "none/input/1000genomes", pops = c("POP1", "POP2", etc...), snp_ld = "RS_ID")
+single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "gene", gene_plot = "GENE_NAME")
+single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "snp", snp_plot = "RS_ID of lead SNP"
+single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "coord", start_plot = 100000, end_plot = 500000)
 }
 \keyword{association}
 \keyword{disequilibrium.}

@@ -1,6 +1,6 @@
 #' Genomic Comparison Linkage Disequilibrium Calculation Function
 #'
-#' This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. The input of the function should already have been formatted using gencom_format
+#' This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. The input of the function should already have been formatted using gencom_format.
 #' @param assoc_data required. A dataframe produced by by gencom_format
 #' @param rs_col required. numeric. index of column containing rsID numbers for SNPs
 #' @param pops required. Populations used to calculate LD.
@@ -14,25 +14,22 @@
 gencom_ld <- function(assoc_data, rs_col, pops, lead_snp){
 
   if(missing(rs_col)){
-    message("Please specify which column contains rsIDs.")
+    stop("Please specify which column contains rsIDs.")
   }else if(missing(pops)){
-    message("Please specify which 1000 Genomes populations to use to calculate LD.")
+    stop("Please specify which 1000 Genomes populations to use to calculate LD.")
   }else if(missing(lead_snp)){
-    message("Please specify which lead SNP to use to calculate LD.")
+    stop("Please specify which lead SNP to use to calculate LD.")
   }else{
     message("All inputs are go!")
   }
-
-  `%>%` <- magrittr::`%>%`
 
   # read in, format, and filter data sets
   message("Reading in association data...")
   assoc_data <- as.data.frame(assoc_data)
   colnames(assoc_data)[rs_col] = "RS_ID"
-  assoc_data$RS_ID = as.numeric(as.character(assoc_data$RS_ID))
 
   # calculate LD
-  message(paste0("Calculating LD using", lead_snp, "..."))
+  message(paste0("Calculating LD using ", lead_snp, "..."))
   assoc_data$LD_BIN = 1
   assoc_data$LD_BIN = NA
   if(length(pops) == 1){
