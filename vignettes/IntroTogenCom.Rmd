@@ -99,3 +99,7 @@ Finally, genCom can help you to compare the assocations by making what we call a
 mirror_plot_function(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld, chr = 14, plotby = "gene", gene_plot = "MARK3")
 ```
 
+
+
+Related References:
+- coloc package (https://cran.r-project.org/web/packages/coloc/index.html)
