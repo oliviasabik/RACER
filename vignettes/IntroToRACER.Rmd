@@ -1,0 +1,105 @@
+---
+title: "Introduction to RACER"
+author: "Olivia Sabik"
+date: "`r Sys.Date()`"
+output:
+  BiocStyle::html_document
+vignette: >
+  %\\VignetteIndexEntry{Introduction to RACER}
+  %\\VignetteEngine{knitr::rmarkdown}
+  %\\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+RACER is a package that allows you to generate high quality regional association plots from genomic data using the function singlePlotRACER() and can stack two such plots using the function mirrorPlotRACER() such that they are mirrored across a common x-axis, enabling the direct visual comparison of two associations at the same locus. For example, in order to link the expression of a specific gene with changes in a phenotype it is common to identify colocalizing pairs of expression quantitative trait loci (eQTL) and quantitative trait loci (QTL) from genome-wide association studies (GWAS). The coloc package from Wallace, Giambartolomei, and Plagnol can be used to calculate the posterior probability of two association signals sharing a common genetic impetus, however the Mirror Plot was designed to provide a visual representation of the relationship between the two associations. Additionally, the singlePlotRACER() function can be used to generate a regional association plot for one association data set. gencom also incoroporates two helper functions: formatRACER() which helps you to format your data for plotting and ldRACER() which helps you to format LD information included in your dataset, or can use input rsID numbers to calculate LD using the 1000 genomes phase III data. 
+
+# Mark3 eQTL and BMD GWAS: A Demonstration of RACER 
+In this vignette, we will demonstrate the utility of these plots using data from our lab's recent work (Calabrese GM, Mesner LD, Stains JP, et al. Cell Systems. 2017;4(1):46–59.e4). In this publication, we identified the gene Mark3 as a putative novel regulator of bone mineral density through the integration of GWAS and co-expression network analysis in mice. In order to understand the relationship between expression of Mark3 and BMD in humans, we utilized coloc, and determined that there was a 97.4% chance that a GTEx eQTL for Mark3 and a GWAS association for BMD shared a genetic driver. However, in our original publication, we did not visually represent this result. This vignette begins with Mark3 eQTL data from the GTEx database (https://gtexportal.org/home/) and BMD GWAS data from the 2017 study using data from the UK BioBank (Kemp JP, Morris JA, Medina-Gomez C, et al. Nature Genetics. 2017;49(10):1468-1475).
+
+```{r, message=FALSE, warning=FALSE}
+library(devtools) 
+library(RACER)
+data("mark3_bmd_gwas")
+data("mark3_eqtl")
+```
+
+# Inputs
+
+RACER will accept any association dataset, as long as it contains a column with chromosome information, a column with chromosome position, and a column with summary statistics, either p-values or -log10(p-values). 
+
+If you wish to include LD information in your plot, you must also include a column with precomupted LD information, or a column with rsID numbers, which can be used to calculate LD. 
+
+If you look at the headers for our two example input GWAS data set, we have a column containing chromosome information(3), a column with position information(4), a column with p-values(11), and a column with rsID numbers(2). While RACER won't use the information in the other columns, they can still be included in the data frame.
+```{r, message=FALSE, warning=FALSE}
+head(mark3_bmd_gwas)
+```
+
+In our eQTL dataset we have a column containing chromosome(11), position(12), p-values(8), and rsIDs(15). 
+```{r, message=FALSE, warning=FALSE}
+head(mark3_eqtl)
+```
+
+# Formatting input association data using RACER
+
+The first step for using RACER is to format your input data. The formatRACER() function will unify the column names in your data so they are compatible with RACER and with one another. This function takes your input dataframe, and the index of the columns containing information about the chromosome, location, and p-value or -log10(p-value). 
+
+```{r, message=FALSE, warning=FALSE}
+head(RACER::formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11))
+```
+
+As you can see, the output of RACER format looks quite a bit like the input, but there are a few subtle changes. Some of the column names have been changed for compatibility, and a -log10(p-value) column had been calculated and named LOG10P. You do need to save this new object to be able to use it in the plotting function. 
+
+```{r message=FALSE, warning=FALSE}
+mark3_bmd_gwas_f = RACER::formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
+mark3_eqtl_f = RACER::formatRACER(assoc_data = mark3_eqtl, chr_col = 10, pos_col = 11, p_col = 7)
+```
+
+# Adding linkage disequilibrium information with RACER
+
+Neither of our input datasets contain information about linkage disequilibirum, so we're going to use the column of rsIDs to pull LD information down from the 1000 Genomes Phase III Database. This will require the formatted data set, the index of the column containing the rsID numbers, the populations from 1000 genomes you want to use to calculate LD (in this example I use the five European in the database), and the rsID of the lead SNP of the association. 
+
+```{r warning=FALSE}
+head(RACER::ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 2, pops = "EUR", lead_snp = "rs11623869"))
+```
+
+As with formatRACER(), the output of ldRACER() is a modified data frame, now with an LD column and an LD_BIN column, which will be used in the plot. These will need to be saved as well.
+
+```{r warning=FALSE}
+mark3_bmd_gwas_f_ld = RACER::ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 2, pops = "EUR", lead_snp = "rs11623869")
+mark3_eqtl_f_ld = RACER::ldRACER(assoc_data = mark3_eqtl_f, rs_col = 15, pops = "EUR", lead_snp = "rs11623869")
+```
+
+# Plotting a single dataset with RACER
+
+Now that we have our data formatted and complete, we can plot our associations. First, we will plot each association separately, using the singlePlotRACER() function. The singlePlotRACER() requires your formatted association dataframe, with optional ld formatting if you would like to include ld information, the chromosome you would like to plot, the build of the genome you would like to use to plot the genes (default = hg19), and the method you wish to plot by. You can plot the association by:
+(1) a gene, plotby = "gene", and gene_plot = "GENE_NAME"
+(2) a snp, plotby = "snp", and snp_plot = "rsID"
+(3) coordinates, plotby = "coord", start_plot = x, end_plot = y
+
+Example 1: Plotting the GWAS association around the MARK3 gene
+```{r warning=FALSE}
+RACER::singlePlotRACER(assoc_data = mark3_bmd_gwas_f_ld, chr = 14, build = "hg19", plotby = "gene", gene_plot = "MARK3")
+```
+
+Example 2: Plotting the GWAS association around the lead snp, rs11623869
+```{r warning=FALSE}
+RACER::singlePlotRACER(assoc_data = mark3_bmd_gwas_f_ld, chr = 14, build = "hg19", plotby = "snp", snp_plot = "rs11623869")
+```
+
+Example 3: Plotting the eQTL by specifying coordinates
+```{r warning=FALSE}
+RACER::singlePlotRACER(assoc_data = mark3_eqtl_f_ld, chr = 14, build = "hg19", plotby = "coord", start_plot = 103500000, end_plot = 104500000)
+```
+
+# Making a mirror plot with RACER
+
+Finally, RACER can help you to compare the assocations by making what we call a mirror plot. The function takes two formatted association data frames, and returns a plot with dataset #1 on the bottom, and dataset #2 inverted on the top. This allows for a more direct visual comparsion of the two datasets. 
+
+```{r warning=FALSE}
+mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld, chr = 14, plotby = "gene", gene_plot = "MARK3")
+```
+
+
+
+# Related References:
+- coloc package (https://cran.r-project.org/web/packages/coloc/index.html)

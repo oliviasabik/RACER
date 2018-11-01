@@ -1,13 +1,12 @@
-#' Single Plot Function
+#' Single Regional Association Plot Function
 #'
 #' This function allows you to creat a plot of -log10(P-values) of an association study
 #' by their genomic position, for example, the results of a GWAS or eQTL study. Sources
 #' 1000K genomes phase III data for linkage disequilibrium calculations.
-#' @param assoc_data required. A dataframe that has been produced by gencom_format and has columns named CHR, POS
+#' @param assoc_data required. A dataframe that has been produced by formatRACER and has columns named CHR, POS
 #' @param chr required. numeric. chromosome to plot
 #' @param build optional. default = "hg19", can also optionally be set to "hg38"
-#' @param plotby required. "coord", "gene", or "snp". Which parameter to use to
-#' determine the reigon to be plotted.
+#' @param plotby required. "coord", "gene", or "snp". Which parameter to use to determine the reigon to be plotted.
 #' @param gene_plot optional. Required if "gene" selected for plotby, then plot will be +/- 50kb of gene
 #' @param snp_plot optional. Required if "snp" selected for plotby, then plot will be +/- 50kb of snp
 #' @param start_plot optional. Required if "coord" selected for plotby, then this will be lower bound of x axis
@@ -17,11 +16,11 @@
 #' @export
 #' @import ggplot2
 #' @examples
-#' single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "gene", gene_plot = "GENE_NAME")
-#' single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "snp", snp_plot = "RS_ID of lead SNP"
-#' single_plot_function(assoc_data = assoc_data, chr = 1, plotby = "coord", start_plot = 100000, end_plot = 500000)
+#' singlePlotRACER(assoc_data = assoc_data, chr = 1, plotby = "gene", gene_plot = "GENE_NAME")
+#' singlePlotRACER(assoc_data = assoc_data, chr = 1, plotby = "snp", snp_plot = "RS_ID of lead SNP"
+#' singlePlotRACER(assoc_data = assoc_data, chr = 1, plotby = "coord", start_plot = 100000, end_plot = 500000)
 
-single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot = NULL){
+singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot = NULL){
 
   if(missing(assoc_data)){
     stop("Please provide a data set to plot.")
@@ -48,11 +47,11 @@ single_plot_function <- function(assoc_data, chr, build="hg19", plotby, gene_plo
   reqs = c("CHR", "POS", "LOG10P")
   cols = colnames(assoc_data)
   if(sum(reqs %in% cols) == 3){
-  }else{stop("Association Data Set is missing a required column, please format your data set using gencom_format.R.")}
+  }else{stop("Association Data Set is missing a required column, please format your data set using formatRACER.R.")}
 
   reqs_2 = c("LD", "LD_BIN")
   if(sum(reqs_2 %in% cols) == 2){
-  }else{message("Association Data Set is missing LD data, the resulting plot won't have LD information, but you can add it using the gencom_ld.R function.")}
+  }else{message("Association Data Set is missing LD data, the resulting plot won't have LD information, but you can add it using the ldRACER.R function.")}
 
   `%>%` <- magrittr::`%>%`
 

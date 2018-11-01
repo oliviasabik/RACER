@@ -1,7 +1,7 @@
-#' Genomic Comparison Linkage Disequilibrium Calculation Function
+#' Calculating Linkage Disequilibrium Information for Regional Association ComparER
 #'
-#' This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. The input of the function should already have been formatted using gencom_format.
-#' @param assoc_data required. A dataframe produced by by gencom_format
+#' This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. The input of the function should already have been formatted using formatRACER().
+#' @param assoc_data required. A dataframe produced by by formatRACER()
 #' @param rs_col required. numeric. index of column containing rsID numbers for SNPs
 #' @param pops required. Populations used to calculate LD.
 #' @param lead_snp required. Required if ldby = "1000genomes". snp used to calculate LD
@@ -9,9 +9,9 @@
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
 #' @examples
-#' gencom_ld(assoc_data = assoc_data, rs_col = 5, pops = c("POP1", "POP2", etc...), lead_snp = "RS_ID")
+#' ldRACER(assoc_data = assoc_data, rs_col = 5, pops = c("POP1", "POP2", etc...), lead_snp = "RS_ID")
 
-gencom_ld <- function(assoc_data, rs_col, pops, lead_snp){
+ldRACER <- function(assoc_data, rs_col, pops, lead_snp){
 
   if(missing(rs_col)){
     stop("Please specify which column contains rsIDs.")

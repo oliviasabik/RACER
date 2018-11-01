@@ -1,8 +1,8 @@
-Package: mirrorplot
-Title: Make a Mirror Plot from Two Sets of -log10(P-Values)
+Package: RACER
+Title: Regional Association ComparER
 Version: 0.1
 Authors@R: person("Olivia", "Sabik", email = "ols5fg@virginia.edu", role = c("aut", "cre"))
-Description: This package can be used to create a plot of two sets of -log10(p-value)s that are mirrored across the x-axis.  
+Description: This package can be used to create a plot comparing two sets of -log10(p-value)s that are mirrored across the x-axis.  
 Depends: R (>= 3.1.0)
 License: GPL-2
 Encoding: UTF-8

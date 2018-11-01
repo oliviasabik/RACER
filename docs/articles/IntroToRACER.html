@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction to genCom • RACER</title>
+<title>Introduction to RACER • RACER</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to genCom">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to RACER">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/IntroTogenCom.html">Introduction to genCom</a>
+      <a href="../articles/IntroToRACER.html">Introduction to RACER</a>
     </li>
   </ul>
 </li>
@@ -69,13 +69,13 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Introduction to genCom</h1>
+      <h1>Introduction to RACER</h1>
                         <h4 class="author">Olivia Sabik</h4>
             
             <h4 class="date">2018-11-01</h4>
       
       
-      <div class="hidden name"><code>IntroTogenCom.Rmd</code></div>
+      <div class="hidden name"><code>IntroToRACER.Rmd</code></div>
 
     </div>
 
@@ -84,23 +84,23 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>gencom is a package that allows you to generate high quality regional association plots from genomic data using the function gencomSinglePlot() and can stack two such plots using the function gencomMirrorPlot() such that they are mirrored across a common x-axis, enabling the direct visual comparison of two associations at the same locus. For example, in order to link the expression of a specific gene with changes in a phenotype it is common to identify colocalizing pairs of expression quantitative trait loci (eQTL) and quantitative trait loci (QTL) from genome-wide association studies (GWAS). The coloc package from Wallace, Giambartolomei, and Plagnol can be used to calculate the posterior probability of two association signals sharing a common genetic impetus, however the Mirror Plot was designed to provide a visual representation of the relationship between the two associations. Additionally, the gencomSinglePlot() function can be used to generate a regional association plot for one association data set. gencom also incoroporates two helper functions: gencomFormat() which helps you to format your data for plotting and gencomLD() which helps you to format LD information included in your dataset, or can use input rsID numbers to calculate LD using the 1000 genomes phase III data.</p>
+<p>RACER is a package that allows you to generate high quality regional association plots from genomic data using the function singlePlotRACER() and can stack two such plots using the function mirrorPlotRACER() such that they are mirrored across a common x-axis, enabling the direct visual comparison of two associations at the same locus. For example, in order to link the expression of a specific gene with changes in a phenotype it is common to identify colocalizing pairs of expression quantitative trait loci (eQTL) and quantitative trait loci (QTL) from genome-wide association studies (GWAS). The coloc package from Wallace, Giambartolomei, and Plagnol can be used to calculate the posterior probability of two association signals sharing a common genetic impetus, however the Mirror Plot was designed to provide a visual representation of the relationship between the two associations. Additionally, the singlePlotRACER() function can be used to generate a regional association plot for one association data set. gencom also incoroporates two helper functions: formatRACER() which helps you to format your data for plotting and ldRACER() which helps you to format LD information included in your dataset, or can use input rsID numbers to calculate LD using the 1000 genomes phase III data.</p>
 </div>
-<div id="mark3-eqtl-and-bmd-gwas-a-demonstration-of-gencom" class="section level1">
+<div id="mark3-eqtl-and-bmd-gwas-a-demonstration-of-racer" class="section level1">
 <h1 class="hasAnchor">
-<a href="#mark3-eqtl-and-bmd-gwas-a-demonstration-of-gencom" class="anchor"></a>Mark3 eQTL and BMD GWAS: A Demonstration of gencom</h1>
+<a href="#mark3-eqtl-and-bmd-gwas-a-demonstration-of-racer" class="anchor"></a>Mark3 eQTL and BMD GWAS: A Demonstration of RACER</h1>
 <p>In this vignette, we will demonstrate the utility of these plots using data from our lab’s recent work (Calabrese GM, Mesner LD, Stains JP, et al. Cell Systems. 2017;4(1):46–59.e4). In this publication, we identified the gene Mark3 as a putative novel regulator of bone mineral density through the integration of GWAS and co-expression network analysis in mice. In order to understand the relationship between expression of Mark3 and BMD in humans, we utilized coloc, and determined that there was a 97.4% chance that a GTEx eQTL for Mark3 and a GWAS association for BMD shared a genetic driver. However, in our original publication, we did not visually represent this result. This vignette begins with Mark3 eQTL data from the GTEx database (<a href="https://gtexportal.org/home/" class="uri">https://gtexportal.org/home/</a>) and BMD GWAS data from the 2017 study using data from the UK BioBank (Kemp JP, Morris JA, Medina-Gomez C, et al. Nature Genetics. 2017;49(10):1468-1475).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools) 
-<span class="kw">library</span>(mirrorplot)
+<span class="kw">library</span>(RACER)
 <span class="kw">data</span>(<span class="st">"mark3_bmd_gwas"</span>)
 <span class="kw">data</span>(<span class="st">"mark3_eqtl"</span>)</code></pre></div>
 </div>
 <div id="inputs" class="section level1">
 <h1 class="hasAnchor">
 <a href="#inputs" class="anchor"></a>Inputs</h1>
-<p>GenCom will accept any association dataset, as long as it contains a column with chromosome information, a column with chromosome position, and a column with summary statistics, either p-values or -log10(p-values).</p>
+<p>RACER will accept any association dataset, as long as it contains a column with chromosome information, a column with chromosome position, and a column with summary statistics, either p-values or -log10(p-values).</p>
 <p>If you wish to include LD information in your plot, you must also include a column with precomupted LD information, or a column with rsID numbers, which can be used to calculate LD.</p>
-<p>If you look at the headers for our two example input GWAS data set, we have a column containing chromosome information(3), a column with position information(4), a column with p-values(11), and a column with rsID numbers(2). While GenCom won’t use the information in the other columns, they can still be included in the data frame.</p>
+<p>If you look at the headers for our two example input GWAS data set, we have a column containing chromosome information(3), a column with position information(4), a column with p-values(11), and a column with rsID numbers(2). While RACER won’t use the information in the other columns, they can still be included in the data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mark3_bmd_gwas)</code></pre></div>
 <pre><code>## # A tibble: 6 x 12
 ##   SNPID SNP     CHR     BP ALLELE1 ALLELE0 A1FREQ  INFO     BETA      SE
@@ -136,11 +136,11 @@
 ## 5       C                1  rs12586378
 ## 6       A                1  rs12879435</code></pre>
 </div>
-<div id="formatting-input-association-data-using-gencom" class="section level1">
+<div id="formatting-input-association-data-using-racer" class="section level1">
 <h1 class="hasAnchor">
-<a href="#formatting-input-association-data-using-gencom" class="anchor"></a>Formatting input association data using GenCom</h1>
-<p>The first step for using GenCom is to format your input data. The gencom_format.R function will unify the column names in your data so they are compatible with GenCom and with one another. This function takes your input dataframe, and the index of the columns containing information about the chromosome, location, and p-value or -log10(p-value).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mirrorplot<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/gencom_format">gencom_format</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas, <span class="dt">chr_col =</span> <span class="dv">3</span>, <span class="dt">pos_col =</span> <span class="dv">4</span>, <span class="dt">p_col =</span> <span class="dv">11</span>))</code></pre></div>
+<a href="#formatting-input-association-data-using-racer" class="anchor"></a>Formatting input association data using RACER</h1>
+<p>The first step for using RACER is to format your input data. The formatRACER() function will unify the column names in your data so they are compatible with RACER and with one another. This function takes your input dataframe, and the index of the columns containing information about the chromosome, location, and p-value or -log10(p-value).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(RACER<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RACER/topics/formatRACER">formatRACER</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas, <span class="dt">chr_col =</span> <span class="dv">3</span>, <span class="dt">pos_col =</span> <span class="dv">4</span>, <span class="dt">p_col =</span> <span class="dv">11</span>))</code></pre></div>
 <pre><code>##              SNPID         SNP CHR       POS ALLELE1 ALLELE0   A1FREQ
 ## 1 14:102500153:A:G  rs10149958  14 102500153       A       G 0.928255
 ## 2 14:102500244:G:T  rs17512713  14 102500244       G       T 0.918942
@@ -155,15 +155,15 @@
 ## 4 0.996559 -0.00421757 0.00428378 0.42 142487 0.37675071
 ## 5 0.998043 -0.00413914 0.00740183 0.76 142487 0.11918641
 ## 6 0.885150 -0.03783390 0.01889920 0.11 142487 0.95860731</code></pre>
-<p>As you can see, the output of GenCom format looks quite a bit like the input, but there are a few subtle changes. Some of the column names have been changed for compatibility, and a -log10(p-value) column had been calculated and named LOG10P. You do need to save this new object to be able to use it in the plotting function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mark3_bmd_gwas_f =<span class="st"> </span>mirrorplot<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/gencom_format">gencom_format</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas, <span class="dt">chr_col =</span> <span class="dv">3</span>, <span class="dt">pos_col =</span> <span class="dv">4</span>, <span class="dt">p_col =</span> <span class="dv">11</span>)
-mark3_eqtl_f =<span class="st"> </span>mirrorplot<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/gencom_format">gencom_format</a></span>(<span class="dt">assoc_data =</span> mark3_eqtl, <span class="dt">chr_col =</span> <span class="dv">10</span>, <span class="dt">pos_col =</span> <span class="dv">11</span>, <span class="dt">p_col =</span> <span class="dv">7</span>)</code></pre></div>
+<p>As you can see, the output of RACER format looks quite a bit like the input, but there are a few subtle changes. Some of the column names have been changed for compatibility, and a -log10(p-value) column had been calculated and named LOG10P. You do need to save this new object to be able to use it in the plotting function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mark3_bmd_gwas_f =<span class="st"> </span>RACER<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RACER/topics/formatRACER">formatRACER</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas, <span class="dt">chr_col =</span> <span class="dv">3</span>, <span class="dt">pos_col =</span> <span class="dv">4</span>, <span class="dt">p_col =</span> <span class="dv">11</span>)
+mark3_eqtl_f =<span class="st"> </span>RACER<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RACER/topics/formatRACER">formatRACER</a></span>(<span class="dt">assoc_data =</span> mark3_eqtl, <span class="dt">chr_col =</span> <span class="dv">10</span>, <span class="dt">pos_col =</span> <span class="dv">11</span>, <span class="dt">p_col =</span> <span class="dv">7</span>)</code></pre></div>
 </div>
-<div id="adding-linkage-disequilibrium-information-with-gencom" class="section level1">
+<div id="adding-linkage-disequilibrium-information-with-racer" class="section level1">
 <h1 class="hasAnchor">
-<a href="#adding-linkage-disequilibrium-information-with-gencom" class="anchor"></a>Adding linkage disequilibrium information with genCom</h1>
+<a href="#adding-linkage-disequilibrium-information-with-racer" class="anchor"></a>Adding linkage disequilibrium information with RACER</h1>
 <p>Neither of our input datasets contain information about linkage disequilibirum, so we’re going to use the column of rsIDs to pull LD information down from the 1000 Genomes Phase III Database. This will require the formatted data set, the index of the column containing the rsID numbers, the populations from 1000 genomes you want to use to calculate LD (in this example I use the five European in the database), and the rsID of the lead SNP of the association.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mirrorplot<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/gencom_ld">gencom_ld</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas_f, <span class="dt">rs_col =</span> <span class="dv">2</span>, <span class="dt">pops =</span> <span class="st">"EUR"</span>, <span class="dt">lead_snp =</span> <span class="st">"rs11623869"</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(RACER<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RACER/topics/ldRACER">ldRACER</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas_f, <span class="dt">rs_col =</span> <span class="dv">2</span>, <span class="dt">pops =</span> <span class="st">"EUR"</span>, <span class="dt">lead_snp =</span> <span class="st">"rs11623869"</span>))</code></pre></div>
 <pre><code>## All inputs are go!</code></pre>
 <pre><code>## Reading in association data...</code></pre>
 <pre><code>## Calculating LD using rs11623869...</code></pre>
@@ -195,52 +195,52 @@ mark3_eqtl_f =<span class="st"> </span>mirrorplot<span class="op">::</span><span
 ## 4 0.06237600 0.69 142487 0.161150909     NA NA
 ## 5 0.03589580 0.13 142487 0.886056648     NA NA
 ## 6 0.04781450 0.59 142487 0.229147988     NA NA</code></pre>
-<p>As with genCom_format(), the output of genCom_ld() is a modified data frame, now with an LD column and an LD_BIN column, which will be used in the plot. These will need to be saved as well.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mark3_bmd_gwas_f_ld =<span class="st"> </span>mirrorplot<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/gencom_ld">gencom_ld</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas_f, <span class="dt">rs_col =</span> <span class="dv">2</span>, <span class="dt">pops =</span> <span class="st">"EUR"</span>, <span class="dt">lead_snp =</span> <span class="st">"rs11623869"</span>)</code></pre></div>
+<p>As with formatRACER(), the output of ldRACER() is a modified data frame, now with an LD column and an LD_BIN column, which will be used in the plot. These will need to be saved as well.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mark3_bmd_gwas_f_ld =<span class="st"> </span>RACER<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RACER/topics/ldRACER">ldRACER</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas_f, <span class="dt">rs_col =</span> <span class="dv">2</span>, <span class="dt">pops =</span> <span class="st">"EUR"</span>, <span class="dt">lead_snp =</span> <span class="st">"rs11623869"</span>)</code></pre></div>
 <pre><code>## All inputs are go!</code></pre>
 <pre><code>## Reading in association data...</code></pre>
 <pre><code>## Calculating LD using rs11623869...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mark3_eqtl_f_ld =<span class="st"> </span>mirrorplot<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/gencom_ld">gencom_ld</a></span>(<span class="dt">assoc_data =</span> mark3_eqtl_f, <span class="dt">rs_col =</span> <span class="dv">15</span>, <span class="dt">pops =</span> <span class="st">"EUR"</span>, <span class="dt">lead_snp =</span> <span class="st">"rs11623869"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mark3_eqtl_f_ld =<span class="st"> </span>RACER<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RACER/topics/ldRACER">ldRACER</a></span>(<span class="dt">assoc_data =</span> mark3_eqtl_f, <span class="dt">rs_col =</span> <span class="dv">15</span>, <span class="dt">pops =</span> <span class="st">"EUR"</span>, <span class="dt">lead_snp =</span> <span class="st">"rs11623869"</span>)</code></pre></div>
 <pre><code>## All inputs are go!</code></pre>
 <pre><code>## Reading in association data...</code></pre>
 <pre><code>## Calculating LD using rs11623869...</code></pre>
 </div>
-<div id="plotting-a-single-dataset-with-gencom" class="section level1">
+<div id="plotting-a-single-dataset-with-racer" class="section level1">
 <h1 class="hasAnchor">
-<a href="#plotting-a-single-dataset-with-gencom" class="anchor"></a>Plotting a single dataset with genCom</h1>
-<p>Now that we have our data formatted and complete, we can plot our associations. First, we will plot each association separately, using the single_plot_function() function. The single_plot_function() requires your formatted association dataframe, with optional ld formatting if you would like to include ld information, the chromosome you would like to plot, the build of the genome you would like to use to plot the genes (default = hg19), and the method you wish to plot by. You can plot the association by: (1) a gene, plotby = “gene”, and gene_plot = “GENE_NAME” (2) a snp, plotby = “snp”, and snp_plot = “rsID” (3) coordinates, plotby = “coord”, start_plot = x, end_plot = y</p>
+<a href="#plotting-a-single-dataset-with-racer" class="anchor"></a>Plotting a single dataset with RACER</h1>
+<p>Now that we have our data formatted and complete, we can plot our associations. First, we will plot each association separately, using the singlePlotRACER() function. The singlePlotRACER() requires your formatted association dataframe, with optional ld formatting if you would like to include ld information, the chromosome you would like to plot, the build of the genome you would like to use to plot the genes (default = hg19), and the method you wish to plot by. You can plot the association by: (1) a gene, plotby = “gene”, and gene_plot = “GENE_NAME” (2) a snp, plotby = “snp”, and snp_plot = “rsID” (3) coordinates, plotby = “coord”, start_plot = x, end_plot = y</p>
 <p>Example 1: Plotting the GWAS association around the MARK3 gene</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mirrorplot<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/single_plot_function">single_plot_function</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas_f_ld, <span class="dt">chr =</span> <span class="dv">14</span>, <span class="dt">build =</span> <span class="st">"hg19"</span>, <span class="dt">plotby =</span> <span class="st">"gene"</span>, <span class="dt">gene_plot =</span> <span class="st">"MARK3"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RACER<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RACER/topics/singlePlotRACER">singlePlotRACER</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas_f_ld, <span class="dt">chr =</span> <span class="dv">14</span>, <span class="dt">build =</span> <span class="st">"hg19"</span>, <span class="dt">plotby =</span> <span class="st">"gene"</span>, <span class="dt">gene_plot =</span> <span class="st">"MARK3"</span>)</code></pre></div>
 <pre><code>## Plotting by...</code></pre>
 <pre><code>## gene: MARK3</code></pre>
 <pre><code>## Reading in association data</code></pre>
 <pre><code>## Generating Plot</code></pre>
-<p><img src="IntroTogenCom_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="IntroToRACER_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Example 2: Plotting the GWAS association around the lead snp, rs11623869</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mirrorplot<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/single_plot_function">single_plot_function</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas_f_ld, <span class="dt">chr =</span> <span class="dv">14</span>, <span class="dt">build =</span> <span class="st">"hg19"</span>, <span class="dt">plotby =</span> <span class="st">"snp"</span>, <span class="dt">snp_plot =</span> <span class="st">"rs11623869"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RACER<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RACER/topics/singlePlotRACER">singlePlotRACER</a></span>(<span class="dt">assoc_data =</span> mark3_bmd_gwas_f_ld, <span class="dt">chr =</span> <span class="dv">14</span>, <span class="dt">build =</span> <span class="st">"hg19"</span>, <span class="dt">plotby =</span> <span class="st">"snp"</span>, <span class="dt">snp_plot =</span> <span class="st">"rs11623869"</span>)</code></pre></div>
 <pre><code>## Plotting by...</code></pre>
 <pre><code>## snp rs11623869</code></pre>
 <pre><code>## Reading in association data</code></pre>
 <pre><code>## Generating Plot</code></pre>
-<p><img src="IntroTogenCom_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="IntroToRACER_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>Example 3: Plotting the eQTL by specifying coordinates</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mirrorplot<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/single_plot_function">single_plot_function</a></span>(<span class="dt">assoc_data =</span> mark3_eqtl_f_ld, <span class="dt">chr =</span> <span class="dv">14</span>, <span class="dt">build =</span> <span class="st">"hg19"</span>, <span class="dt">plotby =</span> <span class="st">"coord"</span>, <span class="dt">start_plot =</span> <span class="dv">103500000</span>, <span class="dt">end_plot =</span> <span class="dv">104500000</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RACER<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RACER/topics/singlePlotRACER">singlePlotRACER</a></span>(<span class="dt">assoc_data =</span> mark3_eqtl_f_ld, <span class="dt">chr =</span> <span class="dv">14</span>, <span class="dt">build =</span> <span class="st">"hg19"</span>, <span class="dt">plotby =</span> <span class="st">"coord"</span>, <span class="dt">start_plot =</span> <span class="dv">103500000</span>, <span class="dt">end_plot =</span> <span class="dv">104500000</span>)</code></pre></div>
 <pre><code>## Plotting by...</code></pre>
 <pre><code>## coord</code></pre>
 <pre><code>## Reading in association data</code></pre>
 <pre><code>## Generating Plot</code></pre>
-<p><img src="IntroTogenCom_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p><img src="IntroToRACER_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
-<div id="making-a-mirrorplot-with-gencom" class="section level1">
+<div id="making-a-mirror-plot-with-racer" class="section level1">
 <h1 class="hasAnchor">
-<a href="#making-a-mirrorplot-with-gencom" class="anchor"></a>Making a mirrorplot with genCom</h1>
-<p>Finally, genCom can help you to compare the assocations by making what we call a mirrorplot. The function takes two formatted association data frames, and returns a plot with dataset #1 on the bottom, and dataset #2 inverted on the top. This allows for a more direct visual comparsion of the two datasets.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/mirrorplot/topics/mirror_plot_function">mirror_plot_function</a></span>(<span class="dt">assoc_data1 =</span> mark3_bmd_gwas_f_ld, <span class="dt">assoc_data2 =</span> mark3_eqtl_f_ld, <span class="dt">chr =</span> <span class="dv">14</span>, <span class="dt">plotby =</span> <span class="st">"gene"</span>, <span class="dt">gene_plot =</span> <span class="st">"MARK3"</span>)</code></pre></div>
+<a href="#making-a-mirror-plot-with-racer" class="anchor"></a>Making a mirror plot with RACER</h1>
+<p>Finally, RACER can help you to compare the assocations by making what we call a mirror plot. The function takes two formatted association data frames, and returns a plot with dataset #1 on the bottom, and dataset #2 inverted on the top. This allows for a more direct visual comparsion of the two datasets.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mirrorPlotRACER.html">mirrorPlotRACER</a></span>(<span class="dt">assoc_data1 =</span> mark3_bmd_gwas_f_ld, <span class="dt">assoc_data2 =</span> mark3_eqtl_f_ld, <span class="dt">chr =</span> <span class="dv">14</span>, <span class="dt">plotby =</span> <span class="st">"gene"</span>, <span class="dt">gene_plot =</span> <span class="st">"MARK3"</span>)</code></pre></div>
 <pre><code>## Plotting by...</code></pre>
 <pre><code>## gene: MARK3</code></pre>
 <pre><code>## Reading in association data</code></pre>
 <pre><code>## Generating plot.</code></pre>
-<p><img src="IntroTogenCom_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p><img src="IntroToRACER_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div id="related-references" class="section level1">
 <h1 class="hasAnchor">
@@ -257,12 +257,12 @@ mark3_eqtl_f =<span class="st"> </span>mirrorplot<span class="op">::</span><span
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#mark3-eqtl-and-bmd-gwas-a-demonstration-of-gencom">Mark3 eQTL and BMD GWAS: A Demonstration of gencom</a></li>
+      <li><a href="#mark3-eqtl-and-bmd-gwas-a-demonstration-of-racer">Mark3 eQTL and BMD GWAS: A Demonstration of RACER</a></li>
       <li><a href="#inputs">Inputs</a></li>
-      <li><a href="#formatting-input-association-data-using-gencom">Formatting input association data using GenCom</a></li>
-      <li><a href="#adding-linkage-disequilibrium-information-with-gencom">Adding linkage disequilibrium information with genCom</a></li>
-      <li><a href="#plotting-a-single-dataset-with-gencom">Plotting a single dataset with genCom</a></li>
-      <li><a href="#making-a-mirrorplot-with-gencom">Making a mirrorplot with genCom</a></li>
+      <li><a href="#formatting-input-association-data-using-racer">Formatting input association data using RACER</a></li>
+      <li><a href="#adding-linkage-disequilibrium-information-with-racer">Adding linkage disequilibrium information with RACER</a></li>
+      <li><a href="#plotting-a-single-dataset-with-racer">Plotting a single dataset with RACER</a></li>
+      <li><a href="#making-a-mirror-plot-with-racer">Making a mirror plot with RACER</a></li>
       <li><a href="#related-references">Related References:</a></li>
       </ul>
 </div>

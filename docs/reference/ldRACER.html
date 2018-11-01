@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • RACER</title>
+<title>Calculating Linkage Disequilibrium Information for Regional Association ComparER — ldRACER • RACER</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Calculating Linkage Disequilibrium Information for Regional Association ComparER — ldRACER" />
+
+<meta property="og:description" content="This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. The input of the function should already have been formatted using formatRACER()." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +49,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -101,17 +104,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Calculating Linkage Disequilibrium Information for Regional Association ComparER</h1>
+    
+    <div class="hidden name"><code>ldRACER.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="IntroToRACER.html">Introduction to RACER</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. The input of the function should already have been formatted using formatRACER().</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>ldRACER</span>(<span class='no'>assoc_data</span>, <span class='no'>rs_col</span>, <span class='no'>pops</span>, <span class='no'>lead_snp</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>assoc_data</th>
+      <td><p>required. A dataframe produced by by formatRACER()</p></td>
+    </tr>
+    <tr>
+      <th>rs_col</th>
+      <td><p>required. numeric. index of column containing rsID numbers for SNPs</p></td>
+    </tr>
+    <tr>
+      <th>pops</th>
+      <td><p>required. Populations used to calculate LD.</p></td>
+    </tr>
+    <tr>
+      <th>lead_snp</th>
+      <td><p>required. Required if ldby = "1000genomes". snp used to calculate LD</p></td>
+    </tr>
+    </table>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>ldRACER</span>(<span class='kw'>assoc_data</span> <span class='kw'>=</span> <span class='no'>assoc_data</span>, <span class='kw'>rs_col</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>pops</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"POP1"</span>, <span class='st'>"POP2"</span>, <span class='no'>etc...</span>), <span class='kw'>lead_snp</span> <span class='kw'>=</span> <span class='st'>"RS_ID"</span>)</div><div class='output co'>#&gt; <span class='message'>All inputs are go!</span></div><div class='output co'>#&gt; <span class='message'>Reading in association data...</span></div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(assoc_data): object 'assoc_data' not found</span></div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

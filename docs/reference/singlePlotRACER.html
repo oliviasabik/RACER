@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GTEx data for Mark3 from thyroid tissue — mark3_eqtl • RACER</title>
+<title>Single Regional Association Plot Function — singlePlotRACER • RACER</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="GTEx data for Mark3 from thyroid tissue — mark3_eqtl" />
+<meta property="og:title" content="Single Regional Association Plot Function — singlePlotRACER" />
 
-<meta property="og:description" content="Data from the GTEx consortium, eQTL for Mark3 in thyroid" />
+<meta property="og:description" content="This function allows you to creat a plot of -log10(P-values) of an association study
+by their genomic position, for example, the results of a GWAS or eQTL study. Sources
+1000K genomes phase III data for linkage disequilibrium calculations." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -104,40 +106,75 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>GTEx data for Mark3 from thyroid tissue</h1>
+    <h1>Single Regional Association Plot Function</h1>
     
-    <div class="hidden name"><code>mark3_eqtl.Rd</code></div>
+    <div class="hidden name"><code>singlePlotRACER.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Data from the GTEx consortium, eQTL for Mark3 in thyroid</p>
+    <p>This function allows you to creat a plot of -log10(P-values) of an association study
+by their genomic position, for example, the results of a GWAS or eQTL study. Sources
+1000K genomes phase III data for linkage disequilibrium calculations.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>data</span>(<span class='no'>mark3_eqtl</span>)</pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A flat file</p>
+    <pre class="usage"><span class='fu'>singlePlotRACER</span>(<span class='no'>assoc_data</span>, <span class='no'>chr</span>, <span class='kw'>build</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>, <span class='no'>plotby</span>,
+  <span class='kw'>gene_plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>snp_plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start_plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>end_plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='https://gtexportal.org/home/'>
-</a></p>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>assoc_data</th>
+      <td><p>required. A dataframe that has been produced by formatRACER and has columns named CHR, POS</p></td>
+    </tr>
+    <tr>
+      <th>chr</th>
+      <td><p>required. numeric. chromosome to plot</p></td>
+    </tr>
+    <tr>
+      <th>build</th>
+      <td><p>optional. default = "hg19", can also optionally be set to "hg38"</p></td>
+    </tr>
+    <tr>
+      <th>plotby</th>
+      <td><p>required. "coord", "gene", or "snp". Which parameter to use to determine the reigon to be plotted.</p></td>
+    </tr>
+    <tr>
+      <th>gene_plot</th>
+      <td><p>optional. Required if "gene" selected for plotby, then plot will be +/- 50kb of gene</p></td>
+    </tr>
+    <tr>
+      <th>snp_plot</th>
+      <td><p>optional. Required if "snp" selected for plotby, then plot will be +/- 50kb of snp</p></td>
+    </tr>
+    <tr>
+      <th>start_plot</th>
+      <td><p>optional. Required if "coord" selected for plotby, then this will be lower bound of x axis</p></td>
+    </tr>
+    <tr>
+      <th>end_plot</th>
+      <td><p>optional. Required if "coord" selected for plotby, then this will be upper bound of x axis</p></td>
+    </tr>
+    </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>mark3_eqtl</span>)</div></pre>
+    <pre class="examples"><div class='input'>singlePlotRACER(assoc_data = assoc_data, chr = 1, plotby = "gene", gene_plot = "GENE_NAME")
+singlePlotRACER(assoc_data = assoc_data, chr = 1, plotby = "snp", snp_plot = "RS_ID of lead SNP"
+singlePlotRACER(assoc_data = assoc_data, chr = 1, plotby = "coord", start_plot = 100000, end_plot = 500000)
+</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:3:1: unexpected symbol</span>
+#&gt; <span class='error'>2: singlePlotRACER(assoc_data = assoc_data, chr = 1, plotby = "snp", snp_plot = "RS_ID of lead SNP"</span>
+#&gt; <span class='error'>3: singlePlotRACER</span>
+#&gt; <span class='error'>   ^</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#source">Source</a></li>
-      
+      <li><a href="#arguments">Arguments</a></li>
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

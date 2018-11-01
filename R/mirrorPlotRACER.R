@@ -1,4 +1,4 @@
-#' Mirror Plot Function
+#' Mirror Plot -- Regional Association ComparER Plot
 #'
 #' This function allows you to creat a plot of -log10(P-values).
 #' @param assoc_data1 required. A dataframe that has columns named
@@ -24,11 +24,11 @@
 #' @export
 #' @import ggplot2
 #' @examples
-#' mirror_plot_function(assoc_data1 = df1, assoc_data2 = df2, chr = #,   name1 = "name1", name2 = "name2", plotby = "gene", gene_plot = "GENE_NAME")
-#' mirror_plot_function(assoc_data1 = df1, assoc_data2 = df2, chr = #, name1 = "name1", name2 = "name2", plotby = "snp", snp_plot = "rs#######")
-#' #' mirror_plot_function(assoc_data1 = df1, assoc_data2 = df2, chr = #, name1 = "name1", name2 = "name2", plotby = "coord", start_plot = #######, end_plot = #######)
+#' mirrorPlotRACER(assoc_data1 = df1, assoc_data2 = df2, chr = #,   name1 = "name1", name2 = "name2", plotby = "gene", gene_plot = "GENE_NAME")
+#' mirrorPlotRACER(assoc_data1 = df1, assoc_data2 = df2, chr = #, name1 = "name1", name2 = "name2", plotby = "snp", snp_plot = "rs#######")
+#' mirrorPlotRACER(assoc_data1 = df1, assoc_data2 = df2, chr = #, name1 = "name1", name2 = "name2", plotby = "coord", start_plot = #######, end_plot = #######)
 
-mirror_plot_function <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld_1=NULL, snp_ld_2=NULL){
+mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld_1=NULL, snp_ld_2=NULL){
   reqs = c("CHR", "POS", "LOG10P")
   cols_1 = colnames(assoc_data1)
   cols_2 = colnames(assoc_data2)

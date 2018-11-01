@@ -1,4 +1,4 @@
-#' Genomic Comparsion Formating Function
+#' Formating Data for Regional Association ComparER
 #'
 #' This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function carries out the formatting necessary to generate a plot
 #' @param assoc_data required. A dataframe that has columns containing the chromosome, physical position, and p-values or -log10(p-values) of the association, and can optionally have columns containing R2 information for LD in the region, or rsID numbers for the associated SNPs
@@ -12,9 +12,9 @@
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
 #' @examples
-#' gencom_format(assoc_data = assoc_data, chr_col = 1, pos_col = 2, log10p_col = 3, ld_col = 4)
+#' formatRACER(assoc_data = assoc_data, chr_col = 1, pos_col = 2, log10p_col = 3, ld_col = 4)
 
-gencom_format <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NULL, ld_col=NULL){
+formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NULL, ld_col=NULL){
 
   if(missing(chr_col)){
     stop("Please specify which column contains chromosome information.")
