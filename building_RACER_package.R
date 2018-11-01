@@ -16,6 +16,7 @@ install("../RACER/")
 library(RACER)
 library(pkgdown)
 pkgdown::build_site()
+devtools::check()
 
 
 #toy_pvalues = read_csv("./toy_pvalues.csv")

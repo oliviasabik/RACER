@@ -12,7 +12,8 @@
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
 #' @examples
-#' formatRACER(assoc_data = assoc_data, chr_col = 1, pos_col = 2, log10p_col = 3, ld_col = 4)
+#' data(mark3_bmd_gwas)
+#' formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
 
 formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NULL, ld_col=NULL){
 

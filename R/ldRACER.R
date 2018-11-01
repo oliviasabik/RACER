@@ -9,7 +9,9 @@
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
 #' @examples
-#' ldRACER(assoc_data = assoc_data, rs_col = 5, pops = c("POP1", "POP2", etc...), lead_snp = "RS_ID")
+#' data(mark3_bmd_gwas)
+#' mark3_bmd_gwas_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
+#' ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 5, pops = c("EUR"), lead_snp = "rs11623869")
 
 ldRACER <- function(assoc_data, rs_col, pops, lead_snp){
 

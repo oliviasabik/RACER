@@ -26,7 +26,8 @@ formatRACER(assoc_data, chr_col, pos_col, p_col = NULL,
 This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function carries out the formatting necessary to generate a plot
 }
 \examples{
-formatRACER(assoc_data = assoc_data, chr_col = 1, pos_col = 2, log10p_col = 3, ld_col = 4)
+data(mark3_bmd_gwas)
+formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
 }
 \keyword{association}
 \keyword{disequilibrium.}

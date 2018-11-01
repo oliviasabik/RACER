@@ -24,9 +24,15 @@
 #' @export
 #' @import ggplot2
 #' @examples
-#' mirrorPlotRACER(assoc_data1 = df1, assoc_data2 = df2, chr = #,   name1 = "name1", name2 = "name2", plotby = "gene", gene_plot = "GENE_NAME")
-#' mirrorPlotRACER(assoc_data1 = df1, assoc_data2 = df2, chr = #, name1 = "name1", name2 = "name2", plotby = "snp", snp_plot = "rs#######")
-#' mirrorPlotRACER(assoc_data1 = df1, assoc_data2 = df2, chr = #, name1 = "name1", name2 = "name2", plotby = "coord", start_plot = #######, end_plot = #######)
+#' data(mark3_bmd_gwas)
+#' data(mark3_eqtl)
+#'
+#' mark3_bmd_gwas_f = RACER::formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
+#' mark3_eqtl_f = RACER::formatRACER(assoc_data = mark3_eqtl, chr_col = 10, pos_col = 11, p_col = 7)
+#'
+#' mark3_bmd_gwas_f_ld = RACER::ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 2, pops = "EUR", lead_snp = "rs11623869")
+#' mark3_eqtl_f_ld = RACER::ldRACER(assoc_data = mark3_eqtl_f, rs_col = 15, pops = "EUR", lead_snp = "rs11623869")
+#' mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld, chr = 14, plotby = "gene", gene_plot = "MARK3")
 
 mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld_1=NULL, snp_ld_2=NULL){
   reqs = c("CHR", "POS", "LOG10P")

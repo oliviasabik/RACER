@@ -18,4 +18,4 @@ install("{PATH}/RACER-master/")
 library(RACER)
 ```
 ## 2. RACER vignette
-The best way to get a feel for RACER is to refer to the [vignette](https://oliviasabik.github.io/RACER/index.html) included in the package. 
+The best way to get a feel for RACER is to refer to the [vignette](https://oliviasabik.github.io/RACER/articles/IntroToRACER.html) included in the package. 
