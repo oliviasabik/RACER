@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/index.html</loc>
+  </url>
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/reference/biomart_hg19.html</loc>
+  </url>
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/reference/biomart_hg38.html</loc>
+  </url>
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/reference/formatRACER.html</loc>
+  </url>
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/reference/ldRACER.html</loc>
+  </url>
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/reference/mark3_bmd_gwas.html</loc>
+  </url>
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/reference/mark3_eqtl.html</loc>
+  </url>
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/reference/mirrorPlotRACER.html</loc>
+  </url>
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/reference/singlePlotRACER.html</loc>
+  </url>
+  <url>
+    <loc>http://oliviasabik.github.io/RACER/articles/IntroToRACER.html</loc>
+  </url>
+</urlset>
