@@ -3,3 +3,15 @@ url: http://oliviasabik.github.io/RACER
 template:
   params:
     bootswatch: yeti
+
+navbar:
+  left:
+  - text: GitHub
+    icon: fa-github fa-lg
+    href: https://github.com/oliviasabik/RACER
+  
+  right:
+  - text: Olivia Sabik
+    href: https://oliviasabik.github.io/
+  - text: RACER
+    href: https://oliviasabik.github.io/RACER/index.html

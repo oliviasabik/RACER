@@ -19,3 +19,5 @@ Suggests:
     BiocStyle,
     knitr,
     rmarkdown
+URL: https://oliviasabik.github.io/RACER/index.html
+BugReports: https://github.com/oliviasabik/RACER
