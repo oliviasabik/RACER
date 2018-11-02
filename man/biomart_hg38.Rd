@@ -6,7 +6,7 @@
 \title{Biomart Gene Data}
 \format{A flat file}
 \source{
-\href{http://useast.ensembl.org/biomart/martview}
+\url{http://useast.ensembl.org/biomart/martview}
 }
 \usage{
 data(biomart_hg38)

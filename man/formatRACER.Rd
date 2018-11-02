@@ -19,8 +19,6 @@ formatRACER(assoc_data, chr_col, pos_col, p_col = NULL,
 \item{log10p_col}{required, if no p_col specified. numeric. index of column in assoc_data containing -log10(p-value)s}
 
 \item{ld_col}{optional. numeric. Required if you want to use the LD data in your data set in your plot, index of column in assoc_data containing LD information, e.g. R2 or D' values}
-
-\item{rs_col}{optional. numeric. Required if you want to calculated LD using 1000 genomes for analysis, index of column containing rsID numbers for SNPs}
 }
 \description{
 This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function carries out the formatting necessary to generate a plot

@@ -14,10 +14,13 @@ setwd("~/Work/RACER/")
 document()
 install("../RACER/")
 library(RACER)
+devtools::check()
+devtools::build()
+
+
+
 library(pkgdown)
 pkgdown::build_site()
-devtools::check()
-
 
 #toy_pvalues = read_csv("./toy_pvalues.csv")
 # mirrorplot::single_plot_function(toy_pvalues)

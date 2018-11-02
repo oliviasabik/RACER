@@ -80,11 +80,11 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = N
       end = end_plot
     }else if((plotby == "gene") == TRUE){
       message(paste("gene:",gene_plot))
-            if(sum(is.null(gene_plot)) == 0){
-              p = subset(gene_sub, gene_sub$GENE_NAME == gene_plot)
-              start = min(p$TRX_START) - 500000
-              end = max(p$TRX_END) + 500000
-            }else{message("No gene specified.")}
+      if(sum(is.null(gene_plot)) == 0){
+        p = subset(gene_sub, gene_sub$GENE_NAME == gene_plot)
+        start = min(p$TRX_START) - 500000
+        end = max(p$TRX_END) + 500000
+      }else{message("No gene specified.")}
     }else if((plotby == "snp") == TRUE){
       message(paste("snp",snp_plot))
       q = subset(assoc_data, RS_ID == snp_plot)
@@ -120,10 +120,10 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = N
     c = ggplot2::ggplot(gene_sub, ggplot2::aes(x = value, y = y_value)) +
       ggplot2::geom_line(ggplot2::aes(group = GENE_NAME), size = 2) + ggplot2::theme_bw() +
       ggplot2::geom_text(data = plot_lab, ggplot2::aes(x = value, y = y_value, label = GENE_NAME),
-                hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
+                         hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
       ggplot2::theme(axis.title.y = ggplot2::element_text(color = "white", size = 28),
-            axis.text.y = ggplot2::element_blank(),
-            axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
+                     axis.text.y = ggplot2::element_blank(),
+                     axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
       ggplot2::ylim(0,(max(gene_sub$y_value)+1))
 
     b = ggplot2::ggplot(in.dt, ggplot2::aes(x = POS, y = LOG10P, color = LD_BIN)) +
@@ -139,10 +139,10 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = N
     c = ggplot2::ggplot(gene_sub, ggplot2::aes(x = value, y = y_value)) +
       ggplot2::geom_line(ggplot2::aes(group = GENE_NAME), size = 2) + ggplot2::theme_bw() +
       ggplot2::geom_text(data = plot_lab, ggplot2::aes(x = value, y = y_value, label = GENE_NAME),
-                hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
+                         hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
       ggplot2::theme(axis.title.y = ggplot2::element_text(color = "white", size = 28),
-            axis.text.y = ggplot2::element_blank(),
-            axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
+                     axis.text.y = ggplot2::element_blank(),
+                     axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
       ggplot2::ylim(0,(max(gene_sub$y_value)+1))
 
     b = ggplot2::ggplot(in.dt, ggplot2::aes(x = POS, y = LOG10P)) +
@@ -155,4 +155,3 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = N
   }
 
 }
-

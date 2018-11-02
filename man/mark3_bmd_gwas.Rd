@@ -6,7 +6,7 @@
 \title{UKBB eBMD GWAS Data Release 2017}
 \format{A flat file}
 \source{
-\href{http://www.gefos.org/?q=content/ukbb-ebmd-gwas-data-release-2017}
+\url{http://www.gefos.org/?q=content/ukbb-ebmd-gwas-data-release-2017}
 }
 \usage{
 data(mark3_bmd_gwas)

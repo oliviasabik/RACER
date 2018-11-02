@@ -10,7 +10,7 @@
 #'
 #'@keywords datasets
 #'
-#'@source \href{https://gtexportal.org/home/}
+#'@source \url{https://gtexportal.org/home/}
 #'
 #'@examples
 #'data(mark3_eqtl)

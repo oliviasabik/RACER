@@ -6,7 +6,7 @@
 \title{GTEx data for Mark3 from thyroid tissue}
 \format{A flat file}
 \source{
-\href{https://gtexportal.org/home/}
+\url{https://gtexportal.org/home/}
 }
 \usage{
 data(mark3_eqtl)

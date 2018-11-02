@@ -6,7 +6,6 @@
 #' @param pos_col required. numeric. index of column in assoc_data containing genomic position information
 #' @param log10p_col required, if no p_col specified. numeric. index of column in assoc_data containing -log10(p-value)s
 #' @param p_col required, if no log10p_col column specified. numeric. index of column in assoc_data containing p-values
-#' @param rs_col optional. numeric. Required if you want to calculated LD using 1000 genomes for analysis, index of column containing rsID numbers for SNPs
 #' @param ld_col optional. numeric. Required if you want to use the LD data in your data set in your plot, index of column in assoc_data containing LD information, e.g. R2 or D' values
 #'
 #' @keywords association plot, gwas, linkage disequilibrium.

@@ -10,7 +10,7 @@
 #'
 #'@keywords datasets
 #'
-#'@source \href{http://useast.ensembl.org/biomart/martview}
+#'@source \url{http://useast.ensembl.org/biomart/martview}
 #'
 #'@examples
 #'data(biomart_hg38)

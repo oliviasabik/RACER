@@ -6,7 +6,7 @@
 \title{Biomart Gene Data}
 \format{A flat file}
 \source{
-\href{http://grch37.ensembl.org/index.html}
+\url{http://grch37.ensembl.org/index.html}
 }
 \usage{
 data(biomart_hg19)

@@ -10,7 +10,7 @@
 #'
 #'@keywords datasets
 #'
-#'@source \href{http://grch37.ensembl.org/index.html}
+#'@source \url{http://grch37.ensembl.org/index.html}
 #'
 #'@examples
 #'data(biomart_hg19)

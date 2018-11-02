@@ -10,6 +10,7 @@
 #'
 #' @param assoc_data2 required. identifcal in format to assoc_data1
 #' @param chr required. chromosome you wish to plot
+#' @param build optional. indicates the genome build to use to plot the genes below the association plot. default = "hg19", but can be changed to "hg38"
 #' @param name1 optional. name of association set 1
 #' @param name2 optional. name of association set 2
 #' @param plotby required. "coord", "gene", or "snp". Which parameter to use to
@@ -34,7 +35,7 @@
 #' mark3_eqtl_f_ld = RACER::ldRACER(assoc_data = mark3_eqtl_f, rs_col = 15, pops = "EUR", lead_snp = "rs11623869")
 #' mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld, chr = 14, plotby = "gene", gene_plot = "MARK3")
 
-mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL, ldby = "none", pops=NULL, snp_ld_1=NULL, snp_ld_2=NULL){
+mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL){
   reqs = c("CHR", "POS", "LOG10P")
   cols_1 = colnames(assoc_data1)
   cols_2 = colnames(assoc_data2)

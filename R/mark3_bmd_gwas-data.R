@@ -10,7 +10,7 @@
 #'
 #'@keywords datasets
 #'
-#'@source \href{http://www.gefos.org/?q=content/ukbb-ebmd-gwas-data-release-2017}
+#'@source \url{http://www.gefos.org/?q=content/ukbb-ebmd-gwas-data-release-2017}
 #'
 #'@examples
 #'data(mark3_bmd_gwas)
