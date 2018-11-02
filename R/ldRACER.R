@@ -43,10 +43,10 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp){
                                                  "col_9", "col_10"), sep = "\t")
     colnames(z) = z[1,]
     z = z[-1,]
-    z = dplyr::select(z, RS_Number, R2)
+    z = dplyr::select_(z, ~RS_Number, ~R2)
     colnames(z) = c("RS_ID", "LD")
     assoc_data$LD = NA
-    assoc_data = dplyr::select(assoc_data, -LD)
+    assoc_data = dplyr::select_(assoc_data, (.dots = paste0("-", "LD")))
     assoc_data = merge(assoc_data, z, by = "RS_ID", all.x = TRUE)
     assoc_data$LD = as.numeric(as.character(assoc_data$LD))
     assoc_data$LD_BIN <- cut(assoc_data$LD,
@@ -75,10 +75,10 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp){
                                                  "col_9", "col_10"), sep = "\t")
       colnames(z) = z[1,]
       z = z[-1,]
-      z = dplyr::select(z, RS_Number, R2)
+      z = dplyr::select_(z, ~RS_Number, ~R2)
       colnames(z) = c("RS_ID", "LD")
       assoc_data$LD = NA
-      assoc_data = dplyr::select(assoc_data, -LD)
+      assoc_data = dplyr::select_(assoc_data, -(~LD))
       assoc_data = merge(assoc_data, z, by = "RS_ID", all.x = TRUE)
       assoc_data$LD = as.numeric(as.character(assoc_data$LD))
       assoc_data$LD_BIN <- cut(assoc_data$LD,

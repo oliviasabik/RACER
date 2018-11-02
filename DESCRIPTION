@@ -18,6 +18,7 @@ Imports: dplyr,
 Suggests: 
     BiocStyle,
     knitr,
-    rmarkdown
+    rmarkdown,
+    utils
 URL: https://oliviasabik.github.io/RACER/index.html
 BugReports: https://github.com/oliviasabik/RACER

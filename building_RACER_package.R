@@ -15,7 +15,11 @@ document()
 install("../RACER/")
 library(RACER)
 devtools::check()
-devtools::build()
+
+usethis::use_data(mark3_eqtl, compress = "xz", overwrite = TRUE)
+usethis::use_data(mark3_bmd_gwas, compress = "xz", overwrite = TRUE)
+usethis::use_data(biomart_hg19, compress = "xz", overwrite = TRUE)
+usethis::use_data(biomart_hg38, compress = "xz", overwrite = TRUE)
 
 
 
@@ -81,23 +85,11 @@ B4galnt3_eqtl_form_ld = gencom_ld(assoc_data = B4galnt3_eqtl_form, rs_col = 1, p
 
 head(B4galnt3_eqtl_form_ld)
 #Success
-
-###### Testing Single Plot Funcation #####
-single_plot_function(assoc_data = B4galnt3_eqtl_form_ld, chr = 12, plotby = "coord", start_plot = 470000, end_plot = 700000)
-
-mirrorplot::single_plot_function(assoc_data = B4galnt3_no_ld_formatted, chr = 12, build = "hg19", plotby = "gene", gene_plot = "B4GALNT3")
-
-mirrorplot::single_plot_function(assoc_data = B4galnt3_no_ld_formatted_B, chr =  12, plotby = "gene", gene_plot = "B4GALNT3")
-#Success
-
-###### Testing the mirrorplot function #####
-head(b4galnt3_gwas_form)
-head(B4galnt3_eqtl_form_ld)
-
-mirror_plot_function(assoc_data1 = B4galnt3_eqtl_form_ld, assoc_data2 = b4galnt3_gwas_form, chr = 12, name1 = "eqtl", name2 = "gwas", plotby = "gene", gene_plot = "B4GALNT3")
-
-
 data("mark3_bmd_gwas")
+data("mark3_eqtl")
+mark3_bmd_gwas_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
+mark3_bmd_gwas_f_ld = ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 2, pops = c("EUR"), lead_snp = "rs11623869")
+singlePlotRACER(assoc_data = mark3_bmd_gwas_f_ld, chr = 14, build = "hg19", plotby = "coord", start_plot = 103500000, end_plot = 104500000)
 
 
 #### package down
@@ -107,5 +99,13 @@ biocLite("BiocStyle")
 usethis::use_package("BiocStyle", "Suggests")
 usethis::use_package("knitr", "Suggests")
 usethis::use_package("rmarkdown", "Suggests")
+usethis::use_package("utils", "Suggests")
+usethis::use_pkgdown()
+
+data("mark3_eqtl")
+head(mark3_eqtl)
+
+library(rmarkdown)
+render(input = "./vignettes/IntroToRACER.Rmd",output_format = "pdf_document", output_file = "IntroToRACER.pdf", output_dir = "./vignettes")
 
 
