@@ -7,14 +7,17 @@
 #' @param log10p_col required, if no p_col specified. numeric. index of column in assoc_data containing -log10(p-value)s
 #' @param p_col required, if no log10p_col column specified. numeric. index of column in assoc_data containing p-values
 #' @param ld_col optional. numeric. Required if you want to use the LD data in your data set in your plot, index of column in assoc_data containing LD information, e.g. R2 or D' values
+#' @param rs_col optional. numeric. Required if you want to use the use
+#' ldRACER to pull LD information from the 1000 genomes phase III project,
+#' or if you want to make a scatter comparison plot
 #'
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
 #' @examples
 #' data(mark3_bmd_gwas)
-#' formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
+#' formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11, rs_col = 2)
 
-formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NULL, ld_col=NULL){
+formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NULL, ld_col=NULL, rs_col = NULL){
 
   if(missing(chr_col)){
     stop("Please specify which column contains chromosome information.")
@@ -35,6 +38,9 @@ formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NUL
   }else if(!is.null(p_col)){
     colnames(assoc_data)[p_col] = "P"
     assoc_data$LOG10P = -log10(assoc_data$P)
+  }
+  if(!is.null(rs_col)){
+    colnames(assoc_data)[rs_col] = "RS_ID"
   }
   if(!is.null(ld_col)){
     message("Processing input LD information...")

@@ -3,5 +3,6 @@
 export(formatRACER)
 export(ldRACER)
 export(mirrorPlotRACER)
+export(scatterPlotRACER)
 export(singlePlotRACER)
 import(ggplot2)
