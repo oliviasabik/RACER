@@ -3,7 +3,7 @@ title: "Introduction to RACER"
 author: "Olivia Sabik"
 date: "`r Sys.Date()`"
 output: 
-  knitr::html_document
+  BiocStyle::html_document
 vignette: >
   %\\VignetteIndexEntry{Introduction to RACER}
   %\\VignetteEngine{knitr::rmarkdown}
@@ -99,6 +99,16 @@ Finally, RACER can help you to compare the assocations by making what we call a 
 mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld, chr = 14, plotby = "gene", gene_plot = "MARK3")
 ```
 
+We can further refine this plot to the region of interest using plotby = "coord". 
+```{r warning=FALSE}
+mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld, chr = 14, plotby = "coord", start_plot = 103750000, end_plot = 104250000)
+```
+
+# Making a scatter plot of p-value correlations
+We can also make a plot to visualize the correlation of the p_values between the two data sets.
+```{r}
+scatterPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld, chr = 14, name1 = "BMD GWAS p_values", name2 = "MARK3 eQTL p_values", region_start = 103750000, region_end = 104250000, ld_df = 1)
+```
 
 
 # Related References:
