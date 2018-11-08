@@ -8,12 +8,14 @@ library(tidyverse)
 #install.packages("settings")
 library(settings)
 #devtools::create("mirrorplot")
-install_github("oliviasabik/mirrorplot")
+#install_github("oliviasabik/mirrorplot")
 
 setwd("~/Work/package_development/RACER/")
 document()
 install("../RACER/")
 library(RACER)
+
+devtools::check()
 
 data("mark3_eqtl")
 data("mark3_bmd_gwas")
@@ -30,20 +32,16 @@ df2_f_ld = ldRACER(assoc_data = df2_f, rs_col = 15, pops = "EUR", lead_snp = "rs
 scatterPlotRACER(assoc_data1 = df1_f_ld, assoc_data2 = df2_f_ld, chr = 14, name1 = "Mark3_GWAS", name2 = "Mark3_eQTL", region_start = 103750000, region_end = 104250000, ld_df = 1)
 
 
-devtools::check()
-
-usethis::use_data(mark3_eqtl, compress = "xz", overwrite = TRUE)
-usethis::use_data(mark3_bmd_gwas, compress = "xz", overwrite = TRUE)
-usethis::use_data(biomart_hg19, compress = "xz", overwrite = TRUE)
-usethis::use_data(biomart_hg38, compress = "xz", overwrite = TRUE)
 
 
 
+
+#### package down
 library(pkgdown)
 pkgdown::build_site()
 
 
-#### package down
+
 source("https://bioconductor.org/biocLite.R")
 biocLite("BiocStyle")
 
@@ -51,6 +49,10 @@ usethis::use_package("BiocStyle", "Suggests")
 usethis::use_package("knitr", "Suggests")
 usethis::use_package("rmarkdown", "Suggests")
 usethis::use_package("utils", "Suggests")
+usethis::use_data(mark3_eqtl, compress = "xz", overwrite = TRUE)
+usethis::use_data(mark3_bmd_gwas, compress = "xz", overwrite = TRUE)
+usethis::use_data(biomart_hg19, compress = "xz", overwrite = TRUE)
+usethis::use_data(biomart_hg38, compress = "xz", overwrite = TRUE)
 usethis::use_pkgdown()
 
 data("mark3_eqtl")
