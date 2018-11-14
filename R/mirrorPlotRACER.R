@@ -117,6 +117,15 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1
   in.dt.2= dplyr::filter_(in.dt.2, ~POS > start)%>%
     dplyr::filter_(~POS < end)
 
+  len1 = nchar(trunc(max(in.dt$LOG10P)))
+  len2 = nchar(trunc(max(in.dt.2$LOG10P)))
+
+  scaleFUN0 <- function(x) sprintf("%.0f", x)
+  scaleFUN1 <- function(x) sprintf("%.1f", x)
+  scaleFUN2 <- function(x) sprintf("%.2f", x)
+  scaleFUN3 <- function(x) sprintf("%.3f", x)
+  scaleFUN4 <- function(x) sprintf("%.4f", x)
+
   # generate mirror plot
   message("Generating plot.")
   if("LD" %in% cols_1 && "LD_BIN" %in% cols_1){
@@ -172,6 +181,30 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1
             axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
       ggplot2::ylim(0,(max(gene_sub$y_value)+1))
 
+    if(len1 == len2){
+      a = a + scale_y_reverse(labels = scaleFUN0)
+      b = b + scale_y_continuous(labels = scaleFUN0)
+    }else if(len1 > len2){
+      a = a + scale_y_reverse(labels = scaleFUN1)
+      diff = len1 - len2
+      if(diff == 1){
+        b = b + scale_y_continuous(labels = scaleFUN2)
+      }else if(diff == 2){
+        b = b + scale_y_continuous(labels = scaleFUN3)
+      }else if(diff == 3){
+        b = b + scale_y_continuous(labels = scaleFUN4)
+      }
+    }else if(len2 > len1){
+      b = b + scale_y_continuous(labels = scaleFUN1)
+      diff = len2 - len1
+      if(diff == 1){
+        a = a + scale_y_reverse(labels = scaleFUN2)
+      }else if(diff == 2){
+        a = a + scale_y_reverse(labels = scaleFUN3)
+      }else if(diff == 3){
+        a = a + scale_y_reverse(labels = scaleFUN4)
+      }
+    }
     ggpubr::ggarrange(a, b, c, heights = c(2,2,1), nrow = 3, ncol = 1,
                       common.legend = TRUE, legend = "right")
 
