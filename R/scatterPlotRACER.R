@@ -26,7 +26,8 @@
 #' df2_f = formatRACER(assoc_data = mark3_eqtl, chr_col = 10, pos_col = 11, p_col = 7,rs_col = 15)
 #' df1_f_ld = ldRACER(assoc_data = df1_f, rs_col = 2, pops = "EUR", lead_snp = "rs11623869")
 #' df2_f_ld = ldRACER(assoc_data = df2_f, rs_col = 15, pops = "EUR", lead_snp = "rs11623869")
-#' scatterPlotRACER(assoc_data1 = df1_f_ld, assoc_data2 = df2_f_ld, chr = 14, name1 = "Mark3_GWAS", name2 = "Mark3_eQTL",
+#' scatterPlotRACER(assoc_data1 = df1_f_ld, assoc_data2 = df2_f_ld, chr = 14,
+#' name1 = "Mark3_GWAS", name2 = "Mark3_eQTL",
 #' region_start = 103750000, region_end = 104250000, ld_df = 1)
 
 scatterPlotRACER <- function(assoc_data1, assoc_data2, chr, name1="Association Dataset #1", name2="Association Dataset #2", region_start, region_end, ld_df = NULL){
