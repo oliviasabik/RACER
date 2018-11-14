@@ -29,7 +29,7 @@ This group of functions allows you to creat a plot of -log10(P-values) of an ass
 }
 \examples{
 data(mark3_bmd_gwas)
-formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11, rs_col = 2) | head
+head(formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11, rs_col = 2))
 }
 \keyword{association}
 \keyword{disequilibrium.}

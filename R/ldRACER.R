@@ -11,7 +11,7 @@
 #' @examples
 #' data(mark3_bmd_gwas)
 #' mark3_bmd_gwas_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
-#' ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 5, pops = c("EUR"), lead_snp = "rs11623869") | head
+#' head(ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 5, pops = c("EUR"), lead_snp = "rs11623869"))
 
 ldRACER <- function(assoc_data, rs_col, pops, lead_snp){
 
