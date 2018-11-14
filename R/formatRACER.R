@@ -15,7 +15,7 @@
 #' @export
 #' @examples
 #' data(mark3_bmd_gwas)
-#' formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11, rs_col = 2)
+#' formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11, rs_col = 2) | head
 
 formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NULL, ld_col=NULL, rs_col = NULL){
 
