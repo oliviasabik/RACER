@@ -16,7 +16,6 @@ Imports: dplyr,
     tidyr,
     magrittr
 Suggests: 
-    BiocStyle,
     knitr,
     rmarkdown,
     utils

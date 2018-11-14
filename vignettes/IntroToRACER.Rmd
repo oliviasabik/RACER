@@ -3,7 +3,7 @@ title: "Introduction to RACER"
 author: "Olivia Sabik"
 date: "`r Sys.Date()`"
 output: 
-  BiocStyle::html_document
+  rmarkdown::html_vignette
 vignette: >
   %\\VignetteIndexEntry{Introduction to RACER}
   %\\VignetteEngine{knitr::rmarkdown}
