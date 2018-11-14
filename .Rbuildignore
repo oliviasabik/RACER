@@ -1,2 +1,8 @@
+^docs$
+^_pkgdown\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^building_RACER_package\.R$
+^config$
+## Ignore travis config file
+^\.travis\.yml$
