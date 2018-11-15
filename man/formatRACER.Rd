@@ -28,8 +28,9 @@ or if you want to make a scatter comparison plot}
 This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function carries out the formatting necessary to generate a plot
 }
 \examples{
+\dontrun{
 data(mark3_bmd_gwas)
-head(formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11, rs_col = 2))
+head(formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11, rs_col = 2))}
 }
 \keyword{association}
 \keyword{disequilibrium.}

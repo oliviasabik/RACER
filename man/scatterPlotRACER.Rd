@@ -35,6 +35,7 @@ be properly labeled}
 This function allows you to create a scatter plot of -log10(P-values).
 }
 \examples{
+\dontrun{
 data("mark3_eqtl")
 data("mark3_bmd_gwas")
 df1_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11,rs_col = 2)
@@ -43,7 +44,7 @@ df1_f_ld = ldRACER(assoc_data = df1_f, rs_col = 2, pops = "EUR", lead_snp = "rs1
 df2_f_ld = ldRACER(assoc_data = df2_f, rs_col = 15, pops = "EUR", lead_snp = "rs11623869")
 scatterPlotRACER(assoc_data1 = df1_f_ld, assoc_data2 = df2_f_ld, chr = 14,
 name1 = "Mark3_GWAS", name2 = "Mark3_eQTL",
-region_start = 103750000, region_end = 104250000, ld_df = 1)
+region_start = 103750000, region_end = 104250000, ld_df = 1)}
 }
 \keyword{association}
 \keyword{plot}

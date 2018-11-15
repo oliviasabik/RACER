@@ -25,6 +25,7 @@
 #' @export
 #' @import ggplot2
 #' @examples
+#' \dontrun{
 #' data(mark3_bmd_gwas)
 #' data(mark3_eqtl)
 #'
@@ -38,7 +39,7 @@
 #' mark3_eqtl_f_ld = RACER::ldRACER(assoc_data = mark3_eqtl_f,
 #' rs_col = 15, pops = "EUR", lead_snp = "rs11623869")
 #' mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld,
-#' chr = 14, plotby = "gene", gene_plot = "MARK3")
+#' chr = 14, plotby = "gene", gene_plot = "MARK3")}
 
 mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL){
   reqs = c("CHR", "POS", "LOG10P")

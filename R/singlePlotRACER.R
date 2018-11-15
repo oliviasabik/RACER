@@ -16,13 +16,14 @@
 #' @export
 #' @import ggplot2
 #' @examples
+#' \dontrun{
 #' data(mark3_bmd_gwas)
 #' mark3_bmd_gwas_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3,
 #' pos_col = 4, p_col = 11)
 #' mark3_bmd_gwas_f_ld = ldRACER(assoc_data = mark3_bmd_gwas_f,
 #' rs_col = 2, pops = c("EUR"), lead_snp = "rs11623869")
 #' singlePlotRACER(assoc_data = mark3_bmd_gwas_f_ld, chr = 14,
-#' build = "hg19", plotby = "coord", start_plot = 103500000, end_plot = 104500000)
+#' build = "hg19", plotby = "coord", start_plot = 103500000, end_plot = 104500000)}
 
 singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot = NULL){
 

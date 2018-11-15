@@ -19,9 +19,10 @@ ldRACER(assoc_data, rs_col, pops, lead_snp)
 This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. The input of the function should already have been formatted using formatRACER().
 }
 \examples{
+\dontrun{
 data(mark3_bmd_gwas)
 mark3_bmd_gwas_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
-head(ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 5, pops = c("EUR"), lead_snp = "rs11623869"))
+head(ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 5, pops = c("EUR"), lead_snp = "rs11623869"))}
 }
 \keyword{association}
 \keyword{disequilibrium.}
