@@ -17,7 +17,6 @@ RACER is a package that allows you to generate high quality regional association
 In this vignette, we will demonstrate the utility of these plots using data from our lab's recent work (Calabrese GM, Mesner LD, Stains JP, et al. Cell Systems. 2017;4(1):46–59.e4). In this publication, we identified the gene Mark3 as a putative novel regulator of bone mineral density through the integration of GWAS and co-expression network analysis in mice. In order to understand the relationship between expression of Mark3 and BMD in humans, we utilized coloc, and determined that there was a 97.4% chance that a GTEx eQTL for Mark3 and a GWAS association for BMD shared a genetic driver. However, in our original publication, we did not visually represent this result. This vignette begins with Mark3 eQTL data from the GTEx database (https://gtexportal.org/home/) and BMD GWAS data from the 2017 study using data from the UK BioBank (Kemp JP, Morris JA, Medina-Gomez C, et al. Nature Genetics. 2017;49(10):1468-1475).
 
 ```{r, message=FALSE, warning=FALSE}
-library(devtools) 
 library(RACER)
 data("mark3_bmd_gwas")
 data("mark3_eqtl")
