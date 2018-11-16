@@ -11,6 +11,7 @@
 #' @param assoc_data2 required. identifcal in format to assoc_data1
 #' @param chr required. chromosome you wish to plot
 #' @param build optional. indicates the genome build to use to plot the genes below the association plot. default = "hg19", but can be changed to "hg38"
+#' @param set optional. default = "protein_coding", however can be set to "all" to plot all RNAs in the genome
 #' @param name1 optional. name of association set 1
 #' @param name2 optional. name of association set 2
 #' @param plotby required. "coord", "gene", or "snp". Which parameter to use to
@@ -41,7 +42,7 @@
 #' mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld,
 #' chr = 14, plotby = "gene", gene_plot = "MARK3")}
 
-mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL){
+mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set = "protein_coding", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL){
   reqs = c("CHR", "POS", "LOG10P")
   cols_1 = colnames(assoc_data1)
   cols_2 = colnames(assoc_data2)
@@ -51,15 +52,21 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1
   }else{stop("Association Data Set #2 is missing a required column.")}
 
   if(build == "hg38"){
-    utils::data(biomart_hg38)
+    utils::data(hg38)
     chr_in = chr
-    colnames(biomart_hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
-    gene_sub = biomart_hg38[biomart_hg38$CHR == chr_in,]
+    colnames(hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "LENGTH", "GENE_NAME", "TYPE")
+    gene_sub = hg38[hg38$CHR == chr_in,]
   }else if(build == "hg19"){
-    utils::data(biomart_hg19)
+    utils::data(hg19)
     chr_in = chr
-    colnames(biomart_hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
-    gene_sub = biomart_hg19[biomart_hg19$CHR == chr_in,]
+    colnames(hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "LENGTH", "GENE_NAME", "TYPE")
+    gene_sub = hg19[hg19$CHR == chr_in,]
+  }
+
+  if(set == "protein_coding"){
+    gene_sub = gene_sub[gene_sub$TYPE == "protein_coding",]
+  }else{
+    gene_sub = gene_sub
   }
 
   `%>%` <- magrittr::`%>%`
@@ -95,7 +102,7 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1
   gene_sub %>%
     dplyr::arrange_(.dots = c(myCol))
   gene_sub = gene_sub[!duplicated(gene_sub$GENE_ID),]
-  gene_sub = gene_sub[,c(3,4,5)]
+  gene_sub = gene_sub[,c(3,4,6)]
   gene_sub = reshape2::melt(gene_sub, id.vars = "GENE_NAME")
   gene_sub$y_value = as.numeric(as.factor(gene_sub$GENE_NAME))
   plot_lab = subset(gene_sub, gene_sub$variable == "TRX_END")
@@ -139,7 +146,9 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1
                                 axis.text.x=ggplot2::element_blank(),
                                 axis.ticks.x=ggplot2::element_blank()) +
       ggplot2::theme(legend.position = "none") +
-      ggplot2::xlim(start,end) + ggplot2::ggtitle(paste0("Mirror Plot of ", name1, " and ", name2 ))
+      ggplot2::xlim(start,end) + ggplot2::ggtitle(paste0(name1)) +
+      theme(plot.title = element_text(size = 10, vjust = -1)) +
+      theme(plot.margin = margin(5.5,5.5,-3,5.5))
   }else{
     message("No LD information for dataset #1.")
     a = ggplot2::ggplot(in.dt, ggplot2::aes_string(x = "POS", y = "LOG10P")) +
@@ -149,7 +158,9 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1
                                                   axis.text.x=ggplot2::element_blank(),
                                                   axis.ticks.x=ggplot2::element_blank()) +
       ggplot2::theme(legend.position = "none") +
-      ggplot2::xlim(start,end) + ggplot2::ggtitle(paste0("Mirror Plot of ", name1, " and ", name2 ))
+      ggplot2::xlim(start,end) + ggplot2::ggtitle(paste0(name1)) +
+      theme(plot.title = element_text(size = 10, vjust = -1)) +
+      theme(plot.margin = margin(5.5,5.5,-3,5.5))
   }
 
   if("LD" %in% cols_2 && "LD_BIN" %in% cols_2){
@@ -162,7 +173,8 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1
       ggplot2::xlim(start,end) + ggplot2::ylim(min(in.dt.2$LOG10P),max(in.dt.2$LOG10P)) +
       ggplot2::theme(axis.title.x=ggplot2::element_blank(),
                      axis.text.x=ggplot2::element_blank(),
-                     axis.ticks.x=ggplot2::element_blank())
+                     axis.ticks.x=ggplot2::element_blank()) + ggplot2::ggtitle(paste0(name2)) +
+      theme(plot.title = element_text(size = 10, vjust = -1))
     }else{
       b = ggplot2::ggplot(in.dt.2, ggplot2::aes_string(x = "POS", y = "LOG10P")) +
         ggplot2::geom_point() + ggplot2::theme_bw() + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position (Mbp)")) +
@@ -170,7 +182,8 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", name1
         ggplot2::xlim(start,end) + ggplot2::ylim(min(in.dt.2$LOG10P),max(in.dt.2$LOG10P)) +
         ggplot2::theme(axis.title.x=ggplot2::element_blank(),
                        axis.text.x=ggplot2::element_blank(),
-                       axis.ticks.x=ggplot2::element_blank())
+                       axis.ticks.x=ggplot2::element_blank()) + ggplot2::ggtitle(paste0(name1)) +
+        theme(plot.title = element_text(size = 10, vjust = -1))
   }
 
     c = ggplot2::ggplot(gene_sub, ggplot2::aes_string(x = "value", y = "y_value")) +

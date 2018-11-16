@@ -5,9 +5,9 @@
 \title{Mirror Plot -- Regional Association ComparER Plot}
 \usage{
 mirrorPlotRACER(assoc_data1, assoc_data2, chr, build = "hg19",
-  name1 = "Association Dataset #1", name2 = "Association Dataset #2",
-  plotby, gene_plot = NULL, snp_plot = NULL, start_plot = NULL,
-  end_plot = NULL)
+  set = "protein_coding", name1 = "Association Dataset #1",
+  name2 = "Association Dataset #2", plotby, gene_plot = NULL,
+  snp_plot = NULL, start_plot = NULL, end_plot = NULL)
 }
 \arguments{
 \item{assoc_data1}{required. A dataframe that has columns named
@@ -22,6 +22,8 @@ be calculated from 1000 genomes phase III in relation to snp_ld_1}
 \item{chr}{required. chromosome you wish to plot}
 
 \item{build}{optional. indicates the genome build to use to plot the genes below the association plot. default = "hg19", but can be changed to "hg38"}
+
+\item{set}{optional. default = "protein_coding", however can be set to "all" to plot all RNAs in the genome}
 
 \item{name1}{optional. name of association set 1}
 

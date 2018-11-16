@@ -4,14 +4,14 @@
 #'
 #'@docType data
 #'
-#'@usage data(biomart_hg38)
+#'@usage data(hg19)
 #'
 #'@format A flat file
 #'
 #'@keywords datasets
 #'
-#'@source \url{http://useast.ensembl.org/biomart/martview}
+#'@source \url{http://grch37.ensembl.org/index.html}
 #'
 #'@examples
-#'data(biomart_hg38)
-"biomart_hg38"
+#'data(hg19)
+"hg19"

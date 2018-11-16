@@ -6,6 +6,7 @@
 #' @param assoc_data required. A dataframe that has been produced by formatRACER and has columns named CHR, POS
 #' @param chr required. numeric. chromosome to plot
 #' @param build optional. default = "hg19", can also optionally be set to "hg38"
+#' @param set optional. default = "protein_coding", however can be set to "all" to plot all RNAs in the genome
 #' @param plotby required. "coord", "gene", or "snp". Which parameter to use to determine the reigon to be plotted.
 #' @param gene_plot optional. Required if "gene" selected for plotby, then plot will be +/- 50kb of gene
 #' @param snp_plot optional. Required if "snp" selected for plotby, then plot will be +/- 50kb of snp
@@ -25,7 +26,7 @@
 #' singlePlotRACER(assoc_data = mark3_bmd_gwas_f_ld, chr = 14,
 #' build = "hg19", plotby = "coord", start_plot = 103500000, end_plot = 104500000)}
 
-singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot = NULL){
+singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot = NULL){
 
   if(missing(assoc_data)){
     stop("Please provide a data set to plot.")
@@ -61,15 +62,21 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = N
   `%>%` <- magrittr::`%>%`
 
   if(build == "hg38"){
-    utils::data(biomart_hg38)
+    utils::data(hg38)
     chr_in = chr
-    colnames(biomart_hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
-    gene_sub = subset(biomart_hg38, biomart_hg38$CHR == chr_in)
+    colnames(hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "LENGTH", "GENE_NAME", "TYPE")
+    gene_sub = hg38[hg38$CHR == chr_in,]
   }else if(build == "hg19"){
-    utils::data(biomart_hg19)
+    utils::data(hg19)
     chr_in = chr
-    colnames(biomart_hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "GENE_NAME", "LENGTH")
-    gene_sub = subset(biomart_hg19, biomart_hg19$CHR == chr_in)
+    colnames(hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "LENGTH", "GENE_NAME", "TYPE")
+    gene_sub = hg19[hg19$CHR == chr_in,]
+  }
+
+  if(set == "protein_coding"){
+    gene_sub = gene_sub[gene_sub$TYPE == "protein_coding",]
+  }else{
+    gene_sub = gene_sub
   }
 
   if(sum(is.null(plotby)) == 1){
@@ -101,11 +108,7 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = N
   # reading in gene data
   gene_sub = subset(gene_sub, gene_sub$TRX_START > (start-5000))
   gene_sub = subset(gene_sub, gene_sub$TRX_END < (end+5000))
-  myCol = paste0("desc(", "LENGTH)")
-  gene_sub %>%
-    dplyr::arrange_(.dots = c(myCol))
-  gene_sub = gene_sub[!duplicated(gene_sub$GENE_ID),]
-  gene_sub = gene_sub[,c(3,4,5)]
+  gene_sub = gene_sub[,c(3,4,6)]
   gene_sub = reshape2::melt(gene_sub,id.vars = "GENE_NAME")
   gene_sub$y_value = as.numeric(as.factor(gene_sub$GENE_NAME))
   plot_lab = subset(gene_sub, gene_sub$variable == "TRX_END")
@@ -129,17 +132,19 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = N
                          hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
       ggplot2::theme(axis.title.y = ggplot2::element_text(color = "white", size = 28),
                      axis.text.y = ggplot2::element_blank(),
-                     axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
+                     axis.ticks.y = ggplot2::element_blank()) +
+      ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
       ggplot2::ylim(0,(max(gene_sub$y_value)+1))
 
     b = ggplot2::ggplot(in.dt, ggplot2::aes_string(x = "POS", y = "LOG10P", color = "LD_BIN")) +
-      ggplot2::geom_point() + ggplot2::scale_colour_manual(
+      ggplot2::geom_point() +
+      ggplot2::scale_colour_manual(
         values = c("1.0-0.8" = "red", "0.8-0.6" = "darkorange1", "0.6-0.4" = "green1",
                    "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey"), drop = FALSE) +
       ggplot2::theme_bw() + ggplot2::xlab("Chromosome Position") + ggplot2::ylab("-log10(p-value)") +
       ggplot2::xlim(start, end) + ggplot2::ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
 
-    ggpubr::ggarrange(b, c, heights = c(4,1), nrow = 2, ncol = 1,
+    ggpubr::ggarrange(b, c, heights = c(2,1), nrow = 2, ncol = 1,
                       common.legend = TRUE, legend = "right")
   }else{
     c = ggplot2::ggplot(gene_sub, ggplot2::aes_string(x = "value", y = "y_value")) +
@@ -156,7 +161,7 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", plotby, gene_plot = N
       ggplot2::ylab("-log10(p-value)") +
       ggplot2::xlim(start, end) + ggplot2::ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
 
-    ggpubr::ggarrange(b, c, heights = c(4,1), nrow = 2, ncol = 1,
+    ggpubr::ggarrange(b, c, heights = c(2,1), nrow = 2, ncol = 1,
                       common.legend = TRUE, legend = "right")
   }
 

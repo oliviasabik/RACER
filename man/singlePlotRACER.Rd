@@ -4,9 +4,9 @@
 \alias{singlePlotRACER}
 \title{Single Regional Association Plot Function}
 \usage{
-singlePlotRACER(assoc_data, chr, build = "hg19", plotby,
-  gene_plot = NULL, snp_plot = NULL, start_plot = NULL,
-  end_plot = NULL)
+singlePlotRACER(assoc_data, chr, build = "hg19",
+  set = "protein_coding", plotby, gene_plot = NULL, snp_plot = NULL,
+  start_plot = NULL, end_plot = NULL)
 }
 \arguments{
 \item{assoc_data}{required. A dataframe that has been produced by formatRACER and has columns named CHR, POS}
@@ -14,6 +14,8 @@ singlePlotRACER(assoc_data, chr, build = "hg19", plotby,
 \item{chr}{required. numeric. chromosome to plot}
 
 \item{build}{optional. default = "hg19", can also optionally be set to "hg38"}
+
+\item{set}{optional. default = "protein_coding", however can be set to "all" to plot all RNAs in the genome}
 
 \item{plotby}{required. "coord", "gene", or "snp". Which parameter to use to determine the reigon to be plotted.}
 
