@@ -144,7 +144,7 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding
       ggplot2::theme_bw() + ggplot2::xlab("Chromosome Position") + ggplot2::ylab("-log10(p-value)") +
       ggplot2::xlim(start, end) + ggplot2::ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
 
-    ggpubr::ggarrange(b, c, heights = c(2,1), nrow = 2, ncol = 1,
+    ggpubr::ggarrange(b, c, heights = c(3,1), nrow = 2, ncol = 1,
                       common.legend = TRUE, legend = "right")
   }else{
     c = ggplot2::ggplot(gene_sub, ggplot2::aes_string(x = "value", y = "y_value")) +
@@ -161,7 +161,7 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding
       ggplot2::ylab("-log10(p-value)") +
       ggplot2::xlim(start, end) + ggplot2::ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
 
-    ggpubr::ggarrange(b, c, heights = c(2,1), nrow = 2, ncol = 1,
+    ggpubr::ggarrange(b, c, heights = c(3,1), nrow = 2, ncol = 1,
                       common.legend = TRUE, legend = "right")
   }
 
