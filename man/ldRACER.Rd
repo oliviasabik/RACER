@@ -4,19 +4,21 @@
 \alias{ldRACER}
 \title{Calculating Linkage Disequilibrium Information for Regional Association ComparER}
 \usage{
-ldRACER(assoc_data, rs_col, pops, lead_snp)
+ldRACER(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
 }
 \arguments{
 \item{assoc_data}{required. A dataframe produced by by formatRACER()}
 
-\item{rs_col}{required. numeric. index of column containing rsID numbers for SNPs}
+\item{rs_col}{required. numeric or character. index of column or name of column containing rsID numbers for SNPs}
 
 \item{pops}{required. Populations used to calculate LD.}
 
-\item{lead_snp}{required. Required if ldby = "1000genomes". snp used to calculate LD}
+\item{lead_snp}{required, unless auto_snp = TRUE. Required if ldby = "1000genomes". snp used to calculate LD}
+
+\item{auto_snp}{logical. default = FALSE, can be set to TRUE to calculate LD using the highest LOG10P SNP as the reference}
 }
 \description{
-This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. The input of the function should already have been formatted using formatRACER().
+This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. This function may also find the most significantly associated SNP in the input data set and use it as the lead SNP (auto_snp = TRUE). The input of the function should already have been formatted using formatRACER().
 }
 \examples{
 \dontrun{

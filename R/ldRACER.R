@@ -1,10 +1,11 @@
 #' Calculating Linkage Disequilibrium Information for Regional Association ComparER
 #'
-#' This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. The input of the function should already have been formatted using formatRACER().
+#' This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. This function may also find the most significantly associated SNP in the input data set and use it as the lead SNP (auto_snp = TRUE). The input of the function should already have been formatted using formatRACER().
 #' @param assoc_data required. A dataframe produced by by formatRACER()
-#' @param rs_col required. numeric. index of column containing rsID numbers for SNPs
+#' @param rs_col required. numeric or character. index of column or name of column containing rsID numbers for SNPs
 #' @param pops required. Populations used to calculate LD.
-#' @param lead_snp required. Required if ldby = "1000genomes". snp used to calculate LD
+#' @param lead_snp required, unless auto_snp = TRUE. Required if ldby = "1000genomes". snp used to calculate LD
+#' @param auto_snp logical. default = FALSE, can be set to TRUE to calculate LD using the highest LOG10P SNP as the reference
 #'
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
@@ -14,14 +15,14 @@
 #' mark3_bmd_gwas_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
 #' head(ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 5, pops = c("EUR"), lead_snp = "rs11623869"))}
 
-ldRACER <- function(assoc_data, rs_col, pops, lead_snp){
+ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE){
 
   if(missing(rs_col)){
     stop("Please specify which column contains rsIDs.")
   }else if(missing(pops)){
     stop("Please specify which 1000 Genomes populations to use to calculate LD.")
-  }else if(missing(lead_snp)){
-    stop("Please specify which lead SNP to use to calculate LD.")
+  }else if(is.null(lead_snp) == TRUE && auto_snp == FALSE){
+    stop("Please specify which lead SNP to use to calculate LD, or use auto SNP.")
   }else{
     message("All inputs are go!")
   }
@@ -29,7 +30,15 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp){
   # read in, format, and filter data sets
   message("Reading in association data...")
   assoc_data <- as.data.frame(assoc_data)
-  colnames(assoc_data)[rs_col] = "RS_ID"
+  if(class(rs_col) == "numeric"){
+    colnames(assoc_data)[rs_col] = "RS_ID"
+  }else if(class(rs_col) == "character"){
+    colnames(assoc_data)[which(colnames(assoc_data) == rs_col)] = "RS_ID"
+  }
+
+  if(auto_snp == TRUE){
+    lead_snp = assoc_data[which.max(assoc_data$LOG10P),"RS_ID"]
+  }
 
   # calculate LD
   message(paste0("Calculating LD using ", lead_snp, "..."))

@@ -31,21 +31,45 @@ formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NUL
   }
 
   message("Formating association data...")
-  colnames(assoc_data)[chr_col] = "CHR"
-  colnames(assoc_data)[pos_col] = "POS"
+  if(class(chr_col) == "numeric"){
+    colnames(assoc_data)[chr_col] = "CHR"
+  }else if(class(chr_col) == "character"){
+    colnames(assoc_data)[which(colnames(assoc_data) == chr_col)] = "CHR"
+  }
+  if(class(pos_col) == "numeric"){
+    colnames(assoc_data)[pos_col] = "POS"
+  }else if(class(pos_col) == "character"){
+    colnames(assoc_data)[which(colnames(assoc_data) == pos_col)] = "POS"
+  }
   message("Processing -log10(p-values)...")
   if(!is.null(log10p_col)){
-    colnames(assoc_data)[log10p_col] = "LOG10P"
+    if(class(log10p_col) == "numeric"){
+      colnames(assoc_data)[log10p_col] = "LOG10P"
+    }else if(class(log10p_col) == "character"){
+      colnames(assoc_data)[which(colnames(assoc_data) == log10p_col)] = "LOG10P"
+    }
   }else if(!is.null(p_col)){
-    colnames(assoc_data)[p_col] = "P"
+    if(class(p_col) == "numeric"){
+      colnames(assoc_data)[p_col] = "P"
+    }else if(class(p_col) == "character"){
+      colnames(assoc_data)[which(colnames(assoc_data) == p_col)] = "P"
+    }
     assoc_data$LOG10P = -log10(assoc_data$P)
   }
   if(!is.null(rs_col)){
-    colnames(assoc_data)[rs_col] = "RS_ID"
+    if(class(rs_col) == "numeric"){
+      colnames(assoc_data)[rs_col] = "RS_ID"
+    }else if(class(rs_col) == "character"){
+      colnames(assoc_data)[which(colnames(assoc_data) == rs_col)] = "RS_ID"
+    }
   }
   if(!is.null(ld_col)){
     message("Processing input LD information...")
-    colnames(assoc_data)[ld_col] = "LD"
+    if(class(ld_col) == "numeric"){
+      colnames(assoc_data)[ld_col] = "LD"
+    }else if(class(ld_col) == "character"){
+      colnames(assoc_data)[which(colnames(assoc_data) == ld_col)] = "LD"
+    }
     assoc_data$LD = as.numeric(as.character(assoc_data$LD))
     assoc_data$LD_BIN <- cut(assoc_data$LD,
                       breaks=c(0,0.2,0.4,0.6,0.8,1.0),
