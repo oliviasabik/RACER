@@ -92,13 +92,13 @@ scatterPlotRACER <- function(assoc_data1, assoc_data2, chr, name1="Association D
       values = c("1.0-0.8" = "red", "0.8-0.6" = "darkorange1", "0.6-0.4" = "green1",
                  "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey"), drop = FALSE) +
       ggplot2::geom_point(data = lab.in, color = "purple") +
-      geom_text(data = lab.in, aes(label = RS_ID), color = "black", size = 3, hjust = 1.25)
+      geom_text(data = lab.in, aes_string(label = "RS_ID"), color = "black", size = 3, hjust = 1.25)
   }else{
     ggplot2::ggplot(df_plot, aes_string(x = "LOG10P1", y = "LOG10P2")) +
       ggplot2::geom_point() + ggplot2::xlab(paste0("LOG10P for ", name1)) +
       ggplot2::ylab(paste0("LOG10P for ", name2)) + ggplot2::theme_bw() +
       ggplot2::geom_point(data = lab.in, color = "purple") +
-      geom_text(data = lab.in, aes(label = RS_ID), color = "black", size = 3, hjust = 1.25)
+      geom_text(data = lab.in, aes_string(label = "RS_ID"), color = "black", size = 3, hjust = 1.25)
   }
 
 }
