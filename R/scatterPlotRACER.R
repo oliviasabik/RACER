@@ -16,6 +16,8 @@
 #' @param region_start start coordinates on chr to be compared
 #' @param region_end end coordinates on the chr to be compared
 #' @param ld_df data frame containing the LD data to use to color the plot
+#' @param label optional. If TRUE, will add a label to a the maximum combined LOG10P of the plot
+#'
 #' @keywords association plot
 #' @export
 #' @import ggplot2
@@ -31,7 +33,7 @@
 #' name1 = "Mark3_GWAS", name2 = "Mark3_eQTL",
 #' region_start = 103750000, region_end = 104250000, ld_df = 1)}
 
-scatterPlotRACER <- function(assoc_data1, assoc_data2, chr, name1="Association Dataset #1", name2="Association Dataset #2", region_start, region_end, ld_df = NULL){
+scatterPlotRACER <- function(assoc_data1, assoc_data2, chr, name1="Association Dataset #1", name2="Association Dataset #2", region_start, region_end, ld_df = NULL, label = FALSE){
   reqs = c("CHR", "POS", "LOG10P", "RS_ID")
   cols_1 = colnames(assoc_data1)
   cols_2 = colnames(assoc_data2)
@@ -79,17 +81,24 @@ scatterPlotRACER <- function(assoc_data1, assoc_data2, chr, name1="Association D
   }
   df_plot = merge(in.dt.final, in.dt.2.final, by = 'RS_ID')
 
+  lab.in = df_plot[which.max(df_plot$LOG10P1 + df_plot$LOG10P2),]
+  print(lab.in)
+
   message("Generating plot.")
   if(ld_df > 0){
   ggplot2::ggplot(df_plot, aes_string(x = "LOG10P1", y = "LOG10P2", color = "LD_BIN")) +
     ggplot2::geom_point() + ggplot2::xlab(paste0("LOG10P for ", name1)) +
     ggplot2::ylab(paste0("LOG10P for ", name2)) + ggplot2::theme_bw() + ggplot2::scale_colour_manual(
       values = c("1.0-0.8" = "red", "0.8-0.6" = "darkorange1", "0.6-0.4" = "green1",
-                 "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey"), drop = FALSE)
+                 "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey"), drop = FALSE) +
+      ggplot2::geom_point(data = lab.in, color = "purple") +
+      geom_text(data = lab.in, aes(label = RS_ID), color = "black", size = 3, hjust = 1.25)
   }else{
     ggplot2::ggplot(df_plot, aes_string(x = "LOG10P1", y = "LOG10P2")) +
       ggplot2::geom_point() + ggplot2::xlab(paste0("LOG10P for ", name1)) +
-      ggplot2::ylab(paste0("LOG10P for ", name2)) + ggplot2::theme_bw()
+      ggplot2::ylab(paste0("LOG10P for ", name2)) + ggplot2::theme_bw() +
+      ggplot2::geom_point(data = lab.in, color = "purple") +
+      geom_text(data = lab.in, aes(label = RS_ID), color = "black", size = 3, hjust = 1.25)
   }
 
 }

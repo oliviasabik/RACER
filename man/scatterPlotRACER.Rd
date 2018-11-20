@@ -6,7 +6,7 @@
 \usage{
 scatterPlotRACER(assoc_data1, assoc_data2, chr,
   name1 = "Association Dataset #1", name2 = "Association Dataset #2",
-  region_start, region_end, ld_df = NULL)
+  region_start, region_end, ld_df = NULL, label = FALSE)
 }
 \arguments{
 \item{assoc_data1}{required. A dataframe that has columns named
@@ -30,6 +30,8 @@ be properly labeled}
 \item{region_end}{end coordinates on the chr to be compared}
 
 \item{ld_df}{data frame containing the LD data to use to color the plot}
+
+\item{label}{optional. If TRUE, will add a label to a the maximum combined LOG10P of the plot}
 }
 \description{
 This function allows you to create a scatter plot of -log10(P-values).
