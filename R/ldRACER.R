@@ -45,14 +45,8 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
   assoc_data$LD_BIN = 1
   assoc_data$LD_BIN = NA
   if(length(pops) == 1){
-    ld_command = paste0("curl -k -X GET 'https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp,
-                                "&pop=",pops,"&r2_d=r2'")
-    z = system(ld_command, intern = TRUE)
-    z = as.data.frame(z)
-    z = tidyr::separate(z, 1, into = c("col_1", "col_2", "col_3", "col_4", "col_5", "col_6", "col_7", "col_8",
-                                                 "col_9", "col_10"), sep = "\t")
-    colnames(z) = z[1,]
-    z = z[-1,]
+    ld_command = paste0("https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp,"&pop=",pops,"&r2_d=r2")
+    z = as.data.frame(data.table::fread(ld_command))
     z = dplyr::select_(z, ~RS_Number, ~R2)
     colnames(z) = c("RS_ID", "LD")
     assoc_data$LD = NA
@@ -67,8 +61,7 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
     assoc_data$LD_BIN = as.factor(assoc_data$LD_BIN)
     assoc_data$LD_BIN = factor(assoc_data$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
     }else if(length(pops) > 1){
-      ld_command = paste0("curl -k -X GET 'https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp,
-                                "&pop=")
+      ld_command = paste0("https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp, "&pop=")
       for (i in 1:length(pops)){
         if (i < length(pops)){
           a = pops[i]
@@ -78,13 +71,8 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
             ld_command = paste0(ld_command, a)
           }
         }
-      ld_command = paste0(ld_command, "&r2_d=r2'")
-      z = system(ld_command, intern = TRUE)
-      z = as.data.frame(z)
-      z = tidyr::separate(z, 1, into = c("col_1", "col_2", "col_3", "col_4", "col_5", "col_6", "col_7", "col_8",
-                                                 "col_9", "col_10"), sep = "\t")
-      colnames(z) = z[1,]
-      z = z[-1,]
+      ld_command = paste0(ld_command, "&r2_d=r2")
+      z = as.data.frame(data.table::fread(ld_command))
       z = dplyr::select_(z, ~RS_Number, ~R2)
       colnames(z) = c("RS_ID", "LD")
       assoc_data$LD = NA
