@@ -106,8 +106,8 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding
   }
 
   # reading in gene data
-  gene_sub = subset(gene_sub, gene_sub$TRX_START > (start-5000))
-  gene_sub = subset(gene_sub, gene_sub$TRX_END < (end+5000))
+  gene_sub = subset(gene_sub, gene_sub$TRX_START > (start-50000))
+  gene_sub = subset(gene_sub, gene_sub$TRX_END < (end+50000))
   gene_sub = gene_sub[,c(3,4,6)]
   gene_sub = reshape2::melt(gene_sub,id.vars = "GENE_NAME")
   gene_sub$y_value = as.numeric(as.factor(gene_sub$GENE_NAME))
@@ -129,20 +129,21 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding
     c = ggplot2::ggplot(gene_sub, ggplot2::aes_string(x = "value", y = "y_value")) +
       ggplot2::geom_line(ggplot2::aes_string(group = "GENE_NAME"), size = 2) + ggplot2::theme_bw() +
       ggplot2::geom_text(data = plot_lab, ggplot2::aes_string(x = "value", y = "y_value", label = "GENE_NAME"),
-                         hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
+                         hjust = -0.1,vjust = 0.3, size = 2.5) +
       ggplot2::theme(axis.title.y = ggplot2::element_text(color = "white", size = 28),
                      axis.text.y = ggplot2::element_blank(),
                      axis.ticks.y = ggplot2::element_blank()) +
       ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
-      ggplot2::ylim(0,(max(gene_sub$y_value)+1))
+      ggplot2::coord_cartesian(xlim = c(start,end), ylim = c(0,(max(gene_sub$y_value)+1)))
 
     b = ggplot2::ggplot(in.dt, ggplot2::aes_string(x = "POS", y = "LOG10P", color = "LD_BIN")) +
       ggplot2::geom_point() +
       ggplot2::scale_colour_manual(
         values = c("1.0-0.8" = "red", "0.8-0.6" = "darkorange1", "0.6-0.4" = "green1",
                    "0.4-0.2" = "skyblue1", "0.2-0.0" = "navyblue", "NA" = "grey"), drop = FALSE) +
-      ggplot2::theme_bw() + ggplot2::xlab("Chromosome Position") + ggplot2::ylab("-log10(p-value)") +
-      ggplot2::xlim(start, end) + ggplot2::ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
+      ggplot2::theme_bw() +
+      ggplot2::xlab("Chromosome Position") + ggplot2::ylab("-log10(p-value)") +
+      ggplot2::coord_cartesian(xlim = c(start, end), ylim = c(min(in.dt$LOG10P),max(in.dt$LOG10P)))
 
     ggpubr::ggarrange(b, c, heights = c(3,1), nrow = 2, ncol = 1,
                       common.legend = TRUE, legend = "right")
@@ -150,16 +151,16 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding
     c = ggplot2::ggplot(gene_sub, ggplot2::aes_string(x = "value", y = "y_value")) +
       ggplot2::geom_line(ggplot2::aes_string(group = "GENE_NAME"), size = 2) + ggplot2::theme_bw() +
       ggplot2::geom_text(data = plot_lab, ggplot2::aes_string(x = "value", y = "y_value", label = "GENE_NAME"),
-                         hjust = -0.1,vjust = 0.3, size = 2.5) + ggplot2::xlim(start,end) +
+                         hjust = -0.1,vjust = 0.3, size = 2.5) +
       ggplot2::theme(axis.title.y = ggplot2::element_text(color = "white", size = 28),
                      axis.text.y = ggplot2::element_blank(),
                      axis.ticks.y = ggplot2::element_blank()) + ggplot2::xlab(paste0("Chromosome ", chr_in, " Position")) +
-      ggplot2::ylim(0,(max(gene_sub$y_value)+1))
+      ggplot2::coord_cartesian(xlim = c(start,end), ylim = c(0,(max(gene_sub$y_value)+1)))
 
     b = ggplot2::ggplot(in.dt, ggplot2::aes_string(x = "POS", y = "LOG10P")) +
       ggplot2::geom_point() + ggplot2::theme_bw() + ggplot2::xlab("Chromosome Position") +
       ggplot2::ylab("-log10(p-value)") +
-      ggplot2::xlim(start, end) + ggplot2::ylim(min(in.dt$LOG10P),max(in.dt$LOG10P))
+      ggplot2::coord_cartesian(xlim = c(start, end), ylim = c(min(in.dt$LOG10P),max(in.dt$LOG10P)))
 
     ggpubr::ggarrange(b, c, heights = c(3,1), nrow = 2, ncol = 1,
                       common.legend = TRUE, legend = "right")
