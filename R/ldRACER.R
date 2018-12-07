@@ -77,6 +77,7 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
       colnames(z) = c("RS_ID", "LD")
       assoc_data$LD = NA
       assoc_data = dplyr::select_(assoc_data, -(~LD))
+      message(paste0("Merging input association data with LD..."))
       assoc_data = merge(assoc_data, z, by = "RS_ID", all.x = TRUE)
       assoc_data$LD = as.numeric(as.character(assoc_data$LD))
       assoc_data$LD_BIN <- cut(assoc_data$LD,

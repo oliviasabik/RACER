@@ -106,7 +106,7 @@ mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld
 # Making a scatter plot of p-value correlations
 We can also make a plot to visualize the correlation of the p_values between the two data sets.
 ```{r}
-scatterPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld, chr = 14, name1 = "BMD GWAS p_values", name2 = "MARK3 eQTL p_values", region_start = 103750000, region_end = 104250000, ld_df = 1)
+scatterPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld, chr = 14, name1 = "BMD GWAS", name2 = "MARK3 eQTL", region_start = 103750000, region_end = 104250000, ld_df = 1)
 ```
 
 
