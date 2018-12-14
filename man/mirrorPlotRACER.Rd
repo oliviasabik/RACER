@@ -7,7 +7,8 @@
 mirrorPlotRACER(assoc_data1, assoc_data2, chr, build = "hg19",
   set = "protein_coding", name1 = "Association Dataset #1",
   name2 = "Association Dataset #2", plotby, gene_plot = NULL,
-  snp_plot = NULL, start_plot = NULL, end_plot = NULL)
+  snp_plot = NULL, start_plot = NULL, end_plot = NULL,
+  label_lead = FALSE)
 }
 \arguments{
 \item{assoc_data1}{required. A dataframe that has columns named
@@ -39,6 +40,8 @@ determine the reigon to be plotted.}
 \item{start_plot}{optional. If "coord" selected for plotby, then this will be lower bound of x axis}
 
 \item{end_plot}{optional. If "coord" selected for plotby, then this will be upper bound of x axis}
+
+\item{label_lead}{optional. default = FALSE, set = TRUE if you wish to add a label to your graph of the SNP used to calculate LD. If the SNP used to calculate LD is not in your data set, the SNP with the greatest -LOG10(P) will be labeled. Labels both plots.}
 }
 \description{
 This function allows you to creat a plot of -log10(P-values).

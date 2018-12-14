@@ -60,6 +60,8 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
     assoc_data$LD_BIN[is.na(assoc_data$LD_BIN)] <- "NA"
     assoc_data$LD_BIN = as.factor(assoc_data$LD_BIN)
     assoc_data$LD_BIN = factor(assoc_data$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
+    assoc_data$LABEL = NA
+    assoc_data[which(assoc_data$RS_ID == lead_snp), which(colnames(assoc_data) == "LABEL")] = "LEAD"
     }else if(length(pops) > 1){
       ld_command = paste0("https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp, "&pop=")
       for (i in 1:length(pops)){
@@ -87,6 +89,8 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
       assoc_data$LD_BIN[is.na(assoc_data$LD_BIN)] <- "NA"
       assoc_data$LD_BIN = as.factor(assoc_data$LD_BIN)
       assoc_data$LD_BIN = factor(assoc_data$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
+      assoc_data$LABEL = NA
+      assoc_data[which(assoc_data$RS_ID == lead_snp), which(colnames(assoc_data) == "LABEL")] = "LEAD"
     }
   return(assoc_data)
 }

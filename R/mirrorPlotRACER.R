@@ -20,8 +20,8 @@
 #' @param snp_plot optional. If "snp" selected for plotby, then plot will be +/- 50kb of snp
 #' @param start_plot optional. If "coord" selected for plotby, then this will be lower bound of x axis
 #' @param end_plot optional. If "coord" selected for plotby, then this will be upper bound of x axis
-
-
+#' @param label_lead optional. default = FALSE, set = TRUE if you wish to add a label to your graph of the SNP used to calculate LD. If the SNP used to calculate LD is not in your data set, the SNP with the greatest -LOG10(P) will be labeled. Labels both plots.
+#'
 #' @keywords association plot
 #' @export
 #' @import ggplot2
@@ -42,7 +42,7 @@
 #' mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld,
 #' chr = 14, plotby = "gene", gene_plot = "MARK3")}
 
-mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set = "protein_coding", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL){
+mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set = "protein_coding", name1="Association Dataset #1", name2="Association Dataset #2", plotby, gene_plot=NULL, snp_plot=NULL, start_plot=NULL, end_plot=NULL, label_lead = FALSE){
   reqs = c("CHR", "POS", "LOG10P")
   cols_1 = colnames(assoc_data1)
   cols_2 = colnames(assoc_data2)
@@ -117,6 +117,15 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
   in.dt = dplyr::filter_(in.dt, ~POS > start)%>%
     dplyr::filter_(~POS < end)
 
+  if(label_lead == TRUE){
+    lsnp_row_1 = which(in.dt$LABEL == "LEAD")
+    label_data_1 = in.dt[lsnp_row_1,]
+    if(dim(label_data_1)[1] == 0){
+      lsnp_row_1 = in.dt[in.dt$LOG10P == max(in.dt$LOG10P),]
+      label_data_1 = lsnp_row_1[1,]
+    }
+  }
+
   in.dt.2 <- as.data.frame(assoc_data2)
   in.dt.2$POS = as.numeric(as.character(in.dt.2$POS))
   in.dt.2$LOG10P = as.numeric(as.character(in.dt.2$LOG10P))
@@ -124,6 +133,15 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
   in.dt.2 = dplyr::filter_(in.dt.2, ~CHR == chr_in)
   in.dt.2= dplyr::filter_(in.dt.2, ~POS > start)%>%
     dplyr::filter_(~POS < end)
+
+  if(label_lead == TRUE){
+    lsnp_row_2 = which(in.dt.2$LABEL == "LEAD")
+    label_data_2 = in.dt.2[lsnp_row_2,]
+    if(dim(label_data_2)[1] == 0){
+      lsnp_row_2 = in.dt.2[in.dt.2$LOG10P == max(in.dt.2$LOG10P),]
+      label_data_2 = lsnp_row_2[1,]
+    }
+  }
 
   len1 = nchar(trunc(max(in.dt$LOG10P)))
   len2 = nchar(trunc(max(in.dt.2$LOG10P)))
@@ -219,6 +237,17 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
         a = a + scale_y_reverse(labels = scaleFUN4)
       }
     }
+
+    if(label_lead == TRUE){
+      a = a + geom_point(data = label_data_1, aes_string(x = "POS", y = "LOG10P"), color = "purple")
+      a = a + geom_text(data = label_data_1, aes_string(label = "RS_ID"),
+                        color = "black", size = 3, hjust = 1.25)
+
+      b = b + geom_point(data = label_data_2, aes_string(x = "POS", y = "LOG10P"), color = "purple")
+      b = b + geom_text(data = label_data_2, aes_string(label = "RS_ID"),
+                        color = "black", size = 3, hjust = 1.25)
+    }
+
     ggpubr::ggarrange(a, b, c, heights = c(2,2,1), nrow = 3, ncol = 1,
                       common.legend = TRUE, legend = "right")
 

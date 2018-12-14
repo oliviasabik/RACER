@@ -12,6 +12,7 @@
 #' @param snp_plot optional. Required if "snp" selected for plotby, then plot will be +/- 50kb of snp
 #' @param start_plot optional. Required if "coord" selected for plotby, then this will be lower bound of x axis
 #' @param end_plot optional. Required if "coord" selected for plotby, then this will be upper bound of x axis
+#' @param label_lead optional. default = FALSE, set = TRUE if you wish to add a label to your graph of the SNP used to calculate LD. If the SNP used to calculate LD is not in your data set, the SNP with the greatest -LOG10(P) will be labeled.
 #'
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
@@ -26,7 +27,7 @@
 #' singlePlotRACER(assoc_data = mark3_bmd_gwas_f_ld, chr = 14,
 #' build = "hg19", plotby = "coord", start_plot = 103500000, end_plot = 104500000)}
 
-singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot = NULL){
+singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding", plotby, gene_plot = NULL, snp_plot = NULL, start_plot=NULL, end_plot = NULL, label_lead = FALSE){
 
   if(missing(assoc_data)){
     stop("Please provide a data set to plot.")
@@ -123,6 +124,14 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding
   in.dt = dplyr::filter_(in.dt, ~POS > start) %>%
     dplyr::filter_(~POS < end)
 
+  if(label_lead == TRUE){
+    lsnp_row = which(in.dt$LABEL == "LEAD")
+    label_data = in.dt[lsnp_row,]
+    if(dim(label_data)[1] == 0){
+      lsnp_row = in.dt[in.dt$LOG10P == max(in.dt$LOG10P),]
+      label_data = lsnp_row[1,]
+    }
+  }
   # Generate plots
   message("Generating Plot")
   if("LD" %in% colnames(in.dt) && "LD_BIN" %in% colnames(in.dt)){
@@ -145,8 +154,6 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding
       ggplot2::xlab("Chromosome Position") + ggplot2::ylab("-log10(p-value)") +
       ggplot2::coord_cartesian(xlim = c(start, end), ylim = c(min(in.dt$LOG10P),max(in.dt$LOG10P)))
 
-    ggpubr::ggarrange(b, c, heights = c(3,1), nrow = 2, ncol = 1,
-                      common.legend = TRUE, legend = "right")
   }else{
     c = ggplot2::ggplot(gene_sub, ggplot2::aes_string(x = "value", y = "y_value")) +
       ggplot2::geom_line(ggplot2::aes_string(group = "GENE_NAME"), size = 2) + ggplot2::theme_bw() +
@@ -161,9 +168,11 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding
       ggplot2::geom_point() + ggplot2::theme_bw() + ggplot2::xlab("Chromosome Position") +
       ggplot2::ylab("-log10(p-value)") +
       ggplot2::coord_cartesian(xlim = c(start, end), ylim = c(min(in.dt$LOG10P),max(in.dt$LOG10P)))
-
-    ggpubr::ggarrange(b, c, heights = c(3,1), nrow = 2, ncol = 1,
-                      common.legend = TRUE, legend = "right")
   }
-
+  if(label_lead == TRUE){
+    b = b + geom_point(data = label_data, aes_string(x = "POS", y = "LOG10P"), color = "purple")
+    b = b + geom_text(data = label_data, aes_string(label = "RS_ID"), color = "black", size = 3, hjust = 1.25)
+  }
+  ggpubr::ggarrange(b, c, heights = c(3,1), nrow = 2, ncol = 1,
+                    common.legend = TRUE, legend = "right")
 }

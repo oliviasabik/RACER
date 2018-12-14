@@ -82,7 +82,6 @@ scatterPlotRACER <- function(assoc_data1, assoc_data2, chr, name1="Association D
   df_plot = merge(in.dt.final, in.dt.2.final, by = 'RS_ID')
 
   lab.in = df_plot[which.max(df_plot$LOG10P1 + df_plot$LOG10P2),]
-  print(lab.in)
 
   message("Generating plot.")
   if(ld_df > 0){
