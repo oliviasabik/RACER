@@ -1,21 +1,20 @@
 #' Scatter Plot -- Regional Association ComparER Plot
 #'
-#' This function allows you to create a scatter plot of -log10(P-values).
-#' @param assoc_data1 required. A dataframe that has columns named
-#' POS representing the position of the snp on
-#' the chromosome, LOG10P which contains the -log10(P-values),
-#' CHR, which contains the chromosome number, RS_ID,
-#' which contains rsIDs for the SNPs in the data frame. If you
-#' have processed your data using formatRACER() these columns will
-#' be properly labeled
+#' This function allows you to create a scatter plot of -log10(P-values) from two association studies.
+#'
+#' @param assoc_data1 required. A dataframe that has columns named POS representing the position of
+#' the SNP on the chromosome, LOG10P which contains the -log10(P-values), CHR, which contains the
+#' chromosome number, RS_ID, which contains rsIDs for the SNPs in the data frame. If you
+#' have processed your data using formatRACER() these columns will be properly labeled.
 #'
 #' @param assoc_data2 required. identifcal in format to assoc_data1
 #' @param chr required. chromosome you wish to plot
 #' @param name1 optional. name of association set 1
 #' @param name2 optional. name of association set 2
-#' @param region_start start coordinates on chr to be compared
-#' @param region_end end coordinates on the chr to be compared
-#' @param ld_df data frame containing the LD data to use to color the plot
+#' @param region_start required. start coordinates on chr to be compared
+#' @param region_end required. end coordinates on the chr to be compared
+#' @param ld_df required. numeric. 1 or 2, indicating which data frame containing the LD data to
+#' use to color the points on the plot
 #' @param label optional. If TRUE, will add a label to a the maximum combined LOG10P of the plot
 #'
 #' @keywords association plot

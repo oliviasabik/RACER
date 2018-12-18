@@ -1,11 +1,13 @@
 #' Single Regional Association Plot Function
 #'
 #' This function allows you to creat a plot of -log10(P-values) of an association study
-#' by their genomic position, for example, the results of a GWAS or eQTL study. Sources
-#' 1000K genomes phase III data for linkage disequilibrium calculations.
+#' by their genomic position, for example, the results of a GWAS or eQTL study. Be sure
+#' your input association data has been formatted using formatRACER. If you want to
+#' include linkage disequilibirum data, you can use the ldRACER function to use the 1000
+#' genomes project to calculate LD for your data.
 #' @param assoc_data required. A dataframe that has been produced by formatRACER and has columns named CHR, POS
 #' @param chr required. numeric. chromosome to plot
-#' @param build optional. default = "hg19", can also optionally be set to "hg38"
+#' @param build optional. default = "hg19", can also optionally be set to "hg38", depending on the build of your input data
 #' @param set optional. default = "protein_coding", however can be set to "all" to plot all RNAs in the genome
 #' @param plotby required. "coord", "gene", or "snp". Which parameter to use to determine the reigon to be plotted.
 #' @param gene_plot optional. Required if "gene" selected for plotby, then plot will be +/- 50kb of gene

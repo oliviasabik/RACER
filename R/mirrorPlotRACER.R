@@ -1,13 +1,14 @@
 #' Mirror Plot -- Regional Association ComparER Plot
 #'
-#' This function allows you to creat a plot of -log10(P-values).
-#' @param assoc_data1 required. A dataframe that has columns named
-#' POS representing the position of the snp on
-#' the chromosome, LOG10P which contains the -log10(P-values),
-#' CHR, which contains the chromosome number, RS_ID, which
-#' LD information. If no column named LD is in the input, LD will
-#' be calculated from 1000 genomes phase III in relation to snp_ld_1
+#' This function allows you to creat a plot of -log10(P-values) for two sets of association data.
+#' Mirror plots illustrate the two associations on a common x-axis, with the first association
+#' inverted, mirroring the two associations against one another.
 #'
+#' @param assoc_data1 required. A dataframe that has columns named POS representing the position
+#' of the SNP on the chromosome, LOG10P which contains the -log10(P-values), CHR, which contains
+#' the chromosome number, RS_ID, which contains LD information. If your data set has been processed
+#' using the formatRACER function and the ldRACER function, these columns will be appropriately
+#' named in your data.
 #' @param assoc_data2 required. identifcal in format to assoc_data1
 #' @param chr required. chromosome you wish to plot
 #' @param build optional. indicates the genome build to use to plot the genes below the association plot. default = "hg19", but can be changed to "hg38"
@@ -18,8 +19,8 @@
 #' determine the reigon to be plotted.
 #' @param gene_plot optional. If "gene" selected for plotby, then plot will be +/- 50kb of gene, should be a human gene symbol
 #' @param snp_plot optional. If "snp" selected for plotby, then plot will be +/- 50kb of snp
-#' @param start_plot optional. If "coord" selected for plotby, then this will be lower bound of x axis
-#' @param end_plot optional. If "coord" selected for plotby, then this will be upper bound of x axis
+#' @param start_plot optional. If "coord" selected for plotby, then this will be lower bound of x-axis
+#' @param end_plot optional. If "coord" selected for plotby, then this will be upper bound of x-axis
 #' @param label_lead optional. default = FALSE, set = TRUE if you wish to add a label to your graph of the SNP used to calculate LD. If the SNP used to calculate LD is not in your data set, the SNP with the greatest -LOG10(P) will be labeled. Labels both plots.
 #'
 #' @keywords association plot
