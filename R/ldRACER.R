@@ -45,7 +45,7 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
   assoc_data$LD_BIN = 1
   assoc_data$LD_BIN = NA
   if(length(pops) == 1){
-    ld_command = paste0("https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp,"&pop=",pops,"&r2_d=r2")
+    ld_command = paste0("https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp,"&pop=",pops,"&r2_d=r2&token=c0f613f149ab")
     z = as.data.frame(data.table::fread(ld_command))
     z = dplyr::select_(z, ~RS_Number, ~R2)
     colnames(z) = c("RS_ID", "LD")
@@ -73,7 +73,7 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
             ld_command = paste0(ld_command, a)
           }
         }
-      ld_command = paste0(ld_command, "&r2_d=r2")
+      ld_command = paste0(ld_command, "&r2_d=r2&token=c0f613f149ab")
       z = as.data.frame(data.table::fread(ld_command))
       z = dplyr::select_(z, ~RS_Number, ~R2)
       colnames(z) = c("RS_ID", "LD")
