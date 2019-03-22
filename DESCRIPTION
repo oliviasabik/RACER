@@ -16,7 +16,8 @@ Imports:
     reshape2,
     magrittr,
     data.table,
-    curl
+    curl,
+    tibble
 Suggests: 
     knitr,
     rmarkdown,
