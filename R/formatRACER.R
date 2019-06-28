@@ -7,8 +7,7 @@
 #' @param log10p_col required, if no p_col specified. numeric. index of column in assoc_data containing -log10(p-value)s.
 #' @param p_col required, if no log10p_col column specified. numeric. index of column in assoc_data containing p-values.
 #' @param ld_col optional. numeric. Required if you want to use the LD data in your data set in your plot, index of column in assoc_data containing LD information, e.g. R2 or D' values
-#' @param rs_col optional. numeric. Required if you want to use the use ldRACER to pull LD information from the 1000 genomes phase III project,
-#' or if you want to make a scatter comparison plot
+#' @param rs_col optional. numeric. Required if you want to use the use ldRACER to pull LD information from the 1000 genomes phase III project, or if you want to make a scatter comparison plot
 #'
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
@@ -25,33 +24,47 @@ formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NUL
     stop("Please specify which column contains genomic position information.")
   }else if(is.null(log10p_col) && is.null(p_col)){
     stop("Please specify which column contains p-values or -log10(p-values).")
-  }else{
-    message("All inputs are go!")
   }
 
   message("Formating association data...")
   if(class(chr_col) == "numeric"){
     colnames(assoc_data)[chr_col] = "CHR"
   }else if(class(chr_col) == "character"){
-    colnames(assoc_data)[which(colnames(assoc_data) == chr_col)] = "CHR"
+    if((chr_col %in% colnames(assoc_data) == TRUE)){
+      colnames(assoc_data)[which(colnames(assoc_data) == chr_col)] = "CHR"
+    }else{
+      stop("The chromosome column you specified is not in the association data frame.")
+    }
   }
   if(class(pos_col) == "numeric"){
     colnames(assoc_data)[pos_col] = "POS"
   }else if(class(pos_col) == "character"){
-    colnames(assoc_data)[which(colnames(assoc_data) == pos_col)] = "POS"
+    if((pos_col %in% colnames(assoc_data) == TRUE)){
+      colnames(assoc_data)[which(colnames(assoc_data) == pos_col)] = "POS"
+    }else{
+      stop("The position column you specified is not in the association data frame.")
+    }
   }
   message("Processing -log10(p-values)...")
   if(!is.null(log10p_col)){
     if(class(log10p_col) == "numeric"){
       colnames(assoc_data)[log10p_col] = "LOG10P"
     }else if(class(log10p_col) == "character"){
-      colnames(assoc_data)[which(colnames(assoc_data) == log10p_col)] = "LOG10P"
+      if((log10p_col %in% colnames(assoc_data) == TRUE)){
+        colnames(assoc_data)[which(colnames(assoc_data) == log10p_col)] = "LOG10P"
+      }else{
+        stop("The -log10p column you specified is not in the association data frame.")
+      }
     }
   }else if(!is.null(p_col)){
     if(class(p_col) == "numeric"){
       colnames(assoc_data)[p_col] = "P"
     }else if(class(p_col) == "character"){
-      colnames(assoc_data)[which(colnames(assoc_data) == p_col)] = "P"
+      if((p_col %in% colnames(assoc_data) == TRUE)){
+        colnames(assoc_data)[which(colnames(assoc_data) == p_col)] = "P"
+      }else{
+        stop("The p-value column you specified is not in the association data frame.")
+      }
     }
     assoc_data$LOG10P = -log10(assoc_data$P)
   }
@@ -59,7 +72,11 @@ formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NUL
     if(class(rs_col) == "numeric"){
       colnames(assoc_data)[rs_col] = "RS_ID"
     }else if(class(rs_col) == "character"){
-      colnames(assoc_data)[which(colnames(assoc_data) == rs_col)] = "RS_ID"
+      if((rs_col %in% colnames(assoc_data) == TRUE)){
+        colnames(assoc_data)[which(colnames(assoc_data) == rs_col)] = "RS_ID"
+      }else{
+        stop("The rsID column you specified is not in the association data frame.")
+      }
     }
   }
   if(!is.null(ld_col)){
@@ -67,7 +84,11 @@ formatRACER <- function(assoc_data, chr_col, pos_col, p_col=NULL, log10p_col=NUL
     if(class(ld_col) == "numeric"){
       colnames(assoc_data)[ld_col] = "LD"
     }else if(class(ld_col) == "character"){
-      colnames(assoc_data)[which(colnames(assoc_data) == ld_col)] = "LD"
+      if((ld_col %in% colnames(assoc_data) == TRUE)){
+        colnames(assoc_data)[which(colnames(assoc_data) == ld_col)] = "LD"
+      }else{
+        stop("The LD column you specified is not in the association data frame.")
+      }
     }
     assoc_data$LD = as.numeric(as.character(assoc_data$LD))
     assoc_data$LD_BIN <- cut(assoc_data$LD,

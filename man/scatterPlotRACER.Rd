@@ -9,13 +9,10 @@ scatterPlotRACER(assoc_data1, assoc_data2, chr,
   region_start, region_end, ld_df = NULL, label = FALSE)
 }
 \arguments{
-\item{assoc_data1}{required. A dataframe that has columns named
-POS representing the position of the snp on
-the chromosome, LOG10P which contains the -log10(P-values),
-CHR, which contains the chromosome number, RS_ID,
-which contains rsIDs for the SNPs in the data frame. If you
-have processed your data using formatRACER() these columns will
-be properly labeled}
+\item{assoc_data1}{required. A dataframe that has columns named POS representing the position of
+the SNP on the chromosome, LOG10P which contains the -log10(P-values), CHR, which contains the
+chromosome number, RS_ID, which contains rsIDs for the SNPs in the data frame. If you
+have processed your data using formatRACER() these columns will be properly labeled.}
 
 \item{assoc_data2}{required. identifcal in format to assoc_data1}
 
@@ -25,16 +22,17 @@ be properly labeled}
 
 \item{name2}{optional. name of association set 2}
 
-\item{region_start}{start coordinates on chr to be compared}
+\item{region_start}{required. start coordinates on chr to be compared}
 
-\item{region_end}{end coordinates on the chr to be compared}
+\item{region_end}{required. end coordinates on the chr to be compared}
 
-\item{ld_df}{data frame containing the LD data to use to color the plot}
+\item{ld_df}{required. numeric. 1 or 2, indicating which data frame containing the LD data to
+use to color the points on the plot}
 
 \item{label}{optional. If TRUE, will add a label to a the maximum combined LOG10P of the plot}
 }
 \description{
-This function allows you to create a scatter plot of -log10(P-values).
+This function allows you to create a scatter plot of -log10(P-values) from two association studies.
 }
 \examples{
 \dontrun{
