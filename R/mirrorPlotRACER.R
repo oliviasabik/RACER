@@ -99,9 +99,6 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
   # reading in gene data
   gene_sub = subset(gene_sub, gene_sub$TRX_START > (start-5000))
   gene_sub = subset(gene_sub, gene_sub$TRX_END < (end+5000))
-  myCol = paste0("desc(", "LENGTH)")
-  gene_sub %>%
-    dplyr::arrange_(.dots = c(myCol))
   gene_sub = gene_sub[!duplicated(gene_sub$GENE_ID),]
   gene_sub = gene_sub[,c(3,4,6)]
   gene_sub = reshape2::melt(gene_sub, id.vars = "GENE_NAME")
@@ -114,9 +111,9 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
   in.dt$POS = as.numeric(as.character(in.dt$POS))
   in.dt$LOG10P = as.numeric(as.character(in.dt$LOG10P))
   in.dt$CHR = as.numeric(as.character(in.dt$CHR))
-  in.dt = dplyr::filter_(in.dt, ~CHR == chr_in)
-  in.dt = dplyr::filter_(in.dt, ~POS > start)%>%
-    dplyr::filter_(~POS < end)
+  in.dt = dplyr::filter(in.dt, CHR == chr_in)
+  in.dt = dplyr::filter(in.dt, POS > start)%>%
+    dplyr::filter(POS < end)
 
   if(label_lead == TRUE){
     lsnp_row_1 = which(in.dt$LABEL == "LEAD")
@@ -131,9 +128,9 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
   in.dt.2$POS = as.numeric(as.character(in.dt.2$POS))
   in.dt.2$LOG10P = as.numeric(as.character(in.dt.2$LOG10P))
   in.dt.2$CHR = as.numeric(as.character(in.dt.2$CHR))
-  in.dt.2 = dplyr::filter_(in.dt.2, ~CHR == chr_in)
-  in.dt.2= dplyr::filter_(in.dt.2, ~POS > start)%>%
-    dplyr::filter_(~POS < end)
+  in.dt.2 = dplyr::filter(in.dt.2, CHR == chr_in)
+  in.dt.2= dplyr::filter(in.dt.2, POS > start)%>%
+    dplyr::filter(POS < end)
 
   if(label_lead == TRUE){
     lsnp_row_2 = which(in.dt.2$LABEL == "LEAD")

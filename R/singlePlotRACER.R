@@ -122,9 +122,9 @@ singlePlotRACER <- function(assoc_data, chr, build="hg19", set = "protein_coding
   in.dt$POS = as.numeric(as.character(in.dt$POS))
   in.dt$LOG10P = as.numeric(as.character(in.dt$LOG10P))
   in.dt$CHR = as.numeric(as.character(in.dt$CHR))
-  in.dt = dplyr::filter_(in.dt, ~CHR == chr_in)
-  in.dt = dplyr::filter_(in.dt, ~POS > start) %>%
-    dplyr::filter_(~POS < end)
+  in.dt = dplyr::filter(in.dt, CHR == chr_in)
+  in.dt = dplyr::filter(in.dt, POS > start) %>%
+    dplyr::filter(POS < end)
 
   if(label_lead == TRUE){
     lsnp_row = which(in.dt$LABEL == "LEAD")

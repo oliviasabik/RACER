@@ -9,6 +9,8 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
+URL: https://oliviasabik.github.io/RACERweb/index.html
+BugReports: https://github.com/oliviasabik/RACER
 Imports: 
     dplyr,
     ggplot2,
@@ -17,10 +19,7 @@ Imports:
     magrittr,
     data.table,
     curl,
-    tibble
-Suggests: 
+    tibble,
     knitr,
     rmarkdown,
     utils
-URL: https://oliviasabik.github.io/RACERweb/index.html
-BugReports: https://github.com/oliviasabik/RACER

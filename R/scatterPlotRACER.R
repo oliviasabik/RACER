@@ -48,17 +48,17 @@ scatterPlotRACER <- function(assoc_data1, assoc_data2, chr, name1="Association D
   in.dt$POS = as.numeric(as.character(in.dt$POS))
   in.dt$LOG10P = as.numeric(as.character(in.dt$LOG10P))
   in.dt$CHR = as.numeric(as.character(in.dt$CHR))
-  in.dt = dplyr::filter_(in.dt, ~CHR == chr)
-  in.dt = dplyr::filter_(in.dt, ~POS > region_start)%>%
-    dplyr::filter_(~POS < region_end)
+  in.dt = dplyr::filter(in.dt, CHR == chr)
+  in.dt = dplyr::filter(in.dt, POS > region_start)%>%
+    dplyr::filter(POS < region_end)
 
   in.dt.2 <- as.data.frame(assoc_data2)
   in.dt.2$POS = as.numeric(as.character(in.dt.2$POS))
   in.dt.2$LOG10P = as.numeric(as.character(in.dt.2$LOG10P))
   in.dt.2$CHR = as.numeric(as.character(in.dt.2$CHR))
-  in.dt.2 = dplyr::filter_(in.dt.2, ~CHR == chr)
-  in.dt.2= dplyr::filter_(in.dt.2, ~POS > region_start)%>%
-    dplyr::filter_(~POS < region_end)
+  in.dt.2 = dplyr::filter(in.dt.2, CHR == chr)
+  in.dt.2= dplyr::filter(in.dt.2, POS > region_start)%>%
+    dplyr::filter(POS < region_end)
 
   if(ld_df > 0){
     if(ld_df == 1){

@@ -33,11 +33,22 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
   if(class(rs_col) == "numeric"){
     colnames(assoc_data)[rs_col] = "RS_ID"
   }else if(class(rs_col) == "character"){
-    colnames(assoc_data)[which(colnames(assoc_data) == rs_col)] = "RS_ID"
+    if((rs_col %in% colnames(assoc_data) == TRUE)){
+      colnames(assoc_data)[which(colnames(assoc_data) == rs_col)] = "RS_ID"
+    }else{
+      stop("The rsID column you specified is not in the association data frame.")
+    }
   }
 
   if(auto_snp == TRUE){
     lead_snp = assoc_data[which.max(assoc_data$LOG10P),"RS_ID"]
+  }
+
+  pot_pops = c("AFR", "AMR", "EAS", "EUR", "SAS", "YRI", "LWK", "GWD", "MSL", "ESN", "ASW", "ACB", "MXL", "PUR", "CLM", "PEL", "CHB", "JPT", "CHS", "CDX", "KHV", "CEU", "TSI", "FIN", "GBR", "IBS", "GIH", "PJL", "BEB", "STU", "ITU")
+  if(sum(pops %in% pot_pops == TRUE) == length(pops)){
+    message("Populations selected.")
+  }else{
+    stop("The one or more of the populations you specified are not valid, please consult documentation for list of acceptable population codes.")
   }
 
   # calculate LD
@@ -46,11 +57,13 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
   assoc_data$LD_BIN = NA
   if(length(pops) == 1){
     ld_command = paste0("https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp,"&pop=",pops,"&r2_d=r2&token=c0f613f149ab")
+    print(ld_command)
     z = as.data.frame(data.table::fread(ld_command))
-    z = dplyr::select_(z, ~RS_Number, ~R2)
+    z = dplyr::select(z, "RS_Number", "R2")
     colnames(z) = c("RS_ID", "LD")
     assoc_data$LD = NA
-    assoc_data = dplyr::select_(assoc_data, (.dots = paste0("-", "LD")))
+    assoc_data = dplyr::select(assoc_data, -"LD")
+    message(paste0("Merging input association data with LD..."))
     assoc_data = merge(assoc_data, z, by = "RS_ID", all.x = TRUE)
     assoc_data$LD = as.numeric(as.character(assoc_data$LD))
     assoc_data$LD_BIN <- cut(assoc_data$LD,
@@ -74,11 +87,12 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
           }
         }
       ld_command = paste0(ld_command, "&r2_d=r2&token=c0f613f149ab")
+      print(ld_command)
       z = as.data.frame(data.table::fread(ld_command))
-      z = dplyr::select_(z, ~RS_Number, ~R2)
+      z = dplyr::select(z, "RS_Number", "R2")
       colnames(z) = c("RS_ID", "LD")
       assoc_data$LD = NA
-      assoc_data = dplyr::select_(assoc_data, -(~LD))
+      assoc_data = dplyr::select(assoc_data, -"LD")
       message(paste0("Merging input association data with LD..."))
       assoc_data = merge(assoc_data, z, by = "RS_ID", all.x = TRUE)
       assoc_data$LD = as.numeric(as.character(assoc_data$LD))
