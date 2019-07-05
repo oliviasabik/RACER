@@ -87,7 +87,7 @@ RACER::singlePlotRACER(assoc_data = mark3_bmd_gwas_f_ld, chr = 14, build = "hg19
 
 Example 3: Plotting the eQTL by specifying coordinates
 ```{r warning=FALSE}
-RACER::singlePlotRACER(assoc_data = mark3_eqtl_f_ld, chr = 14, build = "hg19", plotby = "coord", start_plot = 103500000, end_plot = 104500000)
+RACER::singlePlotRACER(assoc_data = mark3_eqtl_f_ld, chr = 14, build = "hg19", plotby = "coord", start_plot = 103750000, end_plot = 104250000)
 ```
 
 # Making a mirror plot with RACER
