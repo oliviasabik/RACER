@@ -9,7 +9,8 @@
 #' @param ld_col optional. numeric. Required if you want to use the LD data in your data set in your plot, index of column in assoc_data containing LD information, e.g. R2 or D' values
 #' @param rs_col optional. numeric. Required if you want to use the use ldRACER to pull LD information from the 1000 genomes phase III project, or if you want to make a scatter comparison plot
 #'
-#' @keywords association plot, gwas, linkage disequilibrium.
+#' @keywords association plot linkage disequilibrium
+#' @concept GWAS
 #' @export
 #' @examples
 #' \dontrun{

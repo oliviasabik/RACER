@@ -7,7 +7,8 @@
 #' @param lead_snp required, unless auto_snp = TRUE. Required if ldby = "1000genomes". snp used to calculate LD
 #' @param auto_snp optional. default = FALSE, can be set to TRUE to calculate LD using the highest LOG10P SNP as the reference
 #'
-#' @keywords association plot, gwas, linkage disequilibrium.
+#' @keywords association plot linkage disequilibrium
+#' @concept GWAS
 #' @export
 #' @importFrom rlang .data
 #' @examples

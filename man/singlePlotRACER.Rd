@@ -46,8 +46,8 @@ rs_col = 2, pops = c("EUR"), lead_snp = "rs11623869")
 singlePlotRACER(assoc_data = mark3_bmd_gwas_f_ld, chr = 14,
 build = "hg19", plotby = "coord", start_plot = 103500000, end_plot = 104500000)}
 }
+\concept{GWAS}
 \keyword{association}
-\keyword{disequilibrium.}
-\keyword{gwas,}
+\keyword{disequilibrium}
 \keyword{linkage}
-\keyword{plot,}
+\keyword{plot}

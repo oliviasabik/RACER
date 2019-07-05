@@ -64,5 +64,6 @@ rs_col = 15, pops = "EUR", lead_snp = "rs11623869")
 mirrorPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_ld,
 chr = 14, plotby = "gene", gene_plot = "MARK3")}
 }
+\concept{GWAS}
 \keyword{association}
 \keyword{plot}

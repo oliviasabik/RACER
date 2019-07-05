@@ -30,8 +30,8 @@ This group of functions allows you to creat a plot of -log10(P-values) of an ass
 data(mark3_bmd_gwas)
 head(formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11, rs_col = 2))}
 }
+\concept{GWAS}
 \keyword{association}
-\keyword{disequilibrium.}
-\keyword{gwas,}
+\keyword{disequilibrium}
 \keyword{linkage}
-\keyword{plot,}
+\keyword{plot}

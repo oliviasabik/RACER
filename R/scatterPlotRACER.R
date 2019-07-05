@@ -18,6 +18,7 @@
 #' @param label optional. If TRUE, will add a label to a the maximum combined LOG10P of the plot
 #'
 #' @keywords association plot
+#' @concept GWAS
 #' @export
 #' @import ggplot2
 #' @importFrom rlang .data

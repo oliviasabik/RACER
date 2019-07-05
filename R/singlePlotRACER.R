@@ -16,7 +16,8 @@
 #' @param end_plot optional. Required if "coord" selected for plotby, then this will be upper bound of x axis
 #' @param label_lead optional. default = FALSE, set = TRUE if you wish to add a label to your graph of the SNP used to calculate LD. If the SNP used to calculate LD is not in your data set, the SNP with the greatest -LOG10(P) will be labeled.
 #'
-#' @keywords association plot, gwas, linkage disequilibrium.
+#' @keywords association plot linkage disequilibrium
+#' @concept GWAS
 #' @export
 #' @import ggplot2
 #' @importFrom rlang .data

@@ -24,6 +24,7 @@
 #' @param label_lead optional. default = FALSE, set = TRUE if you wish to add a label to your graph of the SNP used to calculate LD. If the SNP used to calculate LD is not in your data set, the SNP with the greatest -LOG10(P) will be labeled. Labels both plots.
 #'
 #' @keywords association plot
+#' @concept GWAS
 #' @export
 #' @import ggplot2
 #' @importFrom rlang .data

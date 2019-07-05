@@ -46,5 +46,6 @@ scatterPlotRACER(assoc_data1 = df1_f_ld, assoc_data2 = df2_f_ld, chr = 14,
 name1 = "Mark3_GWAS", name2 = "Mark3_eQTL",
 region_start = 103750000, region_end = 104250000, ld_df = 1)}
 }
+\concept{GWAS}
 \keyword{association}
 \keyword{plot}
