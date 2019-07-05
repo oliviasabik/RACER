@@ -2,7 +2,7 @@ Package: RACER
 Title: Regional Association Comparer
 Version: 1.0.0
 Authors@R: person("Olivia", "Sabik", email = "ols5fg@virginia.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-2334-5936")) 
-Description: In order to investigate and compare regional association data, one may need to create a single plot of a regional association, a scatter plot of the -log10(p-values)s of two studies, or a mirror plot, a plot comparing two sets of -log10(p-value)s that are mirrored across a common x-axis. RACER can be used to create these three types of plots. This package is described further in Sabik and Farber (2018) <https://doi.org/10.1101/495366>. 
+Description: In order to investigate and compare regional association data, one may need to create a single plot of a regional association, a scatter plot of the -log10(p-values)s of two studies, or a mirror plot, a plot comparing two sets of -log10(p-value)s that are mirrored across a common x-axis. RACER can be used to create these three types of plots. This package is described further in Sabik and Farber (2018) <doi:10.1101/495366>. 
 Depends: R (>= 3.1.0)
 License: GPL-3
 Encoding: UTF-8
