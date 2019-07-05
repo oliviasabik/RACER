@@ -9,6 +9,7 @@
 #'
 #' @keywords association plot, gwas, linkage disequilibrium.
 #' @export
+#' @importFrom rlang .data
 #' @examples
 #' \dontrun{
 #' data(mark3_bmd_gwas)

@@ -26,6 +26,7 @@
 #' @keywords association plot
 #' @export
 #' @import ggplot2
+#' @importFrom rlang .data
 #' @examples
 #' \dontrun{
 #' data(mark3_bmd_gwas)
@@ -111,9 +112,9 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
   in.dt$POS = as.numeric(as.character(in.dt$POS))
   in.dt$LOG10P = as.numeric(as.character(in.dt$LOG10P))
   in.dt$CHR = as.numeric(as.character(in.dt$CHR))
-  in.dt = dplyr::filter(in.dt, CHR == chr_in)
-  in.dt = dplyr::filter(in.dt, POS > start)%>%
-    dplyr::filter(POS < end)
+  in.dt = dplyr::filter(in.dt, .data$CHR == chr_in)
+  in.dt = dplyr::filter(in.dt, .data$POS > start)%>%
+    dplyr::filter(.data$POS < end)
 
   if(label_lead == TRUE){
     lsnp_row_1 = which(in.dt$LABEL == "LEAD")
@@ -128,9 +129,9 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
   in.dt.2$POS = as.numeric(as.character(in.dt.2$POS))
   in.dt.2$LOG10P = as.numeric(as.character(in.dt.2$LOG10P))
   in.dt.2$CHR = as.numeric(as.character(in.dt.2$CHR))
-  in.dt.2 = dplyr::filter(in.dt.2, CHR == chr_in)
-  in.dt.2= dplyr::filter(in.dt.2, POS > start)%>%
-    dplyr::filter(POS < end)
+  in.dt.2 = dplyr::filter(in.dt.2, .data$CHR == chr_in)
+  in.dt.2= dplyr::filter(in.dt.2, .data$POS > start)%>%
+    dplyr::filter(.data$POS < end)
 
   if(label_lead == TRUE){
     lsnp_row_2 = which(in.dt.2$LABEL == "LEAD")

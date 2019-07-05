@@ -111,4 +111,4 @@ scatterPlotRACER(assoc_data1 = mark3_bmd_gwas_f_ld, assoc_data2 = mark3_eqtl_f_l
 
 
 # Related References:
-- coloc package (https://CRAN.R-project.org/package=coloc)
+- coloc package (https://github.com/chr1swallace/coloc)
