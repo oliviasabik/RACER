@@ -23,7 +23,7 @@
 #' @import ggplot2
 #' @importFrom rlang .data
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data("mark3_eqtl")
 #' data("mark3_bmd_gwas")
 #' df1_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11,rs_col = 2)

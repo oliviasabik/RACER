@@ -29,7 +29,7 @@
 #' @import ggplot2
 #' @importFrom rlang .data
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(mark3_bmd_gwas)
 #' data(mark3_eqtl)
 #'

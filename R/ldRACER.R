@@ -12,7 +12,7 @@
 #' @export
 #' @importFrom rlang .data
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(mark3_bmd_gwas)
 #' mark3_bmd_gwas_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
 #' head(ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 5, pops = c("EUR"), lead_snp = "rs11623869"))}
