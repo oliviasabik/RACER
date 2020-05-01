@@ -200,7 +200,7 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
         ggplot2::xlim(start,end) + ggplot2::ylim(min(in.dt.2$LOG10P),max(in.dt.2$LOG10P)) +
         ggplot2::theme(axis.title.x=ggplot2::element_blank(),
                        axis.text.x=ggplot2::element_blank(),
-                       axis.ticks.x=ggplot2::element_blank()) + ggplot2::ggtitle(paste0(name1)) +
+                       axis.ticks.x=ggplot2::element_blank()) + ggplot2::ggtitle(paste0(name2)) +
         theme(plot.title = element_text(size = 10, vjust = -1))
   }
 
