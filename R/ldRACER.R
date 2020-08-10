@@ -58,7 +58,7 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
   assoc_data$LD_BIN = 1
   assoc_data$LD_BIN = NA
   if(length(pops) == 1){
-    ld_command = paste0("https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp,"&pop=",pops,"&r2_d=r2&token=c0f613f149ab")
+    ld_command = paste0("https://ldlink.nci.nih.gov/LDlinkRest/ldproxy?var=", lead_snp,"&pop=",pops,"&r2_d=r2&token=c0f613f149ab")
     print(ld_command)
     z = as.data.frame(data.table::fread(ld_command))
     z = dplyr::select(z, "RS_Number", "R2")
@@ -78,7 +78,7 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
     assoc_data$LABEL = NA
     assoc_data[which(assoc_data$RS_ID == lead_snp), which(colnames(assoc_data) == "LABEL")] = "LEAD"
     }else if(length(pops) > 1){
-      ld_command = paste0("https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldproxy?var=", lead_snp, "&pop=")
+      ld_command = paste0("https://ldlink.nci.nih.gov/LDlinkRest/ldproxy?var=", lead_snp, "&pop=")
       for (i in 1:length(pops)){
         if (i < length(pops)){
           a = pops[i]
