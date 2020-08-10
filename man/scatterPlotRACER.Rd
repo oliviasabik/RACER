@@ -35,7 +35,7 @@ use to color the points on the plot}
 This function allows you to create a scatter plot of -log10(P-values) from two association studies.
 }
 \examples{
-\dontrun{
+\donttest{
 data("mark3_eqtl")
 data("mark3_bmd_gwas")
 df1_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11,rs_col = 2)

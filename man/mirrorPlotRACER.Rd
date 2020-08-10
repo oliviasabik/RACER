@@ -48,7 +48,7 @@ Mirror plots illustrate the two associations on a common x-axis, with the first 
 inverted, mirroring the two associations against one another.
 }
 \examples{
-\dontrun{
+\donttest{
 data(mark3_bmd_gwas)
 data(mark3_eqtl)
 
