@@ -44,13 +44,13 @@ ldRACER <- function(assoc_data, rs_col, pops, window, genome_build, lead_snp = N
     }
   }
 
-  rsid_pattern <- "^rs\\d{1,}"
-  if(!((grepl(rsid_pattern, snp, ignore.case = TRUE)) | (grepl(chr_coord_pattern, snp, ignore.case = TRUE)))) {
-    stop("Invalid query format for variant: ", snp, ".", sep="")
-  }
-
   if(auto_snp == TRUE){
     lead_snp = assoc_data[which.max(assoc_data$LOG10P),"RS_ID"]
+  }
+
+  rsid_pattern <- "^rs\\d{1,}"
+  if(!((grepl(rsid_pattern, lead_snp, ignore.case = TRUE)) | (grepl(chr_coord_pattern, lead_snp, ignore.case = TRUE)))) {
+    stop("Invalid query format for variant: ", lead_snp, ".", sep="")
   }
 
   pot_pops = c("AFR", "AMR", "EAS", "EUR", "SAS", "YRI", "LWK", "GWD", "MSL", "ESN", "ASW", "ACB", "MXL", "PUR", "CLM", "PEL", "CHB", "JPT", "CHS", "CDX", "KHV", "CEU", "TSI", "FIN", "GBR", "IBS", "GIH", "PJL", "BEB", "STU", "ITU")
@@ -86,7 +86,7 @@ ldRACER <- function(assoc_data, rs_col, pops, window, genome_build, lead_snp = N
 
   r2_d = 'r2'
   url = "https://ldlink.nih.gov/LDlinkRest/ldproxy"
-  q_body <- list(paste("var=", snp, sep=""),
+  q_body <- list(paste("var=", lead_snp, sep=""),
              paste("pop=", pop, sep=""),
              paste("r2_d=", r2d, sep=""),
              paste("window=", window, sep=""),
