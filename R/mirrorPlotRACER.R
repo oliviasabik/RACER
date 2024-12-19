@@ -54,12 +54,12 @@ mirrorPlotRACER <- function(assoc_data1, assoc_data2, chr, build = "hg19", set =
   if(sum(reqs %in% cols_2) == 3){
   }else{stop("Association Data Set #2 is missing a required column.")}
 
-  if(build == "hg38"){
+  if(build %in% c("hg38", "grch38")){
     utils::data(hg38)
     chr_in = chr
     colnames(hg38) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "LENGTH", "GENE_NAME", "TYPE")
     gene_sub = hg38[hg38$CHR == chr_in,]
-  }else if(build == "hg19"){
+  }else if(build %in% c("hg19", "grch37")){
     utils::data(hg19)
     chr_in = chr
     colnames(hg19) = c("GENE_ID", "CHR", "TRX_START", "TRX_END", "LENGTH", "GENE_NAME", "TYPE")
