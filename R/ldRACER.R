@@ -49,6 +49,7 @@ ldRACER <- function(assoc_data, rs_col, pops, window, genome_build, lead_snp = N
   }
 
   rsid_pattern <- "^rs\\d{1,}"
+  chr_coord_pattern <- "(^chr)(\\d{1,2}|X|x|Y|y):(\\d{1,9})$"
   if(!((grepl(rsid_pattern, lead_snp, ignore.case = TRUE)) | (grepl(chr_coord_pattern, lead_snp, ignore.case = TRUE)))) {
     stop("Invalid query format for variant: ", lead_snp, ".", sep="")
   }
