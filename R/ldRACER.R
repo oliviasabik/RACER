@@ -85,7 +85,7 @@ ldRACER <- function(assoc_data, rs_col, pops, window, genome_build, lead_snp = N
   assoc_data$LD_BIN = 1
   assoc_data$LD_BIN = NA
 
-  r2_d = 'r2'
+  r2d = 'r2'
   url = "https://ldlink.nih.gov/LDlinkRest/ldproxy"
   q_body <- list(paste("var=", lead_snp, sep=""),
              paste("pop=", pops, sep=""),
