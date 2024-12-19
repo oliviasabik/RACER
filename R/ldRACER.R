@@ -3,8 +3,10 @@
 #' This group of functions allows you to creat a plot of -log10(P-values) of an association study by their genomic position, for example, the results of a GWAS or eQTL study. This function takes the rsID of a reference SNP and calculates LD for all other SNPs in the dataset using the 1000 Genomes Phase III Data. This function takes a lead SNP, or finds the most significantly associated SNP in the input data set and use it as the lead SNP (auto_snp = TRUE). The input of the function should already have been formatted using formatRACER().
 #' @param assoc_data required. A dataframe produced by by formatRACER()
 #' @param rs_col required. numeric or character. index of column or name of column containing rsID numbers for SNPs
-#' @param pops required. Populations used to calculate LD. Options can be found at the LD Link website.
-#' @param lead_snp required, unless auto_snp = TRUE. Required if ldby = "1000genomes". snp used to calculate LD
+#' @param pops required. Populations used to calculate LD. Options can be found at the LD Link website
+#' @param window optional. +/- window base pairs around SNP to compute LD
+#' @param genome_build optional. default=‘grch37‘, can be ‘grch37‘ (hg19), ‘grch38‘ (hg38), or ‘grch38_high_coverage‘ for GRCh38 High Coverage (hg38) 1000 Genome Project data sets
+#' @param lead_snp required. unless auto_snp = TRUE. Required if ldby = "1000genomes". snp used to calculate LD
 #' @param auto_snp optional. default = FALSE, can be set to TRUE to calculate LD using the highest LOG10P SNP as the reference
 #'
 #' @keywords association plot linkage disequilibrium
@@ -17,7 +19,7 @@
 #' mark3_bmd_gwas_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
 #' head(ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 5, pops = c("EUR"), lead_snp = "rs11623869"))}
 
-ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE){
+ldRACER <- function(assoc_data, rs_col, pops, window, genome_build, lead_snp = NULL, auto_snp = FALSE){
 
   if(missing(rs_col)){
     stop("Please specify which column contains rsIDs.")
@@ -42,6 +44,11 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
     }
   }
 
+  rsid_pattern <- "^rs\\d{1,}"
+  if(!((grepl(rsid_pattern, snp, ignore.case = TRUE)) | (grepl(chr_coord_pattern, snp, ignore.case = TRUE)))) {
+    stop("Invalid query format for variant: ", snp, ".", sep="")
+  }
+
   if(auto_snp == TRUE){
     lead_snp = assoc_data[which.max(assoc_data$LOG10P),"RS_ID"]
   }
@@ -53,61 +60,59 @@ ldRACER <- function(assoc_data, rs_col, pops, lead_snp = NULL, auto_snp = FALSE)
     stop("The one or more of the populations you specified are not valid, please consult documentation for list of acceptable population codes.")
   }
 
+  if(length(pops) > 1) {
+  	pops=paste(unlist(pops), collapse = "%2B")
+  }
+
+  avail_genome_build=c("grch37", "grch38", "grch38_high_coverage")
+  if(!(all(genome_build %in% avail_genome_build))) {
+    stop("Not an available genome build.")
+  }
+
+  window = as.integer(window)
+
+  if (!(window >= 0 & window <= 1000000))
+   {
+    stop(paste("Window size must be between 0 and 1000000 bp. Input window size was ", window, " bp.", sep=""))
+   } else {
+     # convert back to character
+     window = as.character(window)
+   }
+
   # calculate LD
   message(paste0("Calculating LD using ", lead_snp, "..."))
   assoc_data$LD_BIN = 1
   assoc_data$LD_BIN = NA
-  if(length(pops) == 1){
-    ld_command = paste0("https://ldlink.nci.nih.gov/LDlinkRest/ldproxy?var=", lead_snp,"&pop=",pops,"&r2_d=r2&token=c0f613f149ab")
-    print(ld_command)
-    z = as.data.frame(data.table::fread(ld_command))
-    z = dplyr::select(z, "RS_Number", "R2")
-    colnames(z) = c("RS_ID", "LD")
-    assoc_data$LD = NA
-    assoc_data = dplyr::select(assoc_data, -"LD")
-    message(paste0("Merging input association data with LD..."))
-    assoc_data = merge(assoc_data, z, by = "RS_ID", all.x = TRUE)
-    assoc_data$LD = as.numeric(as.character(assoc_data$LD))
-    assoc_data$LD_BIN <- cut(assoc_data$LD,
-                        breaks=c(0,0.2,0.4,0.6,0.8,1.0),
-                        labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
-    assoc_data$LD_BIN = as.character(assoc_data$LD_BIN)
-    assoc_data$LD_BIN[is.na(assoc_data$LD_BIN)] <- "NA"
-    assoc_data$LD_BIN = as.factor(assoc_data$LD_BIN)
-    assoc_data$LD_BIN = factor(assoc_data$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
-    assoc_data$LABEL = NA
-    assoc_data[which(assoc_data$RS_ID == lead_snp), which(colnames(assoc_data) == "LABEL")] = "LEAD"
-    }else if(length(pops) > 1){
-      ld_command = paste0("https://ldlink.nci.nih.gov/LDlinkRest/ldproxy?var=", lead_snp, "&pop=")
-      for (i in 1:length(pops)){
-        if (i < length(pops)){
-          a = pops[i]
-          ld_command = paste0(ld_command, a, "%2B")
-          }else if(i == length(pops)){
-            a = pops[i]
-            ld_command = paste0(ld_command, a)
-          }
-        }
-      ld_command = paste0(ld_command, "&r2_d=r2&token=c0f613f149ab")
-      print(ld_command)
-      z = as.data.frame(data.table::fread(ld_command))
-      z = dplyr::select(z, "RS_Number", "R2")
-      colnames(z) = c("RS_ID", "LD")
-      assoc_data$LD = NA
-      assoc_data = dplyr::select(assoc_data, -"LD")
-      message(paste0("Merging input association data with LD..."))
-      assoc_data = merge(assoc_data, z, by = "RS_ID", all.x = TRUE)
-      assoc_data$LD = as.numeric(as.character(assoc_data$LD))
-      assoc_data$LD_BIN <- cut(assoc_data$LD,
-                          breaks=c(0,0.2,0.4,0.6,0.8,1.0),
-                          labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
-      assoc_data$LD_BIN = as.character(assoc_data$LD_BIN)
-      assoc_data$LD_BIN[is.na(assoc_data$LD_BIN)] <- "NA"
-      assoc_data$LD_BIN = as.factor(assoc_data$LD_BIN)
-      assoc_data$LD_BIN = factor(assoc_data$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
-      assoc_data$LABEL = NA
-      assoc_data[which(assoc_data$RS_ID == lead_snp), which(colnames(assoc_data) == "LABEL")] = "LEAD"
-    }
+
+  r2_d = 'r2'
+  url = "https://ldlink.nih.gov/LDlinkRest/ldproxy"
+  q_body <- list(paste("var=", snp, sep=""),
+             paste("pop=", pop, sep=""),
+             paste("r2_d=", r2d, sep=""),
+             paste("window=", window, sep=""),
+             paste("genome_build=", genome_build, sep=""),
+             paste("token=", token, sep=""))
+
+ ld_command = paste(url, "?", paste(unlist(q_body), collapse = "&"), sep="")
+
+  z = as.data.frame(data.table::fread(ld_command))
+  z = dplyr::select(z, "RS_Number", "R2")
+  colnames(z) = c("RS_ID", "LD")
+  assoc_data$LD = NA
+  assoc_data = dplyr::select(assoc_data, -"LD")
+  message(paste0("Merging input association data with LD..."))
+  assoc_data = merge(assoc_data, z, by = "RS_ID", all.x = TRUE)
+  assoc_data$LD = as.numeric(as.character(assoc_data$LD))
+  assoc_data$LD_BIN <- cut(assoc_data$LD,
+                      breaks=c(0,0.2,0.4,0.6,0.8,1.0),
+                      labels=c("0.2-0.0","0.4-0.2","0.6-0.4","0.8-0.6","1.0-0.8"))
+  assoc_data$LD_BIN = as.character(assoc_data$LD_BIN)
+  assoc_data$LD_BIN[is.na(assoc_data$LD_BIN)] <- "NA"
+  assoc_data$LD_BIN = as.factor(assoc_data$LD_BIN)
+  assoc_data$LD_BIN = factor(assoc_data$LD_BIN, levels = c("1.0-0.8", "0.8-0.6", "0.6-0.4", "0.4-0.2", "0.2-0.0", "NA"))
+  assoc_data$LABEL = NA
+  assoc_data[which(assoc_data$RS_ID == lead_snp), which(colnames(assoc_data) == "LABEL")] = "LEAD"
+  
   return(assoc_data)
 }
 
