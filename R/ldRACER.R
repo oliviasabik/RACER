@@ -4,11 +4,12 @@
 #' @param assoc_data required. A dataframe produced by by formatRACER()
 #' @param rs_col required. numeric or character. index of column or name of column containing rsID numbers for SNPs
 #' @param pops required. Populations used to calculate LD. Options can be found at the LD Link website
+#' @param token required. LDLink token.
 #' @param window optional. +/- window base pairs around SNP to compute LD
 #' @param genome_build optional. default=‘grch37‘, can be ‘grch37‘ (hg19), ‘grch38‘ (hg38), or ‘grch38_high_coverage‘ for GRCh38 High Coverage (hg38) 1000 Genome Project data sets
 #' @param lead_snp required. unless auto_snp = TRUE. Required if ldby = "1000genomes". snp used to calculate LD
 #' @param auto_snp optional. default = FALSE, can be set to TRUE to calculate LD using the highest LOG10P SNP as the reference
-#'
+#' 
 #' @keywords association plot linkage disequilibrium
 #' @concept GWAS
 #' @export
@@ -19,12 +20,14 @@
 #' mark3_bmd_gwas_f = formatRACER(assoc_data = mark3_bmd_gwas, chr_col = 3, pos_col = 4, p_col = 11)
 #' head(ldRACER(assoc_data = mark3_bmd_gwas_f, rs_col = 5, pops = c("EUR"), lead_snp = "rs11623869"))}
 
-ldRACER <- function(assoc_data, rs_col, pops, window, genome_build, lead_snp = NULL, auto_snp = FALSE){
+ldRACER <- function(assoc_data, rs_col, pops, token, window, genome_build, lead_snp = NULL, auto_snp = FALSE){
 
   if(missing(rs_col)){
     stop("Please specify which column contains rsIDs.")
   }else if(missing(pops)){
     stop("Please specify which 1000 Genomes populations to use to calculate LD.")
+  }else if(missing(token)){
+    stop("Please specify your LDLink token.")
   }else if(is.null(lead_snp) == TRUE && auto_snp == FALSE){
     stop("Please specify which lead SNP to use to calculate LD, or use auto SNP.")
   }else{
@@ -67,7 +70,7 @@ ldRACER <- function(assoc_data, rs_col, pops, window, genome_build, lead_snp = N
 
   avail_genome_build=c("grch37", "grch38", "grch38_high_coverage")
   if(!(all(genome_build %in% avail_genome_build))) {
-    stop("Not an available genome build.")
+    stop("Not an available genome build. Please use one of {"grch37", "grch38", "grch38_high_coverage"}")
   }
 
   window = as.integer(window)
@@ -86,7 +89,7 @@ ldRACER <- function(assoc_data, rs_col, pops, window, genome_build, lead_snp = N
   assoc_data$LD_BIN = NA
 
   r2d = 'r2'
-  token = 'c0f613f149ab'
+  token = token
   url = "https://ldlink.nih.gov/LDlinkRest/ldproxy"
   q_body <- list(paste("var=", lead_snp, sep=""),
              paste("pop=", pops, sep=""),
