@@ -70,7 +70,7 @@ ldRACER <- function(assoc_data, rs_col, pops, token, window, genome_build, lead_
 
   avail_genome_build=c("grch37", "grch38", "grch38_high_coverage")
   if(!(all(genome_build %in% avail_genome_build))) {
-    stop("Not an available genome build. Please use one of {"grch37", "grch38", "grch38_high_coverage"}")
+    stop("Not an available genome build. Please use one of grch37, grch38, grch38_high_coverage.")
   }
 
   window = as.integer(window)
